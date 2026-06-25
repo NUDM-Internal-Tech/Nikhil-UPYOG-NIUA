@@ -218,7 +218,7 @@ export default defineConfig(({ mode }) => {
     const { name, main } = JSON.parse(fs.readFileSync(pkgJsonPath, "utf-8"));
     if (!name) return;
 
-    const packageName = pkgDir.split("/").pop();
+    const packageName = pkgDir.replace(/\\/g, "/").split("/").pop();
     if (!activeWorkspaces.has(packageName)) return;
 
     const entry = main
