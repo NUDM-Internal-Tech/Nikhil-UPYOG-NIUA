@@ -212,6 +212,7 @@ const ConnectionDetails = _props => {
   const {
     errors
   } = localFormState;
+  localFormState.touched = localFormState.touchedFields || localFormState.touched || {};
   const isMobile = window.Digit.Utils.browser.isMobile();
   const isEmployee = window.location.href.includes("/employee");
   const {
