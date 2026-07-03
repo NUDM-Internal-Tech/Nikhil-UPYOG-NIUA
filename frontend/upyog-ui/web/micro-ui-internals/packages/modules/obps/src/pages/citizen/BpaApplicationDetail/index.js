@@ -245,8 +245,8 @@ const BpaApplicationDetail = () => {
           setShowModal(false);
           setShowToast({ key: "success", action: selectedAction });
           setTimeout(closeToast, 5000);
-          queryClient.invalidateQueries("BPA_DETAILS_PAGE");
-          queryClient.invalidateQueries("workFlowDetails");
+          queryClient.invalidateQueries({ queryKey: ["BPA_DETAILS_PAGE"] });
+          queryClient.invalidateQueries({ queryKey: ["workFlowDetails"] });
         },
       }
     );
