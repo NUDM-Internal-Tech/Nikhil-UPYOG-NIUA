@@ -17,10 +17,11 @@
       "username": "UPYOGADMIN",
       "password": "eGov@123",
       "city": "City A"
-    },
-    "vendor": {
-      "mobile": "",
-      "otp": ""
     }
+  },
+
+  "vendor": {
+    "mobile": "",
+    "otp": ""
   }
 }

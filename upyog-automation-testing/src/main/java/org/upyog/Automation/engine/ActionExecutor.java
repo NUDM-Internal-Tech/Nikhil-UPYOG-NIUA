@@ -472,32 +472,11 @@ public class ActionExecutor {
 
         String filePath = instruction.getInputValue();
 
-        // Load file from resources
-        java.net.URL resource =
-                getClass()
-                        .getClassLoader()
-                        .getResource(filePath);
+        File file = new File(filePath);
 
-        if (resource == null) {
-
+        if (!file.exists()) {
             throw new IllegalArgumentException(
-                    "Upload file not found in resources: "
-                            + filePath
-            );
-        }
-
-        File file;
-
-        try {
-
-            file = new File(resource.toURI());
-
-        } catch (Exception e) {
-
-            throw new RuntimeException(
-                    "Unable to load upload file: "
-                            + filePath,
-                    e
+                    "Upload file not found: " + filePath
             );
         }
 
@@ -508,16 +487,13 @@ public class ActionExecutor {
                 );
 
         if (fileInputs.isEmpty()) {
-
             throw new NoSuchElementException(
-                    "No file input found with locator: "
-                            + locator
+                    "No file input found with locator: " + locator
             );
         }
 
         WebElement fileInput = fileInputs.get(0);
 
-        // Make hidden input visible
         js.executeScript(
                 "arguments[0].style.opacity='1';" +
                         "arguments[0].style.display='block';",
@@ -528,10 +504,7 @@ public class ActionExecutor {
 
         fileInput.sendKeys(file.getAbsolutePath());
 
-        logger.debug(
-                "Uploaded file: {}",
-                file.getAbsolutePath()
-        );
+        logger.info("Uploaded file: {}", file.getAbsolutePath());
     }
 
     /**

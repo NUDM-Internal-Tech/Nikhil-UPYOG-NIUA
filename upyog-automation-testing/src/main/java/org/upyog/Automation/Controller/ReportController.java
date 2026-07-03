@@ -4,6 +4,14 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.upyog.Automation.model.ReportDto;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import java.io.File;
 import java.util.Arrays;
@@ -158,5 +166,43 @@ public class ReportController {
             return ResponseEntity.internalServerError()
                     .build();
         }
+    }
+
+    @GetMapping("/module/{moduleName}")
+    public List<ReportDto> getReportsByModule(@PathVariable String moduleName) {
+
+        File reportDir = new File("target/reports");
+
+        if (!reportDir.exists()) {
+            return new ArrayList<>();
+        }
+
+        File[] files = reportDir.listFiles((dir, name) ->
+                name.startsWith("Execution_" + moduleName.toUpperCase() + "_")
+                        && name.endsWith(".html"));
+
+        if (files == null) {
+            return new ArrayList<>();
+        }
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss a");
+
+        return java.util.Arrays.stream(files)
+                .sorted(Comparator.comparingLong(File::lastModified).reversed())
+                .limit(5)
+                .map(file -> {
+
+                    Date modified = new Date(file.lastModified());
+
+                    ReportDto dto = new ReportDto();
+                    dto.setFileName(file.getName());
+                    dto.setDate(dateFormat.format(modified));
+                    dto.setTime(timeFormat.format(modified));
+
+                    return dto;
+
+                })
+                .collect(Collectors.toList());
     }
 }

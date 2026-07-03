@@ -299,7 +299,7 @@
     {
       "stepName":"Capture Application Number",
       "locatorStrategy":"XPATH",
-      "locatorValue":"//*[contains(text(),'Application No') or contains(text(),'Application Number')]/following-sibling::*[1]",
+      "locatorValue":"//*[contains(text(),'Booking No.') or contains(text(),'Application Number')]/following-sibling::*[1]",
       "action":"CAPTURE_TEXT",
       "inputValue":"APPLICATION_NO",
       "dynamicSleep":3000
@@ -321,6 +321,13 @@
       "dynamicSleep": 3000
     },
     {
+      "stepName": "Select ICICI",
+      "locatorStrategy": "XPATH",
+      "locatorValue":"//label[normalize-space()='ICICI']/preceding-sibling::span/input[@type='radio']",
+      "action": "CLICK_JS",
+      "dynamicSleep": 1000
+    },
+    {
       "stepName": "Click UPYOG Pay",
       "locatorStrategy": "XPATH",
       "locatorValue": "//button[contains(@class,'submit-bar') and .//header[normalize-space()='Pay']]",
@@ -329,44 +336,73 @@
       "dynamicSleep": 4000
     },
     {
-      "stepName": "Click Net Banking",
-      "locatorStrategy": "XPATH",
-      "locatorValue": "//*[contains(text(),'Net Banking')]",
-      "action": "CLICK_JS",
-      "inputValue": null,
-      "dynamicSleep": 2000
+      "stepName": "Open Cards Section",
+      "locatorStrategy": "ID",
+      "locatorValue": "cardAccordionBtn",
+      "action": "CLICK",
+      "dynamicSleep": 1000
     },
     {
-      "stepName": "Select ICICI",
-      "locatorStrategy": "XPATH",
-      "locatorValue": "//*[contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'icici')]",
-      "action": "CLICK_JS",
-      "inputValue": null,
-      "dynamicSleep": 2000
+      "stepName": "Enter Name On Card",
+      "locatorStrategy": "ID",
+      "locatorValue": "nameOnCard",
+      "action": "TYPE",
+      "inputValue": "Arpit",
+      "dynamicSleep": 500
     },
     {
-      "stepName": "Click Gateway Pay",
-      "locatorStrategy": "XPATH",
-      "locatorValue": "//button[contains(translate(.,'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz'),'pay')]",
-      "action": "CLICK_JS",
-      "inputValue": null,
-      "dynamicSleep": 2000
+      "stepName": "Enter Card Number",
+      "locatorStrategy": "ID",
+      "locatorValue": "cardNoMasked",
+      "action": "TYPE",
+      "inputValue": "4111111111111111",
+      "dynamicSleep": 500
     },
     {
-      "stepName": "Click Success",
-      "locatorStrategy": "XPATH",
-      "locatorValue": "//button[contains(.,'Success')]",
-      "action": "CLICK_JS",
-      "inputValue": null,
-      "dynamicSleep": 3000
+      "stepName": "Select Expiry Month",
+      "locatorStrategy": "ID",
+      "locatorValue": "month",
+      "action": "SELECT_BY_VALUE",
+      "inputValue": "03",
+      "dynamicSleep": 500
     },
     {
-      "stepName": "Switch Back To UPYOG",
+      "stepName": "Select Expiry Year",
+      "locatorStrategy": "ID",
+      "locatorValue": "year",
+      "action": "SELECT_BY_VALUE",
+      "inputValue": "2033",
+      "dynamicSleep": 500
+    },
+    {
+      "stepName": "Enter CVV",
+      "locatorStrategy": "ID",
+      "locatorValue": "cvv",
+      "action": "TYPE",
+      "inputValue": "123",
+      "dynamicSleep": 500
+    },
+    {
+      "stepName":"Click Pay Now",
+      "locatorStrategy":"XPATH",
+      "locatorValue":"//button[@id='payBtn2' and contains(@style,'display: block')]",
+      "action":"CLICK_JS",
+      "dynamicSleep":5000
+    },
+    {
+      "stepName": "Enter OTP",
+      "locatorStrategy": "ID",
+      "locatorValue": "otp",
+      "action": "TYPE",
+      "inputValue": "123456",
+      "dynamicSleep": 500
+    },
+    {
+      "stepName": "Verify OTP",
       "locatorStrategy": "XPATH",
-      "locatorValue": "//body",
-      "action": "SWITCH_WINDOW",
-      "inputValue": null,
-      "dynamicSleep": 2000
+      "locatorValue": "//button[@onclick='cardsubmit()']",
+      "action": "CLICK_JS",
+      "dynamicSleep": 5000
     }
   ]
 }

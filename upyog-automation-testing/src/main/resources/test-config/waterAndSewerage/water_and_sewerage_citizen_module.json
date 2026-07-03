@@ -199,16 +199,24 @@
       "stepName":"Submit Application",
       "locatorStrategy":"XPATH",
       "locatorValue":"//button[@class='submit-bar ' and @type='button'][.//header[text()='SUBMIT']]",
-      "action":"CLICK_JS"
+      "action":"CLICK_JS",
+      "dynamicSleep": 2000
     },
     {
-      "stepName":"Capture Application Number",
-      "locatorStrategy":"XPATH",
-      "locatorValue":"//*[contains(text(),'Application No') or contains(text(),'Application Number')]/following-sibling::*[1]",
-      "action":"CAPTURE_TEXT",
-      "inputValue":"APPLICATION_NO",
-      "dynamicSleep":3000
+      "stepName": "Capture Water Application Number",
+      "locatorStrategy": "XPATH",
+      "locatorValue": "//h2[contains(normalize-space(),'Water Application ID')]/following-sibling::p[1]",
+      "action": "CAPTURE_TEXT",
+      "inputValue": "WATER_APPLICATION_NO",
+      "dynamicSleep": 2000
+    },
+    {
+      "stepName": "Capture Sewerage Application Number",
+      "locatorStrategy": "XPATH",
+      "locatorValue": "//h2[contains(normalize-space(),'Sewerage Application ID')]/following-sibling::p[1]",
+      "action": "CAPTURE_TEXT",
+      "inputValue": "SEWERAGE_APPLICATION_NO",
+      "dynamicSleep": 2000
     }
-
   ]
 }

@@ -5,6 +5,10 @@ import org.springframework.stereotype.Service;
 import org.upyog.Automation.Controller.ModuleTestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.upyog.Automation.model.ModuleExecutionResult;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -16,7 +20,7 @@ public class ModuleTestService {
     @Autowired
     private WorkflowExecutor workflowExecutor;
 
-    public String runModule(ModuleTestController.ModuleRequest request) {
+    public List<ModuleExecutionResult> runModule(ModuleTestController.ModuleRequest request) {
 
         String moduleName = request.getModuleName();
 
@@ -30,30 +34,68 @@ public class ModuleTestService {
 
             String[] modules = moduleName.split(",");
 
+            List<ModuleExecutionResult> results = new ArrayList<>();
+
             for (String module : modules) {
 
-                System.out.println(
-                        "RUNNING MODULE = "
-                                + module
-                );
+                module = module.trim();
 
-                executeSingleModule(
-                        module.trim(),
-                        citizenUrl
-                );
-                System.out.println(
-                        "COMPLETED MODULE = "
-                                + module
-                );
+                System.out.println("RUNNING MODULE = " + module);
+
+                try {
+
+                    executeSingleModule(module, citizenUrl);
+
+                    results.add(
+                            new ModuleExecutionResult(
+                                    module,
+                                    "PASS",
+                                    "Executed Successfully"
+                            )
+                    );
+
+                } catch (Exception e) {
+
+                    results.add(
+                            new ModuleExecutionResult(
+                                    module,
+                                    "FAIL",
+                                    e.getMessage()
+                            )
+                    );
+
+                }
             }
 
-            return "Multiple Workflows Executed";
+            return results;
         }
 
-        return executeSingleModule(
-                moduleName,
-                citizenUrl
-        );
+        try {
+
+            executeSingleModule(
+                    moduleName,
+                    citizenUrl
+            );
+
+            return List.of(
+                    new ModuleExecutionResult(
+                            moduleName,
+                            "PASS",
+                            "Executed Successfully"
+                    )
+            );
+
+        } catch (Exception e) {
+
+            return List.of(
+                    new ModuleExecutionResult(
+                            moduleName,
+                            "FAIL",
+                            e.getMessage()
+                    )
+            );
+
+        }
     }
 
     private String executeSingleModule(

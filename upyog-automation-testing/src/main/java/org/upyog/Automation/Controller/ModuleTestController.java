@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.upyog.Automation.Service.ModuleTestService;
+import org.upyog.Automation.model.ModuleExecutionResult;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -16,20 +18,13 @@ public class ModuleTestController {
     private ModuleTestService moduleTestService;
 
     @PostMapping("/run")
-    public ResponseEntity<Map<String, String>> runModule(
+    public ResponseEntity<List<ModuleExecutionResult>> runModule(
             @RequestBody ModuleRequest request) {
 
-        String result =
-                moduleTestService.runModule(
-                        request
-                );
+        List<ModuleExecutionResult> result =
+                moduleTestService.runModule(request);
 
-        Map<String, String> response =
-                new HashMap<>();
-
-        response.put("message", result);
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(result);
     }
 
     public static class ModuleRequest {

@@ -27,10 +27,23 @@ public class ModuleWrapper {
 
         for (ModuleTask module : modules) {
 
-            runModule(
-                    module.getModuleName(),
-                    module.getModuleLogic()
-            );
+            try {
+
+                runModule(
+                        module.getModuleName(),
+                        module.getModuleLogic()
+                );
+
+            } catch (Exception e) {
+
+                logger.error(
+                        "Skipping failed module and continuing: {}",
+                        module.getModuleName(),
+                        e
+                );
+
+                // Continue with next module
+            }
         }
     }
 
