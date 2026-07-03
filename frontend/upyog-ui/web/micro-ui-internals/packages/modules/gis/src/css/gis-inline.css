@@ -163,6 +163,138 @@
   min-width: 230px;
 }
 
+/* Analysis panel — right side of the map, showing DonutChart + tax breakdown */
+.gis-panel--analysis {
+  top: 84px;
+  right: 12px;
+  bottom: 20px;
+  width: 300px;
+  overflow-y: auto;
+}
+
+.gis-analysis-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.gis-analysis-section__title {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #555;
+}
+
+/* Individual status card (one per tax-status category) */
+.gis-status-card {
+  border-left: 3px solid var(--status-color, #ccc);
+  padding: 6px 8px;
+  margin-bottom: 8px;
+  background: #fafafa;
+  border-radius: 0 6px 6px 0;
+}
+
+.gis-status-card__header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.gis-status-card__label {
+  color: #333;
+  font-weight: 500;
+}
+
+.gis-status-card__count {
+  font-weight: 700;
+}
+
+.gis-status-card__pct {
+  font-weight: 400;
+  font-size: 11px;
+  color: #888;
+}
+
+.gis-status-card__pct::before {
+  content: " · ";
+}
+
+.gis-status-card__bar-track {
+  height: 4px;
+  background: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.gis-status-card__bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.gis-status-card__dues {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  margin-top: 4px;
+  color: #888;
+}
+
+.gis-analysis-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 8px 4px 0;
+  border-top: 1px solid #eee;
+  margin-top: 4px;
+}
+
+.gis-analysis-section--spaced {
+  margin-top: 16px;
+}
+
+/* DonutChart SVG canvas — centred block with overflow so hover pop-out isn't clipped */
+.gis-donut-svg {
+  display: block;
+  margin: 0 auto;
+  overflow: visible;
+  cursor: pointer;
+}
+
+/* DonutChart arc paths — transition for smooth hover pop-out; no pointer events (hit-tested in JS) */
+.gis-donut-path {
+  transition: transform 0.2s ease, filter 0.2s ease;
+  pointer-events: none;
+}
+
+/* DonutChart centre text — never receives pointer events so mouse hits pass to the SVG */
+.gis-donut-text {
+  pointer-events: none;
+  text-anchor: middle;
+}
+
+/* Large bold number in the centre hole (count or total) */
+.gis-donut-text--count {
+  font-size: 22px;
+  font-weight: 700;
+  fill: #2b2350;
+}
+
+/* Category name shown below the count when a slice is hovered */
+.gis-donut-text--label {
+  font-size: 10px;
+  fill: #555;
+}
+
+/* Percentage or "Properties" sub-text at the bottom of the centre hole */
+.gis-donut-text--meta {
+  font-size: 10px;
+  fill: #999;
+}
+
 
 /* ============================================================
    SHARED — used by more than one component 
