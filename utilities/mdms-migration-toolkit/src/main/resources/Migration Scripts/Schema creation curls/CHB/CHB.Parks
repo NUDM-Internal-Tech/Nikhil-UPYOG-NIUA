@@ -43,29 +43,69 @@ curl --location 'http://localhost:8094/mdms-v2/schema/v1/_create' \
   },
   "SchemaDefinition": {
     "tenantId": "pg",
-    "code": "CHB.SpecialCategory",
+    "code": "CHB.Parks",
     "description": null,
     "definition": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
-      "title": "SpecialCategory",
+      "title": "Parks",
       "required": [
-        "name",
-        "code",
-        "active"
+        "venueId",
+        "venueName",
+        "childMasterCode",
+        "geoLocation",
+        "address",
+        "contactDetails",
+        "parkDescription",
+        "facilities",
+        "venueDescription",
+        "termsAndCondition",
+        "active",
+        "code"
       ],
       "x-unique": [
+        "venueId",
         "code"
       ],
       "properties": {
-        "name": {
+        "venueId": {
           "type": "string"
         },
-        "code": {
+        "venueName": {
+          "type": "string"
+        },
+        "childMasterCode": {
+          "type": "string"
+        },
+        "geoLocation": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "contactDetails": {
+          "type": "string"
+        },
+        "parkDescription": {
+          "type": "string"
+        },
+        "facilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "venueDescription": {
+          "type": "string"
+        },
+        "termsAndCondition": {
           "type": "string"
         },
         "active": {
           "type": "boolean"
+        },
+        "code": {
+          "type": "string"
         }
       }
     },
