@@ -43,16 +43,18 @@ curl --location 'http://localhost:8094/mdms-v2/schema/v1/_create' \
   },
   "SchemaDefinition": {
     "tenantId": "pg",
-    "code": "CHB.SpecialCategory",
+    "code": "CHB.Venues",
     "description": null,
     "definition": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
-      "title": "SpecialCategory",
+      "title": "Venues",
       "required": [
         "name",
+        "active",
+        "parentMasterType",
         "code",
-        "active"
+        "timeSlot"
       ],
       "x-unique": [
         "code"
@@ -61,11 +63,29 @@ curl --location 'http://localhost:8094/mdms-v2/schema/v1/_create' \
         "name": {
           "type": "string"
         },
+        "active": {
+          "type": "boolean"
+        },
+        "parentMasterType": {
+          "type": "string"
+        },
         "code": {
           "type": "string"
         },
-        "active": {
-          "type": "boolean"
+        "timeSlot": {
+          "type": "object",
+          "required": [
+            "maxDuration",
+            "minDuration"
+          ],
+          "properties": {
+            "maxDuration": {
+              "type": "string"
+            },
+            "minDuration": {
+              "type": "string"
+            }
+          }
         }
       }
     },
