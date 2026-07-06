@@ -240,6 +240,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                 {...customProps}
                 selectedOption={props.value}
                 onSelect={(d) => {
+                  props.onChange(d);
                   props?.setValue("city", {});
                   props?.setValue("locality", {});
                   props?.setValue("mobileNumber", "");
@@ -247,7 +248,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                   props?.setValue("doorNumber", "");
                   props?.setValue("oldPropertyId", "");
                   props?.setValue("name", "");
-                  navigate(`${location.pathname}?action=${action == 0 ? 1 : 0}`, { replace: true });
+                  navigate(`${location.pathname}?action=${d.code}`, { replace: true });
                 }}
               />
             ),
@@ -335,7 +336,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
         {
           type: "custom",
           populators: {
-            name: "addParam1",
+            name: "addParam",
             defaultValue: { code: 1, name: t('PT_SEARCH_DOOR_NO') },
             customProps: {
               t,
@@ -351,6 +352,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                 {...customProps}
                 selectedOption={props.value}
                 onSelect={(d) => {
+                  props.onChange(d);
                   props?.setValue("city", {});
                   props?.setValue("locality", {});
                   props?.setValue("mobileNumber", "");
@@ -358,7 +360,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                   props?.setValue("doorNumber", "");
                   props?.setValue("oldPropertyId", "");
                   props?.setValue("name", "");
-                  navigate(`${location.pathname}?action=${action == 0 ? 1 : 0}`, { replace: true });
+                  navigate(`${location.pathname}?action=${d.code}`, { replace: true });
                 }}
               />
             ),

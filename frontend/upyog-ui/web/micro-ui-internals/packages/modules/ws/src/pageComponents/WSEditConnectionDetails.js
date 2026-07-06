@@ -295,7 +295,7 @@ const ConnectionDetails = (_props) => {
                                             type="number"
                                             value={props.value}
                                             autoFocus={focusIndex.index === connectionDetail?.key && focusIndex.type === "proposedTaps"}
-                                            errorStyle={(localFormState.touched.proposedTaps && errors?.proposedTaps?.message) ? true : false}
+                                            errorStyle={(localFormState.touchedFields.proposedTaps && errors?.proposedTaps?.message) ? true : false}
                                             onChange={(e) => {
                                                 props.onChange(e.target.value);
                                                 setFocusIndex({ index: connectionDetail?.key, type: "proposedTaps" });
