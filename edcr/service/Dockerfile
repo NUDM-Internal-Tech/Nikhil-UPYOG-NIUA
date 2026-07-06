@@ -1,7 +1,11 @@
 #FROM egovio/alpine-maven-builder-jdk-8:gcp AS build
-FROM upyogio/alpine-maven-3.9-builder-jdk-8:gcp-v2 AS build
+FROM amazoncorretto:17-alpine AS build
+
 ARG WORK_DIR
 WORKDIR /app
+
+# Install Maven
+RUN apk add --no-cache maven
 
 # copy the project files
 
@@ -15,7 +19,9 @@ RUN cd ${WORK_DIR} && \
 # Create runtime image
 
 #FROM egovio/wildfly:1-helm-fin-e6312078
-FROM upyogio/wildfly:1-ed
+#FROM upyogio/wildfly:1-ed
+#FROM upyogio/wildfly:26.1.3
+FROM nudmcdg/edcr-wildfly26:07
 COPY --from=build /app/egov/egov-ear/target/*.ear /opt/jboss/wildfly/standalone/deployments/
 USER jboss
 

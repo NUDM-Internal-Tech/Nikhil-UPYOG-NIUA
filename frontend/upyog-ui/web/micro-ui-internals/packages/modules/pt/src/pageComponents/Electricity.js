@@ -1,9 +1,8 @@
-import { CardLabel, LabelFieldPair, TextInput, CardLabelError } from "@upyog/digit-ui-react-components";
-import FormStep from "../../../../react-components/src/molecules/FormStep";
+import { CardLabel,LabelFieldPair, TextInput, CardLabelError, FormStep } from "@nudmcdgnpm/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
-import "../css/pt-inline-auto.css";
+
 const Electricity = ({
   t,
   config,

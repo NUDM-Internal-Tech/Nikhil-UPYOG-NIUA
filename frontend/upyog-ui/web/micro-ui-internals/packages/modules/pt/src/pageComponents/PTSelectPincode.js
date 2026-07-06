@@ -1,20 +1,10 @@
-import { CardLabel, CardLabelError, FormStep, LabelFieldPair, TextInput } from "@upyog/digit-ui-react-components";
+import { CardLabel, CardLabelError, FormStep, LabelFieldPair, TextInput, LocationIcon } from "@nudmcdgnpm/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Timeline from "../components/TLTimeline";
-import "../css/pt-inline-auto.css";
-const PTSelectPincode = ({
-  t,
-  config,
-  onSelect,
-  formData = {},
-  userType,
-  register,
-  errors,
-  setError,
-  formState,
-  clearErrors
-}) => {
+import { getDigiPin, DigipinDisplay } from "../../../../libraries/src/utils/digipin";
+
+const PTSelectPincode = ({ t, config, onSelect, formData = {}, userType, register, errors, setError, formState, clearErrors }) => {
   const tenants = Digit.Hooks.pt.useTenants();
   const {
     pathname
@@ -24,6 +14,11 @@ const PTSelectPincode = ({
     if (presentInModifyApplication && userType === "employee") return formData?.originalData?.address?.pincode || "";
     return formData?.address?.pincode || "";
   });
+  // location and geolocation states
+  const [locationText, setLocationText] = useState("");
+  const [geoLocation, setGeoLocation] = useState(formData?.address?.geoLocation || {});
+  const [digipin, setDigipin] = useState(formData?.address?.digipin || "");
+
   let isEditProperty = formData?.isEditProperty || false;
   if (formData?.isUpdateProperty) isEditProperty = true;
   const inputs = [{
@@ -41,6 +36,56 @@ const PTSelectPincode = ({
   }];
   const [pincodeServicability, setPincodeServicability] = useState(null);
   const [error, setLocalError] = useState("");
+
+  // Generate Digipin from coordinates using client-side function
+  const generateDigipin = (latitude, longitude) => {
+    try {
+      const pin = getDigiPin(latitude, longitude);
+      setDigipin(pin);
+    } catch (error) {
+      console.error("Error generating Digipin:", error);
+    }
+  };
+
+  // Fetch user's current location (latitude & longitude), update state, and generate Digipin
+  const fetchCurrentLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const location = { latitude, longitude };
+          const locationString = `${latitude}, ${longitude}`;
+          setGeoLocation(location);
+          setLocationText(locationString);
+          generateDigipin(latitude, longitude);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+          alert("Unable to retrieve your location. Please check your browser settings.");
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by your browser.");
+    }
+  };
+
+  // Parse manually entered coordinates
+  const handleLocationTextChange = (e) => {
+    const value = e.target.value;
+    setLocationText(value);
+    
+    // Try to parse lat,long format
+    const coords = value.split(',');
+    if (coords.length === 2) {
+      const lat = parseFloat(coords[0].trim());
+      const lng = parseFloat(coords[1].trim());
+      if (!isNaN(lat) && !isNaN(lng)) {
+        setGeoLocation({ latitude: lat, longitude: lng });
+        generateDigipin(lat, lng);
+      }
+    }
+  };
+
   useEffect(() => {
     if (formData?.address?.pincode) {
       setPincode(formData.address.pincode);
@@ -63,12 +108,11 @@ const PTSelectPincode = ({
       });
     }
   }
-  const goNext = async data => {
-    const foundValue = tenants?.find(obj => obj.pincode?.find(item => item == data?.pincode));
-    if (foundValue) {
-      onSelect(config.key, {
-        pincode
-      });
+
+  const goNext = async (data) => {
+    const foundValue = tenants?.find((obj) => obj.pincode?.find((item) => item == data?.pincode));
+    if (foundValue || locationText) {
+      onSelect(config.key, { pincode, geoLocation, digipin });
     } else {
       setPincodeServicability("PT_COMMON_PINCODE_NOT_SERVICABLE");
     }
@@ -87,14 +131,44 @@ const PTSelectPincode = ({
     });
   }
   const onSkip = () => onSelect();
-  return <React.Fragment>
-    {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
-    <FormStep t={t} config={{
-      ...config,
-      inputs
-    }} onSelect={goNext} _defaultValues={{
-      pincode
-    }} onChange={onChange} onSkip={onSkip} forcedError={t(pincodeServicability)} isDisabled={!pincode || isEditProperty}></FormStep>
-            </React.Fragment>;
+  return (
+    <React.Fragment>
+    {window.location.href.includes("/citizen") ? <Timeline currentStep={1}/> : null}
+    
+    <FormStep
+      t={t}
+      config={{ ...config, inputs }}
+      onSelect={goNext}
+      _defaultValues={{ pincode }}
+      onChange={onChange}
+      onSkip={onSkip}
+      forcedError={t(pincodeServicability)}
+      isDisabled={!pincode && !locationText || isEditProperty}
+    >
+      {/* Location Input with Fetch Button */}
+      <div style={{ marginBottom: "20px" }}>
+        <div style={{ display: "flex", alignItems: "stretch", gap: "8px" }}>
+          <TextInput
+            t={t}
+            type="text"
+            name="currentLocation"
+            value={locationText}
+            onChange={handleLocationTextChange}
+            placeholder="Click location icon to fetch current location"
+            style={{ flex: 1 }}
+          />
+          <div
+            className="butt-icon"
+            onClick={fetchCurrentLocation}
+            style={{ cursor: "pointer", display: "flex", alignItems: "center", padding: "5px" }}
+          >
+            <LocationIcon styles={{ width: "16px", border: "none" }} className="fill-path-primary-main" />
+          </div>
+        </div>
+        <DigipinDisplay t={t} digipin={digipin} />
+      </div>
+    </FormStep>
+            </React.Fragment>
+  );
 };
 export default PTSelectPincode;

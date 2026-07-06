@@ -1,9 +1,9 @@
-import { Dropdown, FormComposer, InfoBannerIcon, Loader, Localities, RadioButtons, Toast } from "@upyog/digit-ui-react-components";
+import { Dropdown, FormComposer, InfoBannerIcon, Loader, Localities, RadioButtons, Toast } from "@nudmcdgnpm/digit-ui-react-components";
 import _ from "lodash";
 import PropTypes from "prop-types";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useHistory ,Link} from "react-router-dom";
+import { Link,  } from "react-router-dom";
 
 const description = {
   description: "PT_SEARCH_OR_DESC",
@@ -19,7 +19,7 @@ const description = {
 
 const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
   const { t } = useTranslation();
-  const history = useHistory();
+  const navigate = Digit.Hooks.useCustomNavigate();
   const { action = 0 } = Digit.Hooks.useQueryParams();
   const [searchData, setSearchData] = useState({});
   const [showToast, setShowToast] = useState(null);
@@ -240,6 +240,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                 {...customProps}
                 selectedOption={props.value}
                 onSelect={(d) => {
+                  props.onChange(d);
                   props?.setValue("city", {});
                   props?.setValue("locality", {});
                   props?.setValue("mobileNumber", "");
@@ -247,7 +248,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                   props?.setValue("doorNumber", "");
                   props?.setValue("oldPropertyId", "");
                   props?.setValue("name", "");
-                  history.replace(`${history.location.pathname}?action=${action == 0 ? 1 : 0}`);
+                  navigate(`${location.pathname}?action=${d.code}`, { replace: true });
                 }}
               />
             ),
@@ -335,7 +336,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
         {
           type: "custom",
           populators: {
-            name: "addParam1",
+            name: "addParam",
             defaultValue: { code: 1, name: t('PT_SEARCH_DOOR_NO') },
             customProps: {
               t,
@@ -351,6 +352,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                 {...customProps}
                 selectedOption={props.value}
                 onSelect={(d) => {
+                  props.onChange(d);
                   props?.setValue("city", {});
                   props?.setValue("locality", {});
                   props?.setValue("mobileNumber", "");
@@ -358,7 +360,7 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
                   props?.setValue("doorNumber", "");
                   props?.setValue("oldPropertyId", "");
                   props?.setValue("name", "");
-                  history.replace(`${history.location.pathname}?action=${action == 0 ? 1 : 0}`);
+                  navigate(`${location.pathname}?action=${d.code}`, { replace: true });
                 }}
               />
             ),
@@ -540,7 +542,6 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
     const oldPropId = data?.[oldProperty.name];
     const propId = data?.[property.name];
     const city = data?.city || allCities[0];
-console.log("citycity",city)
 setCityCode(city.code);
     // if ((city!=null && Object.keys(city).length !=0) && !(mobileNumberLength > 0 || oldPropId!="" || propId!="")){
     //   setShowToast({ warning: true, label: "ERR_PT_FILL_VALID_FIELDS" });
@@ -593,7 +594,7 @@ setCityCode(city.code);
       // https://github.com/egovernments/DIGIT-Dev/commit/2bae1c36dd1f8242bca30366da80c88d46b6aaaa#diff-3c34510e8b422f53eb9633d014f50024496ad79f952849e1b42fd61877562c4cR385
       // am adding one more condtion for this. 
       if(redirectToUrl || window.location.href.includes("upyog-ui/citizen/commonpt/property/citizen-search")) {
-        history.push(
+        navigate(
           `/upyog-ui/citizen/commonPt/property/search-results?${Object.keys(qs)
             .map((key) => `${key}=${qs[key]}`)
             .join("&")}${redirectToUrl ? `&redirectToUrl=${redirectToUrl}` : ''}`

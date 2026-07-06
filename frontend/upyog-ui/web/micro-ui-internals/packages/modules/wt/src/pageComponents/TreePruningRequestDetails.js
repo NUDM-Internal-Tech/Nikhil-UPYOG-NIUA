@@ -1,32 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { FormStep, CardLabel, TextInput, UploadFile, Dropdown, LocationIcon } from "@upyog/digit-ui-react-components";
-import "../css/wt-inline-auto.css";
-const TreePruningRequestDetails = ({
-  t,
-  config,
-  onSelect,
-  userType,
-  formData
-}) => {
+import { FormStep, CardLabel, TextInput, UploadFile, Dropdown, LocationIcon } from "@nudmcdgnpm/digit-ui-react-components";
+import { getDigiPin, DigipinDisplay } from "../../../../libraries/src/utils/digipin";
+
+const TreePruningRequestDetails = ({ t, config, onSelect, userType, formData }) => {
   const user = Digit.UserService.getUser().info;
   const [reasonOfPruning, setReasonOfPruning] = useState(formData?.treePruningRequestDetails?.reasonOfPruning || "");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [geoTagLocation, setGeoTagLocation] = useState(formData?.treePruningRequestDetails?.geoTagLocation || "");
+  const [digipin, setDigipin] = useState(formData?.treePruningRequestDetails?.digipin || "");
   const [supportingDocumentFile, setSupportingDocumentFile] = useState(formData?.treePruningRequestDetails?.supportingDocumentFile || "");
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const tenantId = Digit.ULBService.getStateId();
-  const inputStyles = {
-    width: user.type === "EMPLOYEE" ? "50%" : "100%"
-  };
-  const {
-    data: ReasonOfPruningType
-  } = Digit.Hooks.useCustomMDMS(tenantId, "request-service", [{
-    name: "ReasonPruningType"
-  }], {
-    select: data => {
-      const formattedData = data?.["request-service"]?.["ReasonPruningType"];
+  const inputStyles = { width: user.type === "EMPLOYEE" ? "50%" : "100%" };
+
+  const { data: ReasonOfPruningType} = Digit.Hooks.useCustomMDMS(tenantId, "Request-Service", [{ name: "ReasonPruningType" }], {
+    select: (data) => {
+      const formattedData = data?.["Request-Service"]?.["ReasonPruningType"];
       return formattedData;
     }
   });
@@ -38,7 +29,8 @@ const TreePruningRequestDetails = ({
       geoTagLocation,
       supportingDocumentFile,
       latitude,
-      longitude
+      longitude,
+      digipin
     };
     onSelect(config.key, Service, false);
   };
@@ -86,6 +78,7 @@ const TreePruningRequestDetails = ({
       })).finally(() => setIsUploading(false));
     }
   };
+  // Fetch user's current location (latitude & longitude), update state, and generate Digipin
   const fetchCurrentLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -96,7 +89,14 @@ const TreePruningRequestDetails = ({
         setGeoTagLocation(`${latitude}, ${longitude}`);
         setLatitude(latitude);
         setLongitude(longitude);
-      }, error => {
+        try {
+          const pin = getDigiPin(latitude, longitude);
+          setDigipin(pin);
+        } catch (error) {
+          console.error("Error generating Digipin:", error);
+        }
+      },
+      (error) => {
         console.error("Error getting location:", error);
         alert("Unable to retrieve your location. Please check your browser settings.");
       });
@@ -131,6 +131,7 @@ const TreePruningRequestDetails = ({
             <LocationIcon className="fill-path-primary-main" />
           </div>
         </div>
+        <DigipinDisplay t={t} digipin={digipin} style={{ marginBottom: "16px", width: user.type === "EMPLOYEE" ? "50%" : "100%" }} />
 
         {/* Upload Site Photograph */}
         <CardLabel>

@@ -1,6 +1,20 @@
 import React, { useState, Fragment, useEffect, useRef } from "react";
-import { FormComposer, Header, Card, CardSectionHeader, PDFSvg, Loader, StatusTable, Row, ActionBar, SubmitBar, MultiLink, LinkButton, Toast } from "@upyog/digit-ui-react-components";
-import { useParams, useHistory } from "react-router-dom";
+import {
+  FormComposer,
+  Header,
+  Card,
+  CardSectionHeader,
+  PDFSvg,
+  Loader,
+  StatusTable,
+  Row,
+  ActionBar,
+  SubmitBar,
+  MultiLink,
+  LinkButton,
+  Toast
+} from "@nudmcdgnpm/digit-ui-react-components";
+import { useParams,  } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import ApplicationDetailsTemplate from "../../../../templates/ApplicationDetails";
 import get from "lodash/get";
@@ -28,7 +42,7 @@ const ApplicationDetails = () => {
   const [showWaringToast, setShowWaringToast] = useState(null);
   const [canSubmit, setSubmitValve] = useState(false);
   const defaultValues = {};
-  const history = useHistory();
+  const navigate = Digit.Hooks.useCustomNavigate();
   const stateId = Digit.ULBService.getStateId();
   const isMobile = window.Digit.Utils.browser.isMobile();
   const [showOptions, setShowOptions] = useState(false);
@@ -164,6 +178,7 @@ const ApplicationDetails = () => {
       return true;
     }
   };
+  const { applicationDetails: _, ...serializableDetails } = applicationDetails || {};
   let dowloadOptions = [],
     appStatus = applicationDetails?.applicationData?.applicationStatus || "";
   workflowDetails?.data?.actionState?.nextActions?.forEach(action => {
@@ -191,7 +206,7 @@ const ApplicationDetails = () => {
         action: "ACTIVATE_CONNECTION",
         pathname: pathName,
         state: {
-          applicationDetails: applicationDetails,
+          applicationDetails: serializableDetails,
           action: "RESUBMIT_APPLICATION"
         }
       };
@@ -200,7 +215,7 @@ const ApplicationDetails = () => {
       action.redirectionUrll = {
         action: "ACTIVATE_CONNECTION",
         pathname: `/upyog-ui/employee/ws/modify-application-edit?applicationNumber=${applicationNumber}&service=${serviceType}&propertyId=${applicationDetails?.propertyDetails?.propertyId}`,
-        state: applicationDetails
+        state: serializableDetails
       };
     }
   });
@@ -227,7 +242,7 @@ const ApplicationDetails = () => {
         action: "ACTIVATE_CONNECTION",
         pathname: pathName,
         state: {
-          applicationDetails: applicationDetails,
+          applicationDetails: serializableDetails,
           action: "VERIFY_AND_FORWARD"
         }
       };
@@ -265,8 +280,9 @@ const ApplicationDetails = () => {
       }
     }
   });
-  workflowDetails?.data?.actionState?.nextActions?.forEach(action => {
-    console.log("workflowDetails", workflowDetails);
+
+  workflowDetails?.data?.actionState?.nextActions?.forEach((action) => {
+
     if (action?.action === "PAY") {
       if (workflowDetails?.data?.processInstances?.[0]?.businessService == "WSReconnection") {
         action.redirectionUrll = {
