@@ -98,7 +98,7 @@ public class ReportManager {
         if (extentTest != null) {
             extentTest.fail(stepName);
         } else {
-            System.out.println(
+            logger.info(
                     "NO ACTIVE TEST : " + stepName
             );
         }
