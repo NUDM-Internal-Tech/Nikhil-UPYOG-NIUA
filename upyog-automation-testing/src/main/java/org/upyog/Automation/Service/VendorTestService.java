@@ -41,7 +41,7 @@ public class VendorTestService {
         WorkflowDataStore.put("selected.otp", otp);
         WorkflowDataStore.put("selected.city", cityName);
         WorkflowDataStore.put("selected.applicationNumber", applicationNumber);
-        System.out.println("BASE URL RECEIVED = " + baseUrl);
+        logger.info("BASE URL RECEIVED = " + baseUrl);
         WorkflowDataStore.put("selected.url", baseUrl);
         WorkflowDataStore.put("selected.module", moduleName);
 

@@ -9,8 +9,14 @@ import org.upyog.Automation.config.*;
 import org.upyog.Automation.model.WorkflowData;
 import org.upyog.Automation.model.WorkflowStep;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 public class WorkflowExecutor {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(WorkflowExecutor.class);
 
     @Autowired
     private CitizenTestService citizenTestService;
@@ -37,7 +43,7 @@ public class WorkflowExecutor {
                 WorkflowConfigLoader.load(workflowPath);
         WorkflowDataStore.remove("APPLICATION_NO");
 
-        System.out.println(
+        logger.info(
                 "APPLICATION_NO RESET"
         );
 
@@ -45,14 +51,14 @@ public class WorkflowExecutor {
                 StakeholderConfigLoader.load(
                         stakeholderPath
                 );
-        System.out.println(
+        logger.info(
                 "NEW REPORT CREATED FOR = "
                         + workflow.getModuleName()
         );
         ExtentManager.reset();
         ReportManager.clearTest();
 
-        System.out.println(
+        logger.info(
                 "AFTER RESET TEST = "
                         + ReportManager.getTest()
         );
@@ -64,15 +70,15 @@ public class WorkflowExecutor {
         try {
             for (WorkflowStep step : workflow.getSteps()) {
                 try {
-                    System.out.println(
+                    logger.info(
                             "STEP TYPE = " + step.getType()
                     );
 
-                    System.out.println(
+                    logger.info(
                             "STEP MODULE = " + step.getModule()
                     );
 
-                    System.out.println(
+                    logger.info(
                             "STEP ROLE = " + step.getRole()
                     );
 
@@ -84,13 +90,13 @@ public class WorkflowExecutor {
                             "Executing : " + step.getModule()
                     );
 
-                    System.out.println(
+                    logger.info(
                             "Executing : "
                                     + step.getModule()
                     );
 
                     if ("CITIZEN".equalsIgnoreCase(step.getType())) {
-                        System.out.println(
+                        logger.info(
                                 "CALLING CITIZEN SERVICE"
                         );
 
@@ -116,7 +122,7 @@ public class WorkflowExecutor {
                                             + step.getRole()
                             );
                         }
-                        System.out.println(
+                        logger.info(
                                 "APPLICATION_NO = "
                                         + WorkflowDataStore.get("APPLICATION_NO")
                         );
@@ -132,7 +138,7 @@ public class WorkflowExecutor {
                             );
 
                         }
-                        System.out.println(
+                        logger.info(
                                 "CALLING EMPLOYEE SERVICE"
                         );
 
@@ -193,14 +199,14 @@ public class WorkflowExecutor {
             }
         } finally {
 
-            System.out.println(
+            logger.info(
                     "ABOUT TO FLUSH = "
                             + workflow.getModuleName()
             );
 
             ReportManager.flush();
 
-            System.out.println(
+            logger.info(
                     "REPORT SAVED = "
                             + workflow.getModuleName()
             );

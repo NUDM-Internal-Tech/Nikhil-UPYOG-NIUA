@@ -26,21 +26,20 @@ public class LoginHelper {
 
         String loginMobile = mobile;
 
+        String env = WorkflowDataStore.get("selected.env");
+
         if ("ONLINE_BUILDING_PLAN_APPROVAL_SYSTEM"
                 .equalsIgnoreCase(moduleName)) {
 
-            loginMobile = ConfigReader.get("architect.mobile.number");
+            if ("NIUATT".equalsIgnoreCase(env)) {
+                loginMobile =
+                        ConfigReader.get("niuatt.architect.mobile");
+            }
+            else {
+                loginMobile =
+                        ConfigReader.get("upyog.architect.mobile");
+            }
         }
-
-        System.out.println(
-                "CURRENT URL = "
-                        + driver.getCurrentUrl()
-        );
-
-        System.out.println(
-                "PAGE TITLE = "
-                        + driver.getTitle()
-        );
 
         // ==========================
         // MOBILE
@@ -145,82 +144,5 @@ public class LoginHelper {
                 "Citizen Login Completed"
         );
 
-
-        //Thread.sleep(5000);
-
-        // ==========================
-// LANGUAGE (optional)
-// ==========================
-//        try {
-//
-//            WebElement languageOption = wait.until(
-//                    ExpectedConditions.elementToBeClickable(
-//                            By.xpath(
-//                                    "//*[contains(text(),'English')]"
-//                            )
-//                    )
-//            );
-//
-//            js.executeScript(
-//                    "arguments[0].scrollIntoView({block:'center'});",
-//                    languageOption
-//            );
-//
-//            new org.openqa.selenium.interactions.Actions(driver)
-//                    .moveToElement(languageOption)
-//                    .click()
-//                    .perform();
-//
-//            CommonActions.clickButtonByText(
-//                    driver,
-//                    wait,
-//                    js,
-//                    "Continue"
-//            );
-//
-//            System.out.println("Language selected");
-//
-//        } catch (Exception e) {
-//
-//            System.out.println("Language screen not shown");
-//        }
-
-    // ==========================
-    // CITY
-    // ==========================
-//    WebElement city1Option = wait.until(
-//            ExpectedConditions.elementToBeClickable(
-//                    By.xpath(
-//                            "//*[contains(text(),'" + city + "')]/ancestor::*[contains(@class,'radio-wrap')]"
-//                    )
-//            )
-//    );
-//
-//        js.executeScript(
-//                "arguments[0].scrollIntoView({block:'center'});",
-//                city1Option
-//        );
-//
-//        js.executeScript(
-//                "arguments[0].click();",
-//                city1Option
-//        );
-//
-//        System.out.println("City selected properly");
-//
-//
-//    // ==========================
-//    // CONTINUE
-//    // ==========================
-//        CommonActions.clickButtonByText(
-//    driver,
-//    wait,
-//    js,
-//            "Continue"
-//            );
-//
-//        System.out.println(
-//                "Citizen Login Completed"
-//                );
        }
 }

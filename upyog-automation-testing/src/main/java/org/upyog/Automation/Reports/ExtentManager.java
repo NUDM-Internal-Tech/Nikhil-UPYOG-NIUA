@@ -7,7 +7,13 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ExtentManager {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(ExtentManager.class);
 
     private static ExtentReports extent;
 
@@ -35,7 +41,8 @@ public class ExtentManager {
                             + "_"
                             + timestamp
                             + ".html";
-            System.out.println(
+
+            logger.info(
                     "Creating Report At : "
                             + reportPath
             );

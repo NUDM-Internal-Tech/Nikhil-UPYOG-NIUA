@@ -26,7 +26,7 @@ public class ModuleTestService {
 
         String citizenUrl = request.getBaseUrl();
 
-        System.out.println(
+        logger.info(
                 "Module Received: " + moduleName
         );
 
@@ -40,7 +40,7 @@ public class ModuleTestService {
 
                 module = module.trim();
 
-                System.out.println("RUNNING MODULE = " + module);
+                logger.info("RUNNING MODULE = " + module);
 
                 try {
 
@@ -261,7 +261,7 @@ public class ModuleTestService {
 
             default:
 
-                System.out.println(
+                logger.info(
                         "DEFAULT CASE HIT : " + moduleName
                 );
 

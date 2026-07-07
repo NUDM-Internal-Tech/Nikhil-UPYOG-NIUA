@@ -3,7 +3,13 @@ package org.upyog.Automation.Reports;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ReportManager {
+
+    private static final Logger logger =
+            LoggerFactory.getLogger(ReportManager.class);
 
     private static ExtentReports extent;
 
@@ -24,11 +30,11 @@ public class ReportManager {
                         testName
                 );
 
-        System.out.println(
+        logger.info(
                 "REPORT INSTANCE = " + extent
         );
 
-        System.out.println(
+        logger.info(
                 "TEST INSTANCE = " + test
         );
     }
@@ -54,13 +60,13 @@ public class ReportManager {
 
     public static void logStep(String stepName) {
 
-        System.out.println(
+        logger.info(
                 "LOG STEP CALLED = " + stepName
         );
 
         ExtentTest extentTest = getTest();
 
-        System.out.println(
+        logger.info(
                 "CURRENT TEST = " + extentTest
         );
 

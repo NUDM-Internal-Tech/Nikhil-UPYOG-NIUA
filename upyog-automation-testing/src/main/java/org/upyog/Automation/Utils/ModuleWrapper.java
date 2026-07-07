@@ -53,7 +53,7 @@ public class ModuleWrapper {
     private static void runModule(String moduleName,
                                   Runnable moduleLogic) {
 
-        System.out.println(
+        logger.info(
                 "MODULE WRAPPER TEST = "
                         + ReportManager.getTest()
         );

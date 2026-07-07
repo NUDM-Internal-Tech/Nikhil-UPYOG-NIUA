@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.upyog.Automation.Common.CommonCitizenTest;
 import org.upyog.Automation.Reports.ReportManager;
+import org.upyog.Automation.Utils.ConfigReader;
 import org.upyog.Automation.Utils.WorkflowDataStore;
 
 import java.util.Arrays;
@@ -64,6 +65,13 @@ public class CitizenTestService {
                 : "UPYOG";
 
         WorkflowDataStore.put("selected.env", env);
+
+        // Selecting City based on Url
+        String prefix = env.toLowerCase();
+
+        cityName = ConfigReader.get(prefix + ".city");
+
+        WorkflowDataStore.put("selected.city", cityName);
 
         logger.info("Selected ENV: {}", env);
 

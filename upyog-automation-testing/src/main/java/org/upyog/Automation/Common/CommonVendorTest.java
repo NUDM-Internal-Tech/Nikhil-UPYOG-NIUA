@@ -40,12 +40,12 @@ public class CommonVendorTest extends BaseTest {
             throws InterruptedException {
         setUp();
         {
-            System.out.println("Driver after setup = " + driver);
+            logger.info("Driver after setup = " + driver);
 
             logger.info("Starting {} vendor test", moduleName);
 
             try {
-                System.out.println("MODULE RECEIVED = " + moduleName);
+                logger.info("MODULE RECEIVED = " + moduleName);
                 switch (moduleName.toUpperCase()) {
 
 

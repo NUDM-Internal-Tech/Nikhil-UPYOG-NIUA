@@ -447,7 +447,7 @@
       "locatorStrategy": "NAME",
       "locatorValue": "mobileNumber",
       "action": "TYPE",
-      "inputValue": "${selected.mobile}",
+      "inputValue": "${niuatt.architect.mobile}",
       "dynamicSleep": 1000
     },
     {
@@ -554,7 +554,7 @@
     {
       "stepName":"Capture Application Number",
       "locatorStrategy":"XPATH",
-      "locatorValue":"//*[contains(text(),'Application No') or contains(text(),'Application Number')]/following-sibling::*[1]",
+      "locatorValue":"//*[contains(text(),'New Building Plan Permit Application') or contains(text(),'Application Number')]/following-sibling::*[1]",
       "action":"CAPTURE_TEXT",
       "inputValue":"APPLICATION_NO",
       "dynamicSleep":3000

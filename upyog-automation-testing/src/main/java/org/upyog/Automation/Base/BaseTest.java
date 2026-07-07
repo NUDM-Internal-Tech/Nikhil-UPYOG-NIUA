@@ -21,15 +21,15 @@ public class BaseTest {
     public void setUp() throws InterruptedException {
 
         driver = DriverFactory.createChromeDriver();
-        System.out.println("Driver created = " + driver);
+        logger.info("Driver created = " + driver);
 
         wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        System.out.println("Wait created");
+        logger.info("Wait created");
 
         js = (JavascriptExecutor) driver;
-        System.out.println("JS created");
+        logger.info("JS created");
 
-        System.out.println("selected.url = " + WorkflowDataStore.get("selected.url"));
+        logger.info("selected.url = " + WorkflowDataStore.get("selected.url"));
 
 
         String baseUrl =

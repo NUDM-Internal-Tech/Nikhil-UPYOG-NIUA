@@ -271,7 +271,7 @@ public class ActionExecutor {
                     "FAILED : " + stepName
             );
 
-            throw e;
+            throw new RuntimeException("Step execution failed", e);
         }
     }
 
