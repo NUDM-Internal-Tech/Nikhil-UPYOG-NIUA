@@ -35,7 +35,7 @@ const StakeholderRegistration = () => {
 
   const onSuccess = () => {
     clearParams();
-    queryClient.invalidateQueries("PT_CREATE_PROPERTY");
+    queryClient.invalidateQueries({ queryKey: ["PT_CREATE_PROPERTY"] });
   };
   const createApplication = async () => {
     navigate(`acknowledgement`);
@@ -75,15 +75,15 @@ const StakeholderRegistration = () => {
         const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
         return (
           <Route
-            path={`/${routeObj.route}`}
+            path={routeObj.route}
             key={index}
             element={<Component config={{ texts, inputs, key }} onSelect={handleSelect} onSkip={handleSkip} t={t} formData={params} />}
           />
         );
       })}
-      <Route path={`/check`} element={<CheckPage onSubmit={createApplication} value={params} />} />
-      <Route path={`/acknowledgement`} element={<StakeholderAcknowledgement data={params} onSuccess={onSuccess} />} />
-      <Route path="*" element={<Navigate to={`/${config.indexRoute}`} replace />} />
+      <Route path="check" element={<CheckPage onSubmit={createApplication} value={params} />} />
+      <Route path="acknowledgement" element={<StakeholderAcknowledgement data={params} onSuccess={onSuccess} />} />
+      <Route path="*" element={<Navigate to={config.indexRoute} replace />} />
     </Routes>
   );
 };

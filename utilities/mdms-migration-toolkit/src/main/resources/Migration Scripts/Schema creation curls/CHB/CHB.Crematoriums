@@ -43,25 +43,61 @@ curl --location 'http://localhost:8094/mdms-v2/schema/v1/_create' \
   },
   "SchemaDefinition": {
     "tenantId": "pg",
-    "code": "CHB.SpecialCategory",
+    "code": "CHB.Crematoriums",
     "description": null,
     "definition": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "type": "object",
-      "title": "SpecialCategory",
+      "title": "Crematoriums",
       "required": [
-        "name",
+        "venueId",
+        "venueName",
+        "childMasterCode",
         "code",
+        "geoLocation",
+        "address",
+        "contactDetails",
+        "services",
+        "venueDescription",
+        "termsAndCondition",
         "active"
       ],
       "x-unique": [
+        "venueId",
         "code"
       ],
       "properties": {
-        "name": {
+        "venueId": {
+          "type": "string"
+        },
+        "venueName": {
+          "type": "string"
+        },
+        "childMasterCode": {
           "type": "string"
         },
         "code": {
+          "type": "string"
+        },
+        "geoLocation": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "contactDetails": {
+          "type": "string"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "venueDescription": {
+          "type": "string"
+        },
+        "termsAndCondition": {
           "type": "string"
         },
         "active": {
