@@ -43,11 +43,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.w3c.dom.Document;
 
-import com.emudhra.esign.ReturnDocument;
-import com.emudhra.esign.eSign;
-import com.emudhra.esign.eSignInput;
-import com.emudhra.esign.eSignInputBuilder;
-import com.emudhra.esign.eSignServiceReturn;
+//import com.emudhra.esign.ReturnDocument;
+//import com.emudhra.esign.eSign;
+//import com.emudhra.esign.eSignInput;
+//import com.emudhra.esign.eSignInputBuilder;
+//import com.emudhra.esign.eSignServiceReturn;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
@@ -112,25 +112,24 @@ public class eSignService {
     public String processPDF(RequestInfoWrapper requestInfoWrapper) throws IOException {
     	String txnId=null;
         String pdfBase64 = getPdfAsBase64(requestInfoWrapper.getTransaction().getPdfUrl());
-        eSignInput signInput = eSignInputBuilder.init()
-                .setDocBase64(pdfBase64)
-                .setDocInfo("1723479092483kqKfUdtnch.pdf")//pdf name
-                .setDocURL(requestInfoWrapper.getTransaction().getPdfUrl())//for v3 only pdf view purpose
-                .setLocation("") // reason or signed (optional)
-                .setReason("")	//(optional)
-                .setSignedBy("NIUA") //(mandatory)
-                .setCoSign(true) 
-                .setAppearanceType(eSign.AppearanceType.StandardSignature)
-                .setPageTobeSigned(eSign.PageTobeSigned.First)
-                .setCoordinates(eSign.Coordinates.TopLeft)
-                .build();
+//        eSignInput signInput = eSignInputBuilder.init()
+//                .setDocBase64(pdfBase64)
+//                .setDocInfo("1723479092483kqKfUdtnch.pdf")//pdf name
+//                .setDocURL(requestInfoWrapper.getTransaction().getPdfUrl())//for v3 only pdf view purpose
+//                .setLocation("") // reason or signed (optional)
+//                .setReason("")	//(optional)
+//                .setSignedBy("NIUA") //(mandatory)
+//                .setCoSign(true)
+//                .setAppearanceType(eSign.AppearanceType.StandardSignature)
+//                .setPageTobeSigned(eSign.PageTobeSigned.First)
+//                .setCoordinates(eSign.Coordinates.TopLeft)
+//                .build();
+//
+//        ArrayList<eSignInput> inputList = new ArrayList<>();
+//        inputList.add(signInput);
+//
+//        eSign eSignObj = new eSign(configurations.getLicenceFile(), configurations.getPfxPath(),configurations.getPfxPassword(), configurations.getPfxAllias());
 
-        ArrayList<eSignInput> inputList = new ArrayList<>();
-        inputList.add(signInput);
-        
-        eSign eSignObj = new eSign(configurations.getLicenceFile(), configurations.getPfxPath(),configurations.getPfxPassword(), configurations.getPfxAllias());
-        
-        
         txnId = idGenService.generateTxnId(requestInfoWrapper);
         requestInfoWrapper.getTransaction().setTxnId(txnId);
         Long time = System.currentTimeMillis();
@@ -142,15 +141,16 @@ public class eSignService {
 	    transaction.setLastModifiedBy(uuid);
 		
         producer.push(configurations.getSaveTLEsignTxnTopic(), requestInfoWrapper);
-        
-        // Obtain the gateway parameter
-        eSignServiceReturn serviceReturn = eSignObj.getGatewayParameter(
-                inputList, "NIUA", (txnId+"-"+ requestInfoWrapper.getTransaction().getModule()) , configurations.getRedirectUrl(),configurations.getRedirectUrl(), configurations.getTempFolder(), eSign.eSignAPIVersion.V2, eSign.AuthMode.OTP);
 
-        String gatewayParam = serviceReturn.getGatewayParameter();
-        String gatewayURL = "https://authenticate.sandbox.emudhra.com/AadhaareSign.jsp"; // Adjust if needed
-
-        return gatewayURL + "?txnref=" + gatewayParam;
+//        // Obtain the gateway parameter
+//        eSignServiceReturn serviceReturn = eSignObj.getGatewayParameter(
+//                inputList, "NIUA", (txnId+"-"+ requestInfoWrapper.getTransaction().getModule()) , configurations.getRedirectUrl(),configurations.getRedirectUrl(), configurations.getTempFolder(), eSign.eSignAPIVersion.V2, eSign.AuthMode.OTP);
+//
+//        String gatewayParam = serviceReturn.getGatewayParameter();
+//        String gatewayURL = "https://authenticate.sandbox.emudhra.com/AadhaareSign.jsp"; // Adjust if needed
+//
+//        return gatewayURL + "?txnref=" + gatewayParam;
+        throw new UnsupportedOperationException("eSign library not available");
     }
     
     public String getEsignedPDF(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -158,7 +158,6 @@ public class eSignService {
         InputStream xmlStream;
         String xml = "";
         String txnref = null;
-        byte[] signedBytes = null;
         String pdfPath=null;
         String txnId=null;
 
@@ -182,25 +181,25 @@ public class eSignService {
             txnId = Utilities.GetXpathValue(xPath, "/EsignResp/@txn", doc);	
             if ("1".equals(status)) {
 
-                // complete signing
-                eSign eSign = new eSign(configurations.getLicenceFile(), configurations.getPfxPath(), configurations.getPfxPassword(), configurations.getPfxAllias());
-                eSignServiceReturn serviceReturn = eSign.getSigedDocument(xml, configurations.getTempFolder() + File.separator + txnId + ".sig");
-
-                // To convert signed pdf from base 64 encoded string to pdf file
-                if (serviceReturn.getStatus() == 1) {
-                    ArrayList<ReturnDocument> returnDocuments = serviceReturn.getReturnDocuments();
-                    int i = 0;
-                    for (ReturnDocument returnDocument : returnDocuments) {
-                        String pdfBase64 = returnDocument.getSignedDocument();
-                        System.out.println("Print" +pdfBase64);
-                        signedBytes = esign.text.pdf.codec.Base64.decode(pdfBase64);
-                        pdfPath = configurations.getOutputFolder() + File.separator + txnId + "_" + i + ".pdf";
-                        try (FileOutputStream fos = new FileOutputStream(pdfPath)) {
-                            fos.write(signedBytes);
-                        }
-                        i++;
-                    }
-                }
+//                // complete signing
+//                eSign eSign = new eSign(configurations.getLicenceFile(), configurations.getPfxPath(), configurations.getPfxPassword(), configurations.getPfxAllias());
+//                eSignServiceReturn serviceReturn = eSign.getSigedDocument(xml, configurations.getTempFolder() + File.separator + txnId + ".sig");
+//
+//                // To convert signed pdf from base 64 encoded string to pdf file
+//                if (serviceReturn.getStatus() == 1) {
+//                    ArrayList<ReturnDocument> returnDocuments = serviceReturn.getReturnDocuments();
+//                    int i = 0;
+//                    for (ReturnDocument returnDocument : returnDocuments) {
+//                        String pdfBase64 = returnDocument.getSignedDocument();
+//                        System.out.println("Print" +pdfBase64);
+//                        signedBytes = esign.text.pdf.codec.Base64.decode(pdfBase64);
+//                        pdfPath = configurations.getOutputFolder() + File.separator + txnId + "_" + i + ".pdf";
+//                        try (FileOutputStream fos = new FileOutputStream(pdfPath)) {
+//                            fos.write(signedBytes);
+//                        }
+//                        i++;
+//                    }
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
