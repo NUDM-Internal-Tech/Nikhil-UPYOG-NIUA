@@ -217,6 +217,11 @@ public class TarentoServiceImpl implements ClientService {
 				ObjectNode objectNode = queryService.getChartConfigurationQuery(request, query, indexName, interval);
 				try {
 					JsonNode aggrNode = restService.search(indexName,objectNode.toString());
+
+					if (aggrNode == null) {
+						logger.error("Search returned null for index {}. Query: {}", indexName, objectNode);
+						return;
+					}
 					if(nodes.has(indexName)) { 
 						indexName = indexName + "_" + randIndexCount;
 						randIndexCount += 1;
