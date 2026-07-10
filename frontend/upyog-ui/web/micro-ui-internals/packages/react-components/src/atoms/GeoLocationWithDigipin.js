@@ -12,6 +12,7 @@ const DigipinDisplay = ({
   t,
   digipin,
   style = {},
+  className = "",
   showMapLink = false,
 }) => {
   // Render nothing if no digipin value is available yet
@@ -19,18 +20,9 @@ const DigipinDisplay = ({
 
   return (
     <div
-      style={{
-        padding: "12px 16px",
-        backgroundColor: "#f0f0f0",
-        borderRadius: "8px",
-        border: "1px solid #d4d4d4",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        gap: "10px",
-        // Allow callers to override layout (e.g. width, marginTop) via style prop
-        ...style,
-      }}
+      className={`digipin-display ${className}`.trim()}
+      // Allow callers to override layout (e.g. width, marginTop) via style prop
+      style={style}
     >
       {/* Label + digipin code */}
       <div>
@@ -43,12 +35,7 @@ const DigipinDisplay = ({
           href={`https://mappls.com/digipin/${digipin}`}
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            fontSize: "13px",
-            color: "#a82227",
-            textDecoration: "underline",
-            whiteSpace: "nowrap",
-          }}
+          className="digipin-display__map-link"
         >
           {t("CS_VIEW_ON_MAPMYINDIA")}
         </a>
@@ -157,12 +144,8 @@ const GeoLocationWithDigipin = ({
     <div>
       {/* Input row: text field for the location string + icon button to auto-detect */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "stretch",
-          gap: "8px",
-          ...inputStyle,
-        }}
+        className="geo-location-input-row"
+        style={inputStyle}
       >
         <TextInput
           t={t}
@@ -179,9 +162,6 @@ const GeoLocationWithDigipin = ({
         <div
           className="butt-icon wt-auto-29"
           onClick={fetchCurrentLocation}
-          style={{
-            cursor: "pointer",
-          }}
         >
           <LocationIcon className="fill-path-primary-main" />
         </div>
@@ -193,10 +173,8 @@ const GeoLocationWithDigipin = ({
           t={t}
           digipin={digipin}
           showMapLink={showMapLink}
-          style={{
-            marginTop: "10px",
-            ...inputStyle,
-          }}
+          style={inputStyle}
+          className="digipin-display--below-input"
         />
       )}
     </div>

@@ -73,19 +73,16 @@ const DiginpinMapPopup = ({ lat, lng, digipin, onClose }) => {
 
   return (
     // Full-screen semi-transparent overlay
-    <div style={{
-      position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.5)",
-      zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center",
-    }}>
+    <div className="gis-diginpin-popup-overlay">
       {/* Modal card containing the header bar and the map */}
-      <div style={{ width: "420px", borderRadius: "8px", overflow: "hidden", boxShadow: "0 4px 20px rgba(0,0,0,0.3)" }}>
+      <div className="gis-diginpin-popup-card">
         {/* Header bar: shows the DIGIPIN value and a close button */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 16px", background: "#a82227" }}>
-          <span style={{ color: "#fff", fontWeight: "bold", fontSize: "14px" }}>DIGIPIN: {digipin}</span>
-          <button onClick={onClose} style={{ background: "none", border: "none", color: "#fff", fontSize: "18px", cursor: "pointer", lineHeight: 1 }}>✕</button>
+        <div className="gis-diginpin-popup-header">
+          <span className="gis-diginpin-popup-title">DIGIPIN: {digipin}</span>
+          <button onClick={onClose} className="gis-diginpin-popup-close">✕</button>
         </div>
         {/* Map container — Leaflet mounts into this div via mapRef */}
-        <div ref={mapRef} style={{ height: "300px", width: "100%" }} />
+        <div ref={mapRef} className="gis-diginpin-popup-map" />
       </div>
     </div>
   );

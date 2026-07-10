@@ -34,7 +34,7 @@ import {
         const { acknowledgementIds, tenantId } = useParams();
         const [showOptions, setShowOptions] = useState(false);
         const [showToast, setShowToast] = useState(null);
-        const [showDigipinMap, setShowDigipinMap] = useState(false);
+        // Holds the lat and lng to pass into the popup; its presence also controls modal visibility
         const [digipinMapData, setDigipinGeoJson] = useState(null);
         const { data: storeData } = Digit.Hooks.useStore.getInitData();
         const { tenants } = storeData || {};
@@ -131,7 +131,6 @@ import {
     // handleOpenDigipinMap function to set the digipin coordinates and show the map popup
       const handleOpenDigipinMap = () => {
         setDigipinGeoJson({ lat: parseFloat(tp_details?.latitude), lng: parseFloat(tp_details?.longitude) });
-        setShowDigipinMap(true);
       };
       
         return (
@@ -179,14 +178,11 @@ import {
                     className="border-none"
                     label={t("DIGIPIN")}
                     text={
-                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <div className="wt-auto-74">
                         <span>{tp_details?.additionalDetails?.digipin || t("CS_NA")}</span>
                         {tp_details?.additionalDetails?.digipin && tp_details?.latitude && tp_details?.longitude && (
                           <button
-                            style={{
-                              backgroundColor: "#a82227", color: "white", border: "none",
-                              borderRadius: "4px", padding: "4px 10px", cursor: "pointer", fontSize: "0.85rem",
-                            }}
+                            className="wt-auto-75"
                             onClick={() => handleOpenDigipinMap()}
                           >
                             {t("CS_VIEW_ON_MAP")}
@@ -197,12 +193,12 @@ import {
                   />
                 </StatusTable>
 
-                {showDigipinMap && digipinMapData && (
+                {digipinMapData && (
                   <DiginpinMapPopup
                     lat={digipinMapData.lat}
                     lng={digipinMapData.lng}
                     digipin={tp_details?.additionalDetails?.digipin}
-                    onClose={() => { setShowDigipinMap(false); setDigipinGeoJson(null); }}
+                    onClose={() => { setDigipinGeoJson(null); }}
                   />
                 )}
       

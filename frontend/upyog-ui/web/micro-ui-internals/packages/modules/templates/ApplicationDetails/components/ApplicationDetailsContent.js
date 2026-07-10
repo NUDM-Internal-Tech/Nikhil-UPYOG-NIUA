@@ -98,9 +98,7 @@ function ApplicationDetailsContent({
   const [showMap, setShowMap] = useState(false);
   const [area, setArea] = useState(null);
 
-  // Controls visibility of the DiginpinMapPopup modal
-  const [showDigipinMapModal, setShowDigipinMapModal] = useState(false);
-  // Holds the lat, lng, and digipin to pass into the popup
+  // Holds the lat, lng, and digipin to pass into the popup; its presence also controls modal visibility
   const [digipinMapData, setDigipinMapData] = useState(null);
 
   const handleOpenMap = (geometry) => {
@@ -116,12 +114,10 @@ function ApplicationDetailsContent({
   // Opens the digipin map modal; parses lat/lng strings to floats for Leaflet
   const handleOpenDigipinMap = (lat, lng, digipin) => {
     setDigipinMapData({ digipin, lat: parseFloat(lat), lng: parseFloat(lng) });
-    setShowDigipinMapModal(true);
   };
 
   // Closes the digipin map modal and clears its data
   const handleCloseDigipinMap = () => {
-    setShowDigipinMapModal(false);
     setDigipinMapData(null);
   };
 
@@ -776,7 +772,7 @@ function ApplicationDetailsContent({
             />
           )}
           {/* Render the Leaflet map modal when a digipin row's "View on Map" button is clicked */}
-          {showDigipinMapModal && digipinMapData && (
+          {digipinMapData && (
             <DiginpinMapPopup
               lat={digipinMapData.lat}
               lng={digipinMapData.lng}
