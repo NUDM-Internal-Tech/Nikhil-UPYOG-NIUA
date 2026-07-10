@@ -446,7 +446,7 @@ function ApplicationDetailsContent({
                         key={t(value.title)}
                         label={t(value.title)}
                         text={
-                          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                          <div className="application-details-digipin-wrapper">
                             {/* Read-only digipin display with optional Mappls link */}
                             <GeoLocationWithDigipin
                               t={t}
@@ -458,16 +458,7 @@ function ApplicationDetailsContent({
                             {/* Show "View on Map" button only when all required location data is present */}
                             {value.digipinMapPopup && value.digipinLat && value.digipinLng && value.digipin && (
                               <button
-                                style={{
-                                  backgroundColor: "#a82227",
-                                  color: "white",
-                                  border: "none",
-                                  borderRadius: "4px",
-                                  padding: "4px 10px",
-                                  cursor: "pointer",
-                                  fontSize: "0.85rem",
-                                  alignSelf: "flex-start",
-                                }}
+                                className="application-details-map-btn"
                                 onClick={() => handleOpenDigipinMap(value.digipinLat, value.digipinLng, value.digipin)}
                               >
                                 {t("CS_VIEW_ON_MAP")}
