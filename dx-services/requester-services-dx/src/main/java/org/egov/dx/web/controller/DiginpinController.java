@@ -35,8 +35,8 @@ public class DiginpinController {
      * @param request The request payload containing latitude, longitude, and standard request info.
      * @return A response entity containing the generated DIGIPIN and standard response info.
      */
-    @RequestMapping(value = "/_generate", method = RequestMethod.POST)
-    public ResponseEntity<DiginpinResponse> generate(@Valid @RequestBody DiginpinRequest request) {
+    @RequestMapping(value = "/v1/_generate", method = RequestMethod.POST)
+    public ResponseEntity<DiginpinResponse> generateV1(@Valid @RequestBody DiginpinRequest request) {
         log.info("Generating DIGIPIN for lat={}, lon={}", request.getLatitude(), request.getLongitude());
 
         // Generate the DIGIPIN code using the underlying service
