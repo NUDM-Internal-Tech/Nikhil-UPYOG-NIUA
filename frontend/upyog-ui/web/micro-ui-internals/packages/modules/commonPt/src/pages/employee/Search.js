@@ -70,7 +70,7 @@ const PTSearchFields = {
       placeHolder: "PT_SEARCH_DOOR_NO_PLACEHOLDER",
       validation: {
         pattern: {
-          value:  "[A-Za-z0-9#,/ -()]{1,63}",
+          value: "[A-Za-z0-9#,/ -()]{1,63}",
           message: "ERR_INVALID_DOOR_NO",
         },
       },
@@ -85,7 +85,7 @@ const PTSearchFields = {
           message: "PT_MIN_3CHAR",
         },
         pattern: {
-          value:  "^[a-zA-Z ]+$",
+          value: "^[a-zA-Z ]+$",
           message: "PAYMENT_INVALID_NAME",
         },
       },
@@ -101,14 +101,14 @@ const defaultValues = {
   doorNo: "",
 };
 
-const Search = ({ path }) => { 
+const Search = ({ path }) => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [payload, setPayload] = useState({});
   const [formData, setFormData] = useState(defaultValues);
   const [searchBy, setSearchBy] = useState("searchId");
   const [showToast, setShowToast] = useState(null);
-  
+
   const search = useLocation().search;
   const redirectToUrl = new URLSearchParams(search).get('redirectToUrl');
 
@@ -120,19 +120,20 @@ const Search = ({ path }) => {
     },
   });
 
-  useEffect (() =>{
-    if(sessionStorage.getItem("searchDetailValue") == 1 && searchBy === "searchId"){
+  useEffect(() => {
+    if (sessionStorage.getItem("searchDetailValue") == 1 && searchBy === "searchId") {
       setSearchBy("searchDetail")
     }
-  },[searchBy])
+  }, [searchBy])
 
   const onReset = useCallback(() => {
     setFormData(defaultValues);
-     setPayload({});
+    setPayload({});
     setShowToast(null);
   });
 
   const onSubmit = useCallback((_data) => {
+    console.log("payload data", _data);
     setFormData(_data);
     if (Object.keys(_data).filter((k) => _data[k] && typeof _data[k] !== "object").length > 0) {
       setPayload(
@@ -142,12 +143,13 @@ const Search = ({ path }) => {
       );
       setShowToast(null);
     } else {
+      console.log("ddsss")
       setShowToast({ warning: true, label: "ERR_PT_FILL_VALID_FIELDS" });
     }
   });
 
 
-  if(isLoading) return <Loader></Loader>;
+  if (isLoading) return <Loader></Loader>;
 
   return (
     <React.Fragment>
@@ -169,7 +171,7 @@ const Search = ({ path }) => {
           setShowToast={setShowToast}
           tenantId={tenantId}
           payload={payload}
-          ptSearchConfig={{...ptSearchConfig}}
+          ptSearchConfig={{ ...ptSearchConfig }}
           redirectToUrl={redirectToUrl}
         />
       )}

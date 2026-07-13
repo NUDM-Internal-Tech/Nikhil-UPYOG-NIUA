@@ -8,25 +8,31 @@ const usePropertySearchWithDue = ({ tenantId, filters, auth = true, configs }) =
     const getActiveOwners = propertyData?.owners?.filter(owner => owner?.active);
     const getOwnersList = getActiveOwners?.map(activeOwner => activeOwner?.name)?.join(",");
     return getOwnersList;
-  }
+  };
 
   const defaultSelect = (data) => {
+    if (!data || !Array.isArray(data.Properties)) {
+      return { Properties: [], ConsumerCodes: [], FormattedData: {} };
+    }
     let consumerCodes = [];
     let formattedData = {};
-    data.Properties.map((property) => {
+    data.Properties.forEach((property) => {
+      if (!property) return;
       property.status == "ACTIVE" && consumerCodes.push(property.propertyId);
-      property.units = property?.units?.filter((unit) => unit.active);
+      property.units = property?.units?.filter((unit) => unit?.active) || [];
       property.owners = property?.owners?.filter((owner) =>
-        (owner.status === property?.status) === "INWORKFLOW" && property?.creationReason === "MUTATION" ? "INACTIVE" : "ACTIVE"
-      );
+        (owner?.status === property?.status) === "INWORKFLOW" && property?.creationReason === "MUTATION" ? "INACTIVE" : "ACTIVE"
+      ) || [];
       formattedData[property.propertyId] = {
         propertyId: property?.propertyId,
-        name: property?.owners?.[0].name,
+        name: property?.owners?.[0]?.name,
         status: property?.status,
         due: false,
-        locality: `${property?.tenantId?.replace(".", "_")?.toUpperCase()}_REVENUE_${property?.address?.locality?.code}`,
-        owners: property?.owners,
-        documents: property?.documents,
+        locality: property?.tenantId && property?.address?.locality?.code
+          ? `${property.tenantId.replace(".", "_").toUpperCase()}_REVENUE_${property.address.locality.code}`
+          : "",
+        owners: property?.owners || [],
+        documents: property?.documents || [],
         ownerNames: getOwnerNames(property)
       };
     });
@@ -35,28 +41,49 @@ const usePropertySearchWithDue = ({ tenantId, filters, auth = true, configs }) =
     return data;
   };
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["propertySearchList", tenantId, filters, auth],
-    queryFn: () => configs.enabled && Digit.PTService.search({ tenantId, filters, auth }),
-    select: defaultSelect,
+  const { isLoading, error, data, isSuccess: isPropertySuccess } = useQuery({
     ...configs,
+    queryKey: ["propertySearchList", tenantId, filters, auth],
+    queryFn: async () => {
+      const response = await Digit.PTService.search({ tenantId, filters, auth });
+      return response || { Properties: [] };
+    },
+    select: defaultSelect,
   });
 
   let consumerCodes = data?.ConsumerCodes?.join(",") || "";
 
   const { isLoading: billLoading, data: billData, isSuccess } = useQuery({
+    ...configs,
     queryKey: ["propertySearchBillList", tenantId, filters, data, auth, consumerCodes],
-    queryFn: () => configs.enabled && data && Digit.PTService.fetchPaymentDetails({ tenantId, consumerCodes, auth }),
+    queryFn: async () => {
+      if (!consumerCodes) {
+        return { Bill: [] };
+      }
+      const response = await Digit.PTService.fetchPaymentDetails({ tenantId, consumerCodes, auth });
+      return response || { Bill: [] };
+    },
+    enabled: (configs?.enabled ?? true) && !!data && !!consumerCodes,
     select: (billResp) => {
-      data["Bill"] =
-        billResp?.Bill?.reduce((curr, acc) => {
-          curr[acc?.consumerCode] = acc?.totalAmount;
-          data["FormattedData"][acc?.consumerCode]["due"] = acc?.totalAmount;
-          return curr;
-        }, {}) || {};
+      if (!billResp || !billResp.Bill) {
+        if (data) {
+          data["Bill"] = {};
+        }
+        return billResp || { Bill: [] };
+      }
+      if (data) {
+        data["Bill"] =
+          billResp.Bill.reduce((curr, acc) => {
+            if (!acc || !acc.consumerCode) return curr;
+            curr[acc.consumerCode] = acc.totalAmount;
+            if (data.FormattedData && data.FormattedData[acc.consumerCode]) {
+              data.FormattedData[acc.consumerCode]["due"] = acc.totalAmount;
+            }
+            return curr;
+          }, {}) || {};
+      }
       return billResp;
     },
-    ...configs,
   });
 
   return {
@@ -64,12 +91,13 @@ const usePropertySearchWithDue = ({ tenantId, filters, auth = true, configs }) =
     error,
     data,
     billData,
-    isSuccess,
+    isSuccess: isPropertySuccess && (consumerCodes ? isSuccess : true),
     revalidate: () => {
-      client.invalidateQueries({ queryKey: ["propertySearchBillList", tenantId, filters, auth] });
-      client.invalidateQueries({ queryKey: ["propertySearchList", tenantId, filters, auth] });
+      client.invalidateQueries({ queryKey: ["propertySearchBillList", tenantId, filters] });
+      client.invalidateQueries({ queryKey: ["propertySearchList", tenantId, filters] });
     },
   };
 };
 
 export default usePropertySearchWithDue;
+

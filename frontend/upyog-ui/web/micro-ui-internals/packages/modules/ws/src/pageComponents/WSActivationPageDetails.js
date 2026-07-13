@@ -64,7 +64,7 @@ const WSActivationPageDetails = ({
     filters
   };
   return <React.Fragment>
-            {activationDetails.map((activationDetail, index) => <ConnectionDetails key={activationDetail.key} index={index} activationDetail={activationDetail} {...commonProps} />)}
+            {activationDetails.map((activationDetail, index) => <ConnectionDetails key={index} index={index} activationDetail={activationDetail} {...commonProps} />)}
         </React.Fragment>;
 };
 const ConnectionDetails = _props => {

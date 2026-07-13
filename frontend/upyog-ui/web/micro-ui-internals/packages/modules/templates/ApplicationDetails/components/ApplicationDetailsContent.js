@@ -524,7 +524,7 @@ function ApplicationDetailsContent({
                     );
                   }
                   return (
-                    <div>
+                    <div key={index}>
                       {window.location.href.includes("modify") ? (
                         <Row
                           className="border-none"

@@ -24,7 +24,7 @@ const WSAdditonalDetails = ({ wsAdditionalDetails, oldValue }) => {
               <div className="connection-details-new-value-wrapper">
                 {connectionDetails?.map((value, index) => {
                   return (
-                    <div>
+                    <div key={index}>
                       <Row className="border-none" key={`${value.title}`} label={`${t(`${value.title}`)}`} text={value?.oldValue ? value?.oldValue: value?.value ? value?.value : ""} />
                     </div>
                   );
@@ -51,9 +51,10 @@ const WSAdditonalDetails = ({ wsAdditionalDetails, oldValue }) => {
             <CardSubHeader style={cardSubHeaderStyles()}>{t("WS_ROAD_CUTTING_DETAILS")}</CardSubHeader>
             <div>
               <div className="plumber-details-new-value-wrapper">
-                {roadCuttingDetails?.map((value) => {
+                {roadCuttingDetails?.map((value, index) => {
                   return (
                     <div
+                      key={index}
                       style={ roadCuttingDetails?.length > 1
                           ? {
                               border: "1px solid #D6D5D4",

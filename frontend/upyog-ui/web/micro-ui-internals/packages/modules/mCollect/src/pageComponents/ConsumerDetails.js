@@ -70,7 +70,7 @@ const ConsumerDetails = ({ config, onSelect, userType, formData, setError, formS
   return (
     <React.Fragment>
       {consumerDetails.map((consumerdetail, index) => (
-        <OwnerForm1 key={consumerdetail.key} index={index} consumerdetail={consumerdetail} {...commonProps} />
+        <OwnerForm1 key={index} index={index} consumerdetail={consumerdetail} {...commonProps} />
       ))}
     </React.Fragment>
   );
@@ -98,7 +98,7 @@ const OwnerForm1 = (_props) => {
 
   const { control, formState: localFormState, watch, setError: setLocalError, clearErrors: clearLocalErrors, setValue, trigger, getValues } = useForm();
   const formValue = watch();
-  const { errors } = localFormState;
+  const { errors, touchedFields } = localFormState;
   // console.log("errorssssss", errors)
   const isMobile = window.Digit.Utils.browser.isMobile();
 
@@ -159,7 +159,7 @@ const OwnerForm1 = (_props) => {
                   <TextInput
                     value={field.value}
                     autoFocus={focusIndex.index === consumerdetail?.key && focusIndex.type === "name"}
-                    errorStyle={(localFormState.touchedFields?.ConsumerName && errors?.ConsumerName?.message) ? true : false}
+                    errorStyle={(touchedFields?.ConsumerName && errors?.ConsumerName?.message) ? true : false}
                     onChange={(e) => {
                       field.onChange(e.target.value);
                       //setFocusIndex({ index: consumerdetail.key, type: "ConsumerName" });
@@ -174,7 +174,7 @@ const OwnerForm1 = (_props) => {
               />
             </div>
           </LabelFieldPair>
-          <CardLabelError style={errorStyle}>{localFormState.touchedFields?.ConsumerName ? errors?.ConsumerName?.message : ""}</CardLabelError>
+          <CardLabelError style={errorStyle}>{touchedFields?.ConsumerName ? errors?.ConsumerName?.message : ""}</CardLabelError>
           <LabelFieldPair>
             <CardLabel style={{paddingTop:"10px"}} className="card-label-smaller">{`${t("UC_MOBILE_NUMBER")}`}<span className="check-page-link-button"> *</span></CardLabel>
             <div className="field">
@@ -193,7 +193,7 @@ const OwnerForm1 = (_props) => {
                     }}
                     labelStyle={{ marginTop: "unset", border: "1px solid #464646", borderRight: "none" }}
                     onBlur={field.onBlur}
-                    errorStyle={(localFormState.touchedFields?.mobileNumber && errors?.mobileNumber?.message) ? true : false}
+                    errorStyle={(touchedFields?.mobileNumber && errors?.mobileNumber?.message) ? true : false}
                     disable={isEdit}
                     //style={ isMulitpleOwners ? { background: "#FAFAFA" }: ""}
                   />
@@ -202,7 +202,7 @@ const OwnerForm1 = (_props) => {
             </div>
           </LabelFieldPair>  
           <div>
-          <CardLabelError style={errorStyle}>{localFormState.touchedFields?.mobileNumber ? errors?.mobileNumber?.message : ""}</CardLabelError>
+          <CardLabelError style={errorStyle}>{touchedFields?.mobileNumber ? errors?.mobileNumber?.message : ""}</CardLabelError>
           <LabelFieldPair>  
           <CardLabel style={{paddingTop:"10px"}} className="card-label-smaller">{`${t("UC_EMAIL_ID")}`}</CardLabel>
           <div className="field">

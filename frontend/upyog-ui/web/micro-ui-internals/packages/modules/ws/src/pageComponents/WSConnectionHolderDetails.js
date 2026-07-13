@@ -154,7 +154,7 @@ const WSConnectionHolderDetails = ({
     Menu
   };
   return <React.Fragment>
-      {connectionHolderDetails.map((connectionHolderDetail, index) => <ConnectionDetails key={connectionHolderDetail.key} index={index} connectionHolderDetail={connectionHolderDetail} {...commonProps} />)}
+      {connectionHolderDetails.map((connectionHolderDetail, index) => <ConnectionDetails key={index} index={index} connectionHolderDetail={connectionHolderDetail} {...commonProps} />)}
     </React.Fragment>;
 };
 const ConnectionDetails = _props => {

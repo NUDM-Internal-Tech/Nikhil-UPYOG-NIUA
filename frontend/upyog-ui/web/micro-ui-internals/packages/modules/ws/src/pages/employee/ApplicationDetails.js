@@ -40,6 +40,20 @@ const ApplicationDetails = () => {
   const stateCode = Digit.ULBService.getStateId();
   const [showToast, setShowToast] = useState(null);
   const [showWaringToast, setShowWaringToast] = useState(null);
+
+  useEffect(() => {
+    const redirectedFromEdit = sessionStorage.getItem("redirectedfromEDIT");
+    if (redirectedFromEdit === "true") {
+      setShowToast({
+        key: "success",
+        message: "WS_APPLICATION_SUBMITTED_SUCCESSFULLY_LABEL"
+      });
+    }
+    return () => {
+      sessionStorage.removeItem("redirectedfromEDIT");
+    };
+  }, []);
+
   const [canSubmit, setSubmitValve] = useState(false);
   const defaultValues = {};
   const navigate = Digit.Hooks.useCustomNavigate();

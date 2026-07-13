@@ -66,7 +66,7 @@ const WSActivationPlumberDetails = ({ config, onSelect, userType, formData, setE
         <React.Fragment>
             {plumberDetails?.map((plumberDetail, index) =>
                  plumberDetail ? (
-                <PlumberDetails key={plumberDetail.key} index={index} plumberDetail={plumberDetail} {...commonProps} />
+                <PlumberDetails key={index} index={index} plumberDetail={plumberDetail} {...commonProps} />
                 ) : null
                 )}
         </React.Fragment>

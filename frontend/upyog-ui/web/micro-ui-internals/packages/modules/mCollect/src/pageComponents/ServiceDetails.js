@@ -105,7 +105,7 @@ const ServiceDetails = ({ config, onSelect, userType, formData, setError, formSt
   return (
     <React.Fragment>
       {consumerDetails.map((consumerdetail, index) => (
-        <OwnerForm1 key={consumerdetail.key} index={index} consumerdetail={consumerdetail} {...commonProps} />
+        <OwnerForm1 key={index} index={index} consumerdetail={consumerdetail} {...commonProps} />
       ))}
     </React.Fragment>
   );

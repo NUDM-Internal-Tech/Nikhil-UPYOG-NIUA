@@ -110,9 +110,11 @@ function SelectDocument({
     if (!Array.isArray(type)) type = [];
     if (!type.includes(doc.code)) {
       type.push(doc.code);
-      setFormError(config.key, {
-        type
-      });
+      setTimeout(() => {
+        setFormError(config.key, {
+          type
+        });
+      }, 0);
     }
   };
   const removeError = () => {
@@ -120,13 +122,15 @@ function SelectDocument({
     if (!Array.isArray(type)) type = [];
     if (type.includes(doc?.code)) {
       type = type.filter(e => e != doc?.code);
-      if (!type.length) {
-        clearFormErrors(config.key);
-      } else {
-        setFormError(config.key, {
-          type
-        });
-      }
+      setTimeout(() => {
+        if (!type.length) {
+          clearFormErrors(config.key);
+        } else {
+          setFormError(config.key, {
+            type
+          });
+        }
+      }, 0);
     }
   };
   useEffect(() => {

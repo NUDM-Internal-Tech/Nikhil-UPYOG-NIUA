@@ -90,7 +90,7 @@ const UID = ({
   };
   if (userType === "employee") {
     return inputs?.map((input, index) => {
-      return <React.Fragment>
+      return <React.Fragment key={index}>
           <LabelFieldPair key={index}>
             <CardLabel className="card-label-smaller">{t(input.label)}<span className="check-page-link-button"> *</span></CardLabel>
             <div className="field">
@@ -106,7 +106,7 @@ const UID = ({
 
             </div>
           </LabelFieldPair>
-          {formState.touchedFields[config.key] ? <CardLabelError className="pt-auto-94">
+          {(formState?.touchedFields?.[config.key] || formState?.touched?.[config.key]) ? <CardLabelError className="pt-auto-94">
               {formState.errors?.[config.key]?.message}
             </CardLabelError> : null}
         </React.Fragment>;
