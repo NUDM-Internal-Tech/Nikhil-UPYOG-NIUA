@@ -128,7 +128,7 @@ public class eSignService {
         ArrayList<eSignInput> inputList = new ArrayList<>();
         inputList.add(signInput);
         
-        eSign eSignObj = new eSign(configurations.getLicenceFile(), configurations.getPfxPath(),configurations.getPfxPassword(), configurations.getPfxAllias());
+        eSign eSignObj = null; // new eSign(configurations.getLicenceFile(), configurations.getPfxPath(),configurations.getPfxPassword(), configurations.getPfxAllias());
         
         
         txnId = idGenService.generateTxnId(requestInfoWrapper);
@@ -183,7 +183,7 @@ public class eSignService {
             if ("1".equals(status)) {
 
                 // complete signing
-                eSign eSign = new eSign(configurations.getLicenceFile(), configurations.getPfxPath(), configurations.getPfxPassword(), configurations.getPfxAllias());
+                eSign eSign = null; // new eSign(configurations.getLicenceFile(), configurations.getPfxPath(), configurations.getPfxPassword(), configurations.getPfxAllias());
                 eSignServiceReturn serviceReturn = eSign.getSigedDocument(xml, configurations.getTempFolder() + File.separator + txnId + ".sig");
 
                 // To convert signed pdf from base 64 encoded string to pdf file
