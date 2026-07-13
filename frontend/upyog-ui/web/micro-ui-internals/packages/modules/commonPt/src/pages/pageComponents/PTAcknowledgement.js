@@ -100,16 +100,19 @@ const PTAcknowledgement = ({
       }
     });
 
+// Initialize mutation for creating a property (type=true)
   const mutation = Digit.Hooks.pt.usePropertyAPI(
     data?.locationDet?.city ? data.locationDet.city.code : tenantId,
     true,
   );
 
+// Initialize mutation for updating a property (type=false)
   const mutationForUpdate = Digit.Hooks.pt.usePropertyAPI(
     data?.locationDet?.city ? data.locationDet.city.code : tenantId,
     false,
   );
 
+// Effect to create property on component mount
   useEffect(() => {
     if (!data || Object.keys(data).length === 0) return;
 
@@ -200,6 +203,7 @@ const PTAcknowledgement = ({
     }
   }, [mutation.isSuccess]);
 
+// Handler for proceeding after acknowledgement, storing data in session storage
   const onNext = () => {
     if (onSelect && mutation.isSuccess) {
       sessionStorage.setItem(
@@ -222,6 +226,7 @@ const PTAcknowledgement = ({
     return <Loader />;
   }
 
+// Render card with status and navigation actions
   return (
     <Card>
       <BannerPicker

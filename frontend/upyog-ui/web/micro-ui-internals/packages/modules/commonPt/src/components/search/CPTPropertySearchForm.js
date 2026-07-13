@@ -3,6 +3,13 @@ import React, { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 
+/**
+ * Component responsible for switching between different search modes.
+ *
+ * Each search mode can have different fields. When switching the mode,
+ * the previous form values are reset to avoid submitting values from a
+ * different search type.
+ */
 const SwitchComponent = (props) => {
   return (
     <div className="w-fullwidth PropertySearchFormSwitcher">
@@ -20,12 +27,17 @@ const SearchPTID = ({ tenantId, t, onSubmit, onReset, searchBy, PTSearchFields, 
     defaultValues: {
       ...payload,
     },
+    // Removes values of fields that are no longer mounted.
+    // This is important because different search types render different fields.
+    // Without unregistering, hidden fields from a previous search mode can
+    // remain in the submitted payload.
     shouldUnregister: true
   });
   const formValue = watch();
   const fields = PTSearchFields?.[searchBy] || {};
 
   useEffect(() => {
+    // Redirects employee back to employee home page after create flow.
     if (sessionStorage.getItem("isCreateEnabledEmployee") === "true") {
       sessionStorage.removeItem("isCreateEnabledEmployee");
       navigate("/upyog-ui/employee", { replace: true });
@@ -47,6 +59,8 @@ const SearchPTID = ({ tenantId, t, onSubmit, onReset, searchBy, PTSearchFields, 
               <SearchField key={key}>
                 <label>{t(field?.label)}{`${field?.validation?.required ? "*" : ""}`}</label>
                 {field?.type === "custom" ?
+                  // Controller is used for custom components because they
+                  // do not directly expose a native input ref required by register.
                   <Controller
                     name={key}
                     defaultValue={formValue?.[key]}
