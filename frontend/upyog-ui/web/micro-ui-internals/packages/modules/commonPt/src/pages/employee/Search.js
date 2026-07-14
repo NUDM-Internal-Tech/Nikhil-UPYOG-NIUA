@@ -133,7 +133,6 @@ const Search = ({ path }) => {
   });
 
   const onSubmit = useCallback((_data) => {
-    console.log("payload data", _data);
     setFormData(_data);
     if (Object.keys(_data).filter((k) => _data[k] && typeof _data[k] !== "object").length > 0) {
       setPayload(
@@ -143,7 +142,6 @@ const Search = ({ path }) => {
       );
       setShowToast(null);
     } else {
-      console.log("ddsss")
       setShowToast({ warning: true, label: "ERR_PT_FILL_VALID_FIELDS" });
     }
   });

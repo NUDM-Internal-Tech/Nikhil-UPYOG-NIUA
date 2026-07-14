@@ -339,7 +339,6 @@ const SearchProperty = ({ config: propsConfig, onSelect, redirectToUrl }) => {
       propertyData?.Properties.length > ptSearchConfig?.maxPropertyResult &&
       errorShown
     ) {
-      console.log("ddddddd")
       seterrorShown(true);
       return;
     }
