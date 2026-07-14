@@ -146,7 +146,7 @@
               <goal>repackage</goal>
             </goals>
             <configuration>
-               <excludeArtifactIds>lombok</excludeArtifactIds>
+              <excludeArtifactIds>lombok</excludeArtifactIds>
             </configuration>
           </execution>
         </executions>
