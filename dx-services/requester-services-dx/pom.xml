@@ -108,34 +108,31 @@
       <artifactId>mdms-client</artifactId>
       <version>0.0.2-SNAPSHOT</version>
     </dependency>
+    <!-- <dependency>
+        <groupId>com.emudhra</groupId>
+        <artifactId>common</artifactId>
+        <version>1.0.0</version>
+    </dependency>
     <dependency>
-	<groupId>org.apache.xmlgraphics</groupId>
-	<artifactId>xmlgraphics-commons</artifactId>
-	<version>2.4</version>
-	</dependency>
-	<dependency>
-	<groupId>org.apache.santuario</groupId>
-	<artifactId>xmlsec</artifactId>
-	<version>2.3.0</version>
-	</dependency>
-	<dependency>
-	<groupId>com.emudhra.esign</groupId>
-	<artifactId>eSignASPLibrary5</artifactId>
-	<version>5.0</version>
-	</dependency>
-
-	<dependency>
-	<groupId>commons-io</groupId>
-	<artifactId>commons-io</artifactId>
-	<version>2.4</version>
-	</dependency>
-
-	<dependency>
-	<groupId>org.apache.xmlgraphics</groupId>
-	<artifactId>batik-all</artifactId>
-	<version>1.13</version>
-	</dependency>
-    
+        <groupId>com.emudhra</groupId>
+        <artifactId>batik</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.emudhra</groupId>
+        <artifactId>xmlgraphics</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.emudhra</groupId>
+        <artifactId>org</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.ashu</groupId>
+        <artifactId>esign</artifactId>
+        <version>1.0.0</version>
+    </dependency> -->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
