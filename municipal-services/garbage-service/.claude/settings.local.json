@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs cat)",
+      "Bash(mvn clean *)",
+      "Bash(mvn compile *)"
+    ]
+  }
+}

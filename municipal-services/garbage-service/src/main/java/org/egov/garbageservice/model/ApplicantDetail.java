@@ -14,31 +14,36 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 /**
- * Supporting document metadata attached to a garbage application (fileStoreId, doc type).
- * Persisted with the account for verification and audit.
+ * Applicant person details from the new payload structure (applicantDetails array).
+ * Captured on GarbageAccount; richer than garbageSpecification (DOB, guardian, relationship).
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GrbgDocument {
+public class ApplicantDetail {
 
     @CustomSafeHtml
-    private String uuid;
-    @CustomSafeHtml
-    private String docRefId;
-    @CustomSafeHtml
-    private String docName;
-    @CustomSafeHtml
-    private String docType;
-    @CustomSafeHtml
-    private String docCategory;
-    @CustomSafeHtml
-    private String tblRefUuid;
+    private String applicantName;
 
-    // new payload fields matching frontend document structure
     @CustomSafeHtml
-    private String documentType;
+    private String name;
+
     @CustomSafeHtml
-    private String fileStoreId;
+    private String mobileNumber;
+
     @CustomSafeHtml
-    private String documentUid;
-    private Long garbageId;
+    private String alternateNumber;
+
+    @CustomSafeHtml
+    private String gender;
+
+    @CustomSafeHtml
+    private String dateOfBirth;
+
+    @CustomSafeHtml
+    private String relationShipType;
+
+    @CustomSafeHtml
+    private String guardianName;
+
+    @CustomSafeHtml
+    private String emailId;
 }
