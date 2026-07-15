@@ -15,7 +15,7 @@ import {
   DeleteIcon,
 } from "@nudmcdgnpm/digit-ui-react-components";
 import { values } from "lodash";
-import React, { Fragment, useState, useEffect} from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import BPADocuments from "./BPADocuments";
@@ -181,7 +181,7 @@ function ApplicationDetailsContent({
         name: checkpoint?.assignes?.[0]?.name,
         mobileNumber:
           applicationData?.processInstance?.assignes?.[0]?.uuid === checkpoint?.assignes?.[0]?.uuid &&
-          applicationData?.processInstance?.assignes?.[0]?.mobileNumber
+            applicationData?.processInstance?.assignes?.[0]?.mobileNumber
             ? applicationData?.processInstance?.assignes?.[0]?.mobileNumber
             : checkpoint?.assignes?.[0]?.mobileNumber,
         comment: t(checkpoint && checkpoint?.comment),
@@ -334,7 +334,7 @@ function ApplicationDetailsContent({
       ) : null}
 
       {applicationDetails?.applicationDetails?.map((detail, index) => (
-        <React.Fragment key={index}>
+        <React.Fragment key={detail.title || index}>
           <div style={getMainDivStyles()}>
             {index === 0 && !detail.asSectionHeader ? (
               <CardSubHeader style={{ marginBottom: "16px", fontSize: "24px" }}>{t(detail.title)}</CardSubHeader>
@@ -433,39 +433,39 @@ function ApplicationDetailsContent({
                             {/* Show the original value */}
                             <span>{getTextValue(value)}</span>
                             {isAssetModule && (
-                           applicationDetailsofAsset?.applicationData?.applicationData?.additionalDetails?.geometry ? (
-                              <button
-                                style={{
-                                  backgroundColor: "#a82227",
-                                  color: "white",
-                                  border: "none",
-                                  borderRadius: "4px",
-                                  padding: "4px 10px",
-                                  cursor: "pointer",
-                                  fontSize: "0.85rem",
-                                }}
-                                onClick={() =>
-                                  handleOpenMap(applicationDetailsofAsset?.applicationData?.applicationData?.additionalDetails?.geometry)
-                                }
-                              >
-                                {t("View on Map")}
-                              </button>
-                            ) : (
-                              <button
-                                style={{
-                                  backgroundColor: "#a82227",
-                                  color: "white",
-                                  border: "none",
-                                  borderRadius: "4px",
-                                  padding: "4px 10px",
-                                  cursor: "pointer",
-                                  fontSize: "0.85rem",
-                                }}
-                                onClick={() => setShowMap(true)}
-                              >
-                                {t("Mark on Map")}
-                              </button>
-                            )
+                              applicationDetailsofAsset?.applicationData?.applicationData?.additionalDetails?.geometry ? (
+                                <button
+                                  style={{
+                                    backgroundColor: "#a82227",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "4px",
+                                    padding: "4px 10px",
+                                    cursor: "pointer",
+                                    fontSize: "0.85rem",
+                                  }}
+                                  onClick={() =>
+                                    handleOpenMap(applicationDetailsofAsset?.applicationData?.applicationData?.additionalDetails?.geometry)
+                                  }
+                                >
+                                  {t("View on Map")}
+                                </button>
+                              ) : (
+                                <button
+                                  style={{
+                                    backgroundColor: "#a82227",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "4px",
+                                    padding: "4px 10px",
+                                    cursor: "pointer",
+                                    fontSize: "0.85rem",
+                                  }}
+                                  onClick={() => setShowMap(true)}
+                                >
+                                  {t("Mark on Map")}
+                                </button>
+                              )
                             )}
                           </div>
                         }
@@ -524,7 +524,7 @@ function ApplicationDetailsContent({
                     );
                   }
                   return (
-                    <div key={index}>
+                    <div key={value.title || index}>
                       {window.location.href.includes("modify") ? (
                         <Row
                           className="border-none"
@@ -670,14 +670,13 @@ function ApplicationDetailsContent({
                           }
 
                           return (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={checkpoint.id || checkpoint.performedAction || index}>
                               <CheckPoint
                                 keyValue={index}
                                 isCompleted={index === 0}
                                 info={checkpoint.comment}
                                 label={t(
-                                  `${timelineStatusPrefix}${
-                                    checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
+                                  `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }${timelineStatusPostfix}`
                                 )}
                                 customChild={getTimelineCaptions(checkpoint, index, workflowDetails?.data?.timeline)}
@@ -694,7 +693,7 @@ function ApplicationDetailsContent({
             </Fragment>
           )}
 
-           {isAssetModule && showMapModal && (
+          {isAssetModule && showMapModal && (
             <ViewOnMap
               closeModal={handleCloseMap}
               location={selectedLocation} // pass lat/lng or ID

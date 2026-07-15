@@ -119,8 +119,8 @@ const PTSelectPincode = ({ t, config, onSelect, formData = {}, userType, registe
   };
   if (userType === "employee") {
     return inputs?.map((input, index) => {
-      return <React.Fragment key={index}>
-          <LabelFieldPair key={index}>
+      return <React.Fragment key={input.name || index}>
+          <LabelFieldPair key={input.name ? `field-${input.name}` : index}>
             <CardLabel className="card-label-smaller">{t(input.label)}</CardLabel>
             <div className="field">
               <TextInput key={input.name} value={pincode} onChange={onChange} {...input.validation} disable={presentInModifyApplication} autoFocus={presentInModifyApplication} />

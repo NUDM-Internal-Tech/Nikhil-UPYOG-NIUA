@@ -90,8 +90,8 @@ const UID = ({
   };
   if (userType === "employee") {
     return inputs?.map((input, index) => {
-      return <React.Fragment key={index}>
-          <LabelFieldPair key={index}>
+      return <React.Fragment key={input.name || index}>
+          <LabelFieldPair key={input.name ? `field-${input.name}` : index}>
             <CardLabel className="card-label-smaller">{t(input.label)}<span className="check-page-link-button"> *</span></CardLabel>
             <div className="field">
 
