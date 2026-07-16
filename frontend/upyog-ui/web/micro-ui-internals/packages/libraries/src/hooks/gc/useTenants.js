@@ -4,9 +4,7 @@ const useTenants = () => {
   const tenantInfo = Digit.SessionStorage.get("GC_TENANTS");
 
 
-  const [tenants, setTenants] = useState(tenantInfo ? tenantInfo : null);
-
-  return tenants;
+  return tenantInfo ? tenantInfo : null;
 };
 
 export default useTenants;

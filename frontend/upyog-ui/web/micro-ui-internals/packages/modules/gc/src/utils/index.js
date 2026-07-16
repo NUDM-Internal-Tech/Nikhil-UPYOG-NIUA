@@ -123,8 +123,8 @@ export const setGarbageSpecificationDetails = (data) => {
 
         subCategoryType: gcspecifications?.subCategoryType?.code || gcspecifications?.subCategoryType,
 
-        isvariablecalculation:
-            gcspecifications?.isvariablecalculation || false,
+        isVariableCalculation:
+            gcspecifications?.isVariableCalculation || false,
 
         isbulkgeneration:
             gcspecifications?.isbulkgeneration || false,
@@ -244,8 +244,8 @@ export const GCAPIToFormData = (application, params) => {
       specialCategory:
         params?.gcspecialcategory?.specialCategory?.value || "",
       oldGarbageId: params?.gcspecifications?.oldGarbageId,
-      isvariablecalculation:
-        params?.gcspecifications?.isvariablecalculation,
+      isVariableCalculation:
+        params?.gcspecifications?.isVariableCalculation,
       isbulkgeneration: params?.gcspecifications?.isbulkgeneration,
       no_of_units: Number(params?.gcspecifications?.no_of_units || 0),
       isInheritance: params?.gcspecifications?.isInheritance,

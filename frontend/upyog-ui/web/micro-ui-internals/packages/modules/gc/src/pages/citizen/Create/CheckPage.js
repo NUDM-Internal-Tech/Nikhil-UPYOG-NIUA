@@ -199,13 +199,13 @@ const GCCheckPage = ({ onSubmit, value = {}, renewApplication }) => {
               text={
                 specifications?.isbulkgeneration
                   ? t("GC_FIXED")
-                  : specifications?.isvariablecalculation
+                  : specifications?.isVariableCalculation
                   ? t("GC_VARIABLE")
                   : t("CS_NA")
               }
             />
 
-            {specifications?.isvariablecalculation && (
+            {specifications?.isVariableCalculation && (
               <Row
                 label={t("GC_NO_OF_UNITS")}
                 text={specifications?.no_of_units || t("CS_NA")}

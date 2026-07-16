@@ -79,7 +79,7 @@ const GCSpecifications = ({ t, config, onSelect, formData, renewApplication }) =
     const [category, setCategory] = useState(specsData.category || convertToObject(renewApplication?.grbgCollectionUnits?.[0]?.category) || "");
     const [subCategory, setSubCategory] = useState(specsData.subCategory || convertToObject(renewApplication?.grbgCollectionUnits?.[0]?.subCategory) || "");
     const [subCategoryType, setSubCategoryType] = useState(specsData.subCategoryType ||convertToObject(renewApplication?.grbgCollectionUnits?.[0]?.subCategoryType) || "");
-    const [isvariablecalculation, setIsvariablecalculation] = useState(specsData.isvariablecalculation || renewApplication?.isvariablecalculation || false);
+    const [isVariableCalculation, setIsvariablecalculation] = useState(specsData.isVariableCalculation || renewApplication?.isVariableCalculation || false);
     const [isbulkgeneration, setIsbulkgeneration] = useState(specsData.isbulkgeneration || renewApplication?.isbulkgeneration || false);
     const [no_of_units, setNoOfUnits] = useState(specsData.no_of_units || renewApplication?.no_of_units || "");
     const [isAdditional, setIsAdditional] = useState(specsData.isAdditional || renewApplication?.isAdditional || false);
@@ -149,7 +149,7 @@ const GCSpecifications = ({ t, config, onSelect, formData, renewApplication }) =
             category,
             subCategory,
             subCategoryType,
-            isvariablecalculation,
+            isVariableCalculation,
             isbulkgeneration,
             no_of_units,
             isAdditional,
@@ -311,7 +311,7 @@ const GCSpecifications = ({ t, config, onSelect, formData, renewApplication }) =
                                 />
                                 <CheckBox
                                     label={t("GC_VARIABLE")}
-                                    checked={isvariablecalculation}
+                                    checked={isVariableCalculation}
                                     onChange={(e) => {
                                         setIsvariablecalculation(e.target.checked);
                                         if (e.target.checked) setIsbulkgeneration(false);
@@ -321,7 +321,7 @@ const GCSpecifications = ({ t, config, onSelect, formData, renewApplication }) =
                         </>
                     )}
 
-                    {isAdditional && isvariablecalculation && (
+                    {isAdditional && isVariableCalculation && (
                         <>
                             <CardLabel>{t("GC_NO_OF_UNITS")}</CardLabel>
                             <TextInput

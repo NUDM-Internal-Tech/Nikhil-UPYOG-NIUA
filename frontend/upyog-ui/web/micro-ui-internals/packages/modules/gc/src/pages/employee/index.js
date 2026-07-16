@@ -37,7 +37,6 @@ const EmployeeApp = ({ path, url, userType }) => {
   const Create = Digit.ComponentRegistryService.getComponent("GCCreateEmp");
 
   return (
-    <span style={{ width: "100%" }}>
       <AppContainer>
         <div className="ground-container">
           <div className="breadcrumb-title" style={{ marginLeft: "15px" }}>
@@ -55,7 +54,6 @@ const EmployeeApp = ({ path, url, userType }) => {
           </Routes>
         </div>
       </AppContainer>
-    </span>
   );
 };
 

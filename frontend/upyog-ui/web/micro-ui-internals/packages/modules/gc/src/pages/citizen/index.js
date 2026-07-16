@@ -16,7 +16,6 @@ const shouldHideBack = () => {
 const App = () => {
   const location = useLocation();
   return (
-    <span style={{ width: "100%" }}>
       <AppContainer>
         {!shouldHideBack() && <BackButton>Back</BackButton>}
         <Routes>
@@ -26,7 +25,6 @@ const App = () => {
           <Route path="edit/:applicationNo/*" element={<PrivateRoute><GCEdIt /></PrivateRoute>} />
         </Routes>
       </AppContainer>
-    </span>
   );
 };
 
