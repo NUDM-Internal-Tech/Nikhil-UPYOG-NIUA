@@ -24,16 +24,16 @@
 import React, { useEffect, useState } from "react";
 import { FormStep, TextInput, CardLabel, MobileNumber, RadioButtons, Dropdown } from "../index";
 
-const ApplicantDetails = ({ t, config, onSelect, formData }) => {
+const ApplicantDetails = ({ t, config, onSelect, formData, renewApplication={} }) => {
   const user = Digit.UserService.getUser().info;
   const inputStyles = { width: user.type === "EMPLOYEE" ? "50%" : "86%" };
   let validation = {};
-  const [applicantName, setName] = useState((user.type === "EMPLOYEE" ?"":user?.name) || formData?.owner?.applicantName || formData?.infodetails?.existingDataSet?.owner?.applicantName || "");
-  const [mobileNumber, setMobileNumber] = useState((user.type === "EMPLOYEE" ?"":user?.mobileNumber) ||formData?.owner?.mobileNumber || formData?.infodetails?.existingDataSet?.owner?.mobileNumber || "");
+  const [applicantName, setName] = useState(formData?.owner?.applicantName || (user.type === "EMPLOYEE" ?"":user?.name) || formData?.infodetails?.existingDataSet?.owner?.applicantName || renewApplication?.additionalDetail?.applicantDetails?.[0]?.applicantName || "");
+  const [mobileNumber, setMobileNumber] = useState(formData?.owner?.mobileNumber || (user.type === "EMPLOYEE" ?"":user?.mobileNumber) ||formData?.owner?.mobileNumber || formData?.infodetails?.existingDataSet?.owner?.mobileNumber || renewApplication?.additionalDetail?.applicantDetails?.[0]?.mobileNumber || "");
   const [gender, setGender]=useState(formData?.owner?.gender||"");
   const [dateOfBirth, setDateofBirth] = useState(formData?.owner?.dateOfBirth|| formData?.owner?.requestDetails?.applicantName || "");
-  const [emailId, setEmail] = useState((user.type === "EMPLOYEE" ?"":user?.emailId)||formData?.owner?.emailId ||  formData?.infodetails?.existingDataSet?.owner?.emailId || "");
-  const [alternateNumber, setAltMobileNumber] = useState(formData?.owner?.alternateNumber ||  formData?.infodetails?.existingDataSet?.owner?.alternateNumber || "");
+  const [emailId, setEmail] = useState(formData?.owner?.emailId || (user.type === "EMPLOYEE" ?"":user?.emailId)||formData?.owner?.emailId ||  formData?.infodetails?.existingDataSet?.owner?.emailId || renewApplication?.additionalDetail?.applicantDetails?.[0]?.emailId || "");
+  const [alternateNumber, setAltMobileNumber] = useState(formData?.owner?.alternateNumber ||  formData?.infodetails?.existingDataSet?.owner?.alternateNumber || renewApplication?.additionalDetail?.applicantDetails?.[0]?.alternateNumber || "");
   const [guardianName, setGuardian] = useState(formData?.owner?.guardianName || "");
   const [relationShipType, setRelationShipType] = useState(formData?.owner?.relationShipType || "");
 
@@ -43,7 +43,7 @@ const ApplicantDetails = ({ t, config, onSelect, formData }) => {
   }
   function setOwnerEmail(e) {
     setEmail(e.target.value);
-  }
+  } 
   function setMobileNo(e) {
     setMobileNumber(e.target.value);
   }
@@ -81,9 +81,17 @@ const ApplicantDetails = ({ t, config, onSelect, formData }) => {
   ];
   
   const goNext = () => {
-    let owner = formData.owner;
-    let applicantDetails = { ...owner, applicantName, mobileNumber, gender,dateOfBirth,alternateNumber,relationShipType, guardianName, emailId};
-    onSelect(config.key, applicantDetails, false);
+    const applicantDetails = {
+      applicantName,
+      mobileNumber,
+      gender,
+      dateOfBirth,
+      alternateNumber,
+      relationShipType,
+      guardianName,
+      emailId,
+    };
+    onSelect(config.key, { ...formData?.[config.key], ...applicantDetails }, false);
   };
 
   return (
@@ -220,7 +228,7 @@ const ApplicantDetails = ({ t, config, onSelect, formData }) => {
         ValidationRequired={true}
         {...(validation = {
           isRequired: true,
-          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z]+\\.[a-zA-Z]{3,4}$",
+          pattern: "^[a-zA-Z0-9._%+\\-]+@[a-zA-Z]+\\.[a-zA-Z]{2,}$",
           title: t("PT_NAME_ERROR_MESSAGE"),
         })}
       />

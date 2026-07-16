@@ -367,6 +367,12 @@ eSign:{
   upyogBot: {
     iframeUrl: "/upyog-voice-bot",
   },
+
+ gc: {
+    create: "http://localhost:1235/gc-services/garbage-accounts/_create",
+    search: "http://localhost:1235/gc-services/garbage-accounts/_search",
+    update: "http://localhost:1235/gc-services/garbage-accounts/_update",
+  }
 };
 
 export default Urls;
