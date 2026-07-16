@@ -165,6 +165,9 @@ public class EdcrRestService {
     private EdcrApplicationDetailService applicationDetailService;
 
     @Autowired
+    private EdcrPdfDetailService edcrPdfDetailService; // Service to fetch scrutiny PDF details from the database
+
+    @Autowired
     private EnvironmentSettings environmentSettings;
 
     @Autowired
@@ -626,9 +629,12 @@ public class EdcrRestService {
                         planPdf.getConvertedPdf().getFileStoreId(),
                         ApplicationThreadLocals.getTenantID()));
                 planPdfs.add(planPdf.getLayer().concat(" - ").concat(downloadURL));
-                for (org.egov.common.entity.edcr.EdcrPdfDetail pdf : edcrDetail.getPlanDetail().getEdcrPdfDetails()) {
-                    if (planPdf.getLayer().equalsIgnoreCase(pdf.getLayer()))
-                        pdf.setDownloadURL(downloadURL);
+                // Add null safety checks to prevent NPEs if the planDetail or its PDF list is empty
+                if (edcrDetail.getPlanDetail() != null && edcrDetail.getPlanDetail().getEdcrPdfDetails() != null) {
+                    for (org.egov.common.entity.edcr.EdcrPdfDetail pdf : edcrDetail.getPlanDetail().getEdcrPdfDetails()) {
+                        if (planPdf.getLayer().equalsIgnoreCase(pdf.getLayer()))
+                            pdf.setDownloadURL(downloadURL);
+                    }
                 }
             }
         }
@@ -717,6 +723,29 @@ public class EdcrRestService {
 
         if (!String.valueOf(applnDtls[3]).equalsIgnoreCase("Accepted"))
             edcrDetail.setStatus(String.valueOf(applnDtls[3]));
+
+        // Retrieve and populate plan PDF details for the cross-tenant response
+        List<String> planPdfs = new ArrayList<>();
+        if (applnDtls.length > 15 && applnDtls[15] != null) {
+            Long applicationDetailId = Long.valueOf(String.valueOf(applnDtls[15]));
+            List<EdcrPdfDetail> pdfDetails = edcrPdfDetailService.findByDcrApplicationId(applicationDetailId);
+            for (EdcrPdfDetail planPdf : pdfDetails) {
+                if (planPdf.getConvertedPdf() != null) {
+                    // Generate download URL using the application's actual tenantId
+                    String downloadURL = format(getFileDownloadUrl(
+                            planPdf.getConvertedPdf().getFileStoreId(),
+                            tenantId));
+                    planPdfs.add(planPdf.getLayer().concat(" - ").concat(downloadURL));
+                    if (edcrDetail.getPlanDetail() != null && edcrDetail.getPlanDetail().getEdcrPdfDetails() != null) {
+                        for (org.egov.common.entity.edcr.EdcrPdfDetail pdf : edcrDetail.getPlanDetail().getEdcrPdfDetails()) {
+                            if (planPdf.getLayer().equalsIgnoreCase(pdf.getLayer()))
+                                pdf.setDownloadURL(downloadURL);
+                        }
+                    }
+                }
+            }
+        }
+        edcrDetail.setPlanPdfs(planPdfs);
 
         return edcrDetail;
     }
@@ -831,6 +860,23 @@ public class EdcrRestService {
 
         if (!String.valueOf(applnDtls[3]).equalsIgnoreCase("Accepted"))
             edcrDetail.setStatus(String.valueOf(applnDtls[3]));
+
+        // Retrieve and populate plan PDF details for the cross-tenant BPA response
+        List<String> planPdfs = new ArrayList<>();
+        if (applnDtls.length > 15 && applnDtls[15] != null) {
+            Long applicationDetailId = Long.valueOf(String.valueOf(applnDtls[15]));
+            List<EdcrPdfDetail> pdfDetails = edcrPdfDetailService.findByDcrApplicationId(applicationDetailId);
+            for (EdcrPdfDetail planPdf : pdfDetails) {
+                if (planPdf.getConvertedPdf() != null) {
+                    // Generate download URL using the application's actual tenantId
+                    String downloadURL = format(getFileDownloadUrl(
+                            planPdf.getConvertedPdf().getFileStoreId(),
+                            tenantId));
+                    planPdfs.add(planPdf.getLayer().concat(" - ").concat(downloadURL));
+                }
+            }
+        }
+        edcrDetail.setPlanPdfs(planPdfs);
 
         return edcrDetail;
     }
@@ -1139,7 +1185,7 @@ public class EdcrRestService {
             Map.Entry<String, String> value = tenantItr.next();
             queryStr.append("(select '")
                     .append(value.getKey())
-                    .append("' as tenantId,appln.transactionNumber,dtl.dcrNumber,dtl.status,appln.applicantName,dxf.fileStoreId as dxfFileId,scrudxf.fileStoreId as scrutinizedDxfFileId,rofile.fileStoreId as reportOutputId,pdfile.fileStoreId as planDetailFileStore,appln.applicationDate,appln.applicationNumber,appln.applicationType,appln.serviceType,appln.planPermitNumber,appln.permitApplicationDate from ")
+                    .append("' as tenantId,appln.transactionNumber,dtl.dcrNumber,dtl.status,appln.applicantName,dxf.fileStoreId as dxfFileId,scrudxf.fileStoreId as scrutinizedDxfFileId,rofile.fileStoreId as reportOutputId,pdfile.fileStoreId as planDetailFileStore,appln.applicationDate,appln.applicationNumber,appln.applicationType,appln.serviceType,appln.planPermitNumber,appln.permitApplicationDate,dtl.id as applicationDetailId from ")
                     .append(value.getKey())
                     .append(".edcr_application appln, ")
                     .append(value.getKey())
