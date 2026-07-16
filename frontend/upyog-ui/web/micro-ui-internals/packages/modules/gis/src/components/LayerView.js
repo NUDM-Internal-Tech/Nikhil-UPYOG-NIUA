@@ -33,6 +33,22 @@ const cleanVal = (rawValue) => {
 };
 
 /**
+ * Parses a raw shapefile money/number field into a plain JavaScript number.
+ * Strips currency symbols, commas, and other non-numeric characters before parsing.
+ * Returns 0 for blank, null, or unparseable values so callers can safely do arithmetic.
+ */
+const toNum = (rawValue) => {
+  const parsed = parseFloat(String(rawValue ?? "").replace(/[^0-9.\-]/g, ""));
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+/**
+ * Formats a rupee amount (in full rupees) into the compact "Rs.X.XX L" (lakh) notation
+ * used throughout the tax analysis panel, e.g. 1642000 → "Rs.16.42 L".
+ */
+const formatLakh = (amount) => `Rs.${(amount / 100000).toFixed(2)} L`;
+
+/**
  * AREAS is the master config list. Each entry represents one dataset (one GeoJSON file).
  *
  * Every area defines:
@@ -83,6 +99,9 @@ const AREAS = [
       return {
         category: cleanVal(rawProperties.TYPE_OF_PR) || "Unspecified", // drives colour + filter
         title: cleanVal(rawProperties.TYPE_OF_PR) || "Property",       // popup heading
+        // Hoshiarpur shapefile has no tax data — zero so AnalysisPanel arithmetic stays safe.
+        assessed: 0,
+        outstanding: 0,
         rows: [
           ["Parcel No", cleanVal(rawProperties.Parcel_No)],
           ["Owner", cleanVal(rawProperties.OWNER_NAME)],
@@ -116,6 +135,9 @@ const AREAS = [
       { code: "Partially Paid", label: "Partial" },
       { code: "Overdue", label: "Overdue" },
     ],
+    // Enables the right-side AnalysisPanel (DonutChart + tax breakdown) for this area.
+    // Areas without this flag show the simpler legend panel instead.
+    analysis: true,
     // Karol Bagh fields use a "data_" prefix — completely different schema from Hoshiarpur.
     // toFeature() is the bridge: the rest of the component never touches raw field names.
     toFeature: (rawProperties) => {
@@ -123,6 +145,9 @@ const AREAS = [
       return {
         category: cleanVal(rawProperties.data_Tax_Status) || "Unknown",
         title: cleanVal(rawProperties.data_Property_Type) || "Property",
+        // Parsed to plain numbers (via toNum) so the analysis useMemo can sum them directly.
+        assessed: toNum(rawProperties.data_Annual_Tax_Assessed),
+        outstanding: toNum(rawProperties.data_Outstanding_Dues),
         rows: [
           ["Property ID", cleanVal(rawProperties.data_Property_ID)],
           ["UPIN", cleanVal(rawProperties.data_UPIN)],
@@ -189,6 +214,30 @@ const LayerView = () => {
     categoryCounts[category] = (categoryCounts[category] || 0) + 1;
   });
   const total = geoJsonData.features.length;
+
+  // For areas with analysis:true (currently Karol Bagh), aggregate the tax figures needed
+  // by AnalysisPanel in a single pass over all features:
+  //   totalAssessed    — sum of annual tax assessed across all parcels
+  //   totalOutstanding — sum of outstanding dues across all parcels
+  //   perStatus        — per-category { count, outstanding } used for the status cards
+  // Returns null for areas without tax data, which hides the panel entirely.
+  const analysis = useMemo(() => {
+    if (!area.analysis) return null;
+    let totalAssessed = 0;
+    let totalOutstanding = 0;
+    const perStatus = {};
+    geoJsonData.features.forEach(({ properties }) => {
+      const assessed = properties.assessed || 0;
+      const outstanding = properties.outstanding || 0;
+      totalAssessed += assessed;
+      totalOutstanding += outstanding;
+      const bucket = perStatus[properties.category] || { count: 0, outstanding: 0 };
+      bucket.count += 1;
+      bucket.outstanding += outstanding;
+      perStatus[properties.category] = bucket;
+    });
+    return { totalAssessed, totalOutstanding, perStatus };
+  }, [areaId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   /**
    * Returns the Leaflet style object for one polygon.
@@ -379,26 +428,211 @@ const LayerView = () => {
         ))}
       </div>
 
-      {/* ── LEGEND: colour swatch + label + parcel count for each category ── */}
-      <div className="gis-panel gis-panel--legend">
-        <div className="gis-legend__title">{t(area.legendTitle)}</div>
-        {/* Skip the "ALL" chip — it has no colour of its own */}
-        {area.filters
-          .filter((chip) => chip.code !== "ALL")
-          .map((chip) => (
-            <div key={chip.code} className="gis-summary-row">
-              <span className="gis-legend__label">
-                {/* Colour swatch — background stays inline since it's data-driven per category */}
-                <span
-                  className="gis-legend__swatch"
-                  style={{ background: area.colors[chip.code] }}
-                />
-                {t(chip.label)}
-              </span>
-              {/* Count from categoryCounts; || 0 handles categories with no matching parcels */}
-              <b>{categoryCounts[chip.code] || 0}</b>
+      {/* ── LEGEND (areas without tax analysis) ── */}
+      {!analysis && (
+        <div className="gis-panel gis-panel--legend">
+          <div className="gis-legend__title">{t(area.legendTitle)}</div>
+          {area.filters
+            .filter((chip) => chip.code !== "ALL")
+            .map((chip) => (
+              <div key={chip.code} className="gis-summary-row">
+                <span className="gis-legend__label">
+                  <span
+                    className="gis-legend__swatch"
+                    style={{ background: area.colors[chip.code] }}
+                  />
+                  {t(chip.label)}
+                </span>
+                <b>{categoryCounts[chip.code] || 0}</b>
+              </div>
+            ))}
+        </div>
+      )}
+
+      {/* ── ANALYSIS PANEL (Karol Bagh — donut chart + tax breakdown) ── */}
+      {analysis && (
+        <AnalysisPanel t={t} area={area} total={total} analysis={analysis} />
+      )}
+    </div>
+  );
+};
+
+// ── DonutChart ────────────────────────────────────────────────────────────────
+
+/**
+ * Pure SVG donut chart rendered without any charting library.
+ *
+ * Props:
+ *   slices — array of { code, label, color, count } (one per tax-status category)
+ *   total  — sum of all counts, used to compute each slice's sweep angle
+ *
+ * Interaction: hovering a slice pops it outward and shows its count + percentage
+ * in the centre hole. The idle centre shows the overall property count.
+ * Hit-testing is done in onMouseMove via polar coordinates (no SVG pointer-events
+ * on paths, which avoids z-order issues between overlapping paths).
+ */
+const DonutChart = ({ slices, total }) => {
+  const [hovered, setHovered] = useState(null);
+  const svgRef = useRef(null);
+
+  // SVG canvas is 170×170; centre at (85,85). outerR/innerR define the donut ring width.
+  const cx = 85, cy = 85, outerR = 68, innerR = 40;
+  const toRad = (deg) => (deg * Math.PI) / 180;
+
+  /**
+   * Builds the SVG "d" attribute for one donut slice using two arcs (outer + inner)
+   * connected at their endpoints — the standard SVG donut-slice technique.
+   * Angles are measured clockwise from 12 o'clock (hence the -90° offset).
+   * The `large` flag flips to 1 when the slice spans more than 180° so the arc
+   * takes the long way around rather than cutting through the centre.
+   */
+  const arcPath = (startDeg, endDeg) => {
+    const s = toRad(startDeg - 90);
+    const e = toRad(endDeg - 90);
+    const large = endDeg - startDeg > 180 ? 1 : 0;
+    const x1 = cx + outerR * Math.cos(s), y1 = cy + outerR * Math.sin(s);
+    const x2 = cx + outerR * Math.cos(e), y2 = cy + outerR * Math.sin(e);
+    const x3 = cx + innerR * Math.cos(e), y3 = cy + innerR * Math.sin(e);
+    const x4 = cx + innerR * Math.cos(s), y4 = cy + innerR * Math.sin(s);
+    return `M${x1},${y1} A${outerR},${outerR} 0 ${large} 1 ${x2},${y2} L${x3},${y3} A${innerR},${innerR} 0 ${large} 0 ${x4},${y4} Z`;
+  };
+
+  // Convert each slice into a segment with pre-computed start/end angles and percentage.
+  // Slices with count=0 are dropped so they don't produce invisible zero-width paths.
+  let angle = 0;
+  const segments = slices
+    .filter((s) => s.count > 0)
+    .map((s) => {
+      const sweep = (s.count / total) * 360;
+      const seg = {
+        ...s,
+        startAngle: angle,
+        endAngle: angle + sweep,
+        midAngle: angle + sweep / 2, // used to compute the pop-out translation direction
+        pct: ((s.count / total) * 100).toFixed(1),
+      };
+      angle += sweep;
+      return seg;
+    });
+
+  /**
+   * Determines which slice the cursor is over by converting the mouse position to
+   * SVG coordinates, computing the polar angle from the centre, then finding the
+   * segment whose [startAngle, endAngle) range contains that angle.
+   * Cursor inside the inner hole or outside the outer ring clears the hover.
+   */
+  const handleMouseMove = (e) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    // Scale from CSS pixels to SVG viewBox units (170×170)
+    const svgX = (e.clientX - rect.left) * (170 / rect.width);
+    const svgY = (e.clientY - rect.top) * (170 / rect.height);
+    const dx = svgX - cx;
+    const dy = svgY - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < innerR || dist > outerR + 8) { setHovered(null); return; }
+    // atan2 returns [-π, π]; shift so 0° is at 12 o'clock matching our arc convention
+    let deg = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+    if (deg < 0) deg += 360;
+    const seg = segments.find((s) => deg >= s.startAngle && deg < s.endAngle);
+    setHovered(seg ? seg.code : null);
+  };
+
+  const hoveredSeg = segments.find((s) => s.code === hovered);
+
+  return (
+    <svg
+      ref={svgRef}
+      viewBox="0 0 170 170"
+      width="170"
+      height="170"
+      className="gis-donut-svg"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => setHovered(null)}
+    >
+      {segments.map((seg) => {
+        const isHov = hovered === seg.code;
+        const midRad = toRad(seg.midAngle - 90);
+        const tx = isHov ? +(Math.cos(midRad) * 8).toFixed(2) : 0;
+        const ty = isHov ? +(Math.sin(midRad) * 8).toFixed(2) : 0;
+        return (
+          <path
+            key={seg.code}
+            d={arcPath(seg.startAngle, seg.endAngle)}
+            fill={seg.color}
+            transform={`translate(${tx},${ty})`}
+            className="gis-donut-path"
+            style={{ filter: isHov ? "drop-shadow(0 3px 6px rgba(0,0,0,0.28))" : "none" }}
+          />
+        );
+      })}
+      {hoveredSeg ? (
+        <>
+          <text x={cx} y={cy - 10} className="gis-donut-text gis-donut-text--count" style={{ fill: hoveredSeg.color }}>{hoveredSeg.count}</text>
+          <text x={cx} y={cy + 7}  className="gis-donut-text gis-donut-text--label">{hoveredSeg.label}</text>
+          <text x={cx} y={cy + 20} className="gis-donut-text gis-donut-text--meta">{hoveredSeg.pct}%</text>
+        </>
+      ) : (
+        <>
+          <text x={cx} y={cy - 4}  className="gis-donut-text gis-donut-text--count">{total}</text>
+          <text x={cx} y={cy + 13} className="gis-donut-text gis-donut-text--meta">Properties</text>
+        </>
+      )}
+    </svg>
+  );
+};
+
+// ── AnalysisPanel ─────────────────────────────────────────────────────────────
+
+const AnalysisPanel = ({ t, area, total, analysis }) => {
+  const statusRows = area.filters
+    .filter((chip) => chip.code !== "ALL")
+    .map((chip) => ({
+      code: chip.code,
+      label: chip.label,
+      color: area.colors[chip.code],
+      count: analysis.perStatus[chip.code]?.count || 0,
+      outstanding: analysis.perStatus[chip.code]?.outstanding || 0,
+      pct: total > 0 ? +(((analysis.perStatus[chip.code]?.count || 0) / total) * 100).toFixed(1) : 0,
+    }));
+
+  return (
+    <div className="gis-panel gis-panel--analysis">
+      <div className="gis-analysis-section">
+        <span className="gis-analysis-section__title">{t("Count Distribution")}</span>
+      </div>
+
+      <DonutChart slices={statusRows} total={total} />
+
+      <div className="gis-analysis-section gis-analysis-section--spaced">
+        <span className="gis-analysis-section__title">{t("Property Count By Status")}</span>
+      </div>
+
+      {statusRows.map((row) => (
+        <div key={row.code} className="gis-status-card" style={{ "--status-color": row.color }}>
+          <div className="gis-status-card__header">
+            <span className="gis-status-card__label">{t(row.label)}</span>
+            <span className="gis-status-card__count" style={{ color: row.color }}>
+              {row.count}
+              <span className="gis-status-card__pct">{row.pct}%</span>
+            </span>
+          </div>
+          <div className="gis-status-card__bar-track">
+            <div className="gis-status-card__bar-fill" style={{ width: `${row.pct}%`, background: row.color }} />
+          </div>
+          {row.outstanding > 0 && (
+            <div className="gis-status-card__dues">
+              <span>{t("Outstanding")}</span>
+              <span style={{ color: row.color }}>{formatLakh(row.outstanding)}</span>
             </div>
-          ))}
+          )}
+        </div>
+      ))}
+
+      <div className="gis-analysis-total">
+        <span>{t("Total Outstanding")}</span>
+        <b>{formatLakh(analysis.totalOutstanding)}</b>
       </div>
     </div>
   );
