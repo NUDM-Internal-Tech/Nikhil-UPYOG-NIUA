@@ -305,7 +305,6 @@
                                     <label><input type="checkbox" name="moduleTestingModules" value="PROPERTY_TAX"> Property Tax</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="EWASTE_MANAGEMENT_SYSTEM"> E-Waste</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="ONLINE_BUILDING_PLAN_APPROVAL_SYSTEM"> OBPAS</label>
-                                    <label><input type="checkbox" name="moduleTestingModules" value="ONLINE_BUILDING_PLAN_APPROVAL_SYSTEM_OC"> OBPAS OC</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="PUBLIC_GRIEVANCE_REDRESSAL"> PGR</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="ADVERTISEMENT"> Advertisement</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="TREE_PRUNING"> Tree Pruning</label>
@@ -314,9 +313,8 @@
                                     <label><input type="checkbox" name="moduleTestingModules" value="COMMUNITY_HALL_BOOKING"> Community Hall</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="CONSTRUCTION_AND_DEMOLITION"> Construction & Demolition</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="DESLUDGING_SERVICE"> Desludging</label>
-                                    <label><input type="checkbox" name="moduleTestingModules" value="DESLUDGING_SERVICE_PAYMENT"> Desludging Payment</label>
-                                    <label><input type="checkbox" name="moduleTestingModules" value="DESLUDGING_SERVICE_PAYMENT2"> Desludging Payment2</label>
                                     <label><input type="checkbox" name="moduleTestingModules" value="WATER_AND_SEWERAGE"> Water & Sewerage</label>
+                                    <label><input type="checkbox" name="moduleTestingModules" value="ASSET_MANAGEMENT_SYSTEM"> Asset Management</label>
 
                                 </div>
                             </div>
@@ -688,9 +686,8 @@
                                 <label><input type="checkbox" name="reportModules" value="COMMUNITY_HALL_BOOKING"> Community Hall</label>
                                 <label><input type="checkbox" name="reportModules" value="CONSTRUCTION_AND_DEMOLITION"> Construction & Demolition</label>
                                 <label><input type="checkbox" name="reportModules" value="DESLUDGING_SERVICE"> Desludging</label>
-                                <label><input type="checkbox" name="reportModules" value="DESLUDGING_SERVICE_PAYMENT"> Desludging Payment</label>
-                                <label><input type="checkbox" name="reportModules" value="DESLUDGING_SERVICE_PAYMENT2"> Desludging Payment2</label>
                                 <label><input type="checkbox" name="reportModules" value="WATER_AND_SEWERAGE"> Water & Sewerage</label>
+                                <label><input type="checkbox" name="reportModules" value="ASSET_MANAGEMENT_SYSTEM"> Asset Management</label>
 
                             </div>
                         </div>
@@ -871,14 +868,23 @@ html += `
 
 document.getElementById("moduleResult").innerHTML = html;
 document.getElementById("moduleReportButtons").style.display = "block";
+if (fail > 0) {
 
-        // Success
+    statusText.innerHTML =
+        "❌ Test Failed";
 
-        statusText.innerHTML =
-            "✅ Test Completed Successfully";
+    statusSubText.innerHTML =
+        `${fail} module(s) failed. Please check the report for details.`;
 
-        statusSubText.innerHTML =
-            "Automation completed successfully. Report is ready to view or download.";
+} else {
+
+    statusText.innerHTML =
+        "✅ Test Completed Successfully";
+
+    statusSubText.innerHTML =
+        "Automation completed successfully. Report is ready to view or download.";
+
+}
 
     } catch (error) {
 

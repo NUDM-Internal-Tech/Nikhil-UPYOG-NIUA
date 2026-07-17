@@ -17,6 +17,8 @@ public class ExtentManager {
 
     private static ExtentReports extent;
 
+    private static int reportCounter = 1;
+
     public static synchronized ExtentReports getInstance(
             String reportName
     ) {
@@ -32,14 +34,18 @@ public class ExtentManager {
                     System.getProperty("user.dir")
                             + "/target/reports";
 
+            String uniqueId =
+                    String.format("%03d", reportCounter++);
+
             new File(reportsDir).mkdirs();
 
             String reportPath =
                     reportsDir
-                            + "/Execution_"
+                            + "/"
                             + reportName
                             + "_"
                             + timestamp
+                            + uniqueId
                             + ".html";
 
             logger.info(

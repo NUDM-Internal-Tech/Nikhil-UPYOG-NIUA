@@ -90,7 +90,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Verified"
+      "inputValue":"${comment.verify}"
     },
 
     {
@@ -123,7 +123,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Executed"
+      "inputValue":"${comment.execute}"
     },
 
     {

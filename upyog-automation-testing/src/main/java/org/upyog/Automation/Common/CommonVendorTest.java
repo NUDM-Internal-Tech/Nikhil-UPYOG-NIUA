@@ -77,7 +77,7 @@ public class CommonVendorTest extends BaseTest {
                         break;
 
 
-                    case "CONSTRUCTION_AND_DEMOLITION_VENDOR":
+                    case "CONSTRUCTION_AND_DEMOLITION":
 
                         ModuleWrapper.execute(
                                 "CONSTRUCTION_AND_DEMOLITION",

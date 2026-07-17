@@ -86,7 +86,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Forwarded",
+      "inputValue":"${comment.forward}",
       "dynamicSleep": 3000
     },
 
@@ -245,7 +245,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Forwarded",
+      "inputValue":"${comment.forward}",
       "dynamicSleep": 2000
     },
 
@@ -314,7 +314,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"payerMobile",
       "action":"TYPE",
-      "inputValue":"9999999999",
+      "inputValue":"${mobile.number}",
       "dynamicSleep": 2000
     },
 
@@ -323,7 +323,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"instrumentNumber",
       "action":"TYPE",
-      "inputValue":"GEN123456",
+      "inputValue":"${receipt.number}",
       "dynamicSleep": 2000
     },
 

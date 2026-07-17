@@ -101,6 +101,7 @@ public class ModuleTestService {
     private String executeSingleModule(
             String moduleName,
             String citizenUrl
+
     ) {
 
         switch (moduleName.toUpperCase()) {
@@ -254,6 +255,16 @@ public class ModuleTestService {
                         "test-config/waterAndSewerage/water_and_sewerage_workflow.json",
                         "test-config/waterAndSewerage/water_and_sewerage_stakeholder_module.json",
                         citizenUrl
+                );
+
+                return "Workflow Executed";
+
+            case "ASSET_MANAGEMENT_SYSTEM":
+
+                workflowExecutor.executeWorkflow(
+                        "test-config/asset/asset_workflow.json",
+                        "test-config/asset/asset_stakeholder_module.json",
+                        citizenUrl.replace("/citizen/login", "/employee/login")
                 );
 
                 return "Workflow Executed";

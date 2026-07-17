@@ -67,13 +67,14 @@ public class CitizenTestService {
         WorkflowDataStore.put("selected.env", env);
 
         // Selecting City based on Url
-        String prefix = env.toLowerCase();
+        if (cityName == null || cityName.isBlank()) {
 
-        cityName = ConfigReader.get(prefix + ".city");
+            String prefix = env.toLowerCase();
+
+            cityName = ConfigReader.get(prefix + ".city");
+        }
 
         WorkflowDataStore.put("selected.city", cityName);
-
-        logger.info("Selected ENV: {}", env);
 
         try {
 

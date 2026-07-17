@@ -105,7 +105,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Forwarded",
+      "inputValue":"${comment.verify}",
       "dynamicSleep": 3000
     },
 
@@ -283,7 +283,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Forwarded"
+      "inputValue":"${comment.forward}"
     },
 
 
@@ -364,7 +364,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Approved"
+      "inputValue":"${comment.approve}"
     },
 
 
@@ -419,7 +419,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"comments",
       "action":"TYPE",
-      "inputValue":"Approved"
+      "inputValue":"${comment.approve}"
     },
 
 

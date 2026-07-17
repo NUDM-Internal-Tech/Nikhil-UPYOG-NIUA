@@ -58,59 +58,26 @@
       "inputValue": null,
       "dynamicSleep": 4000
     },
-      {
-        "stepName": "Open Cards Section",
-        "locatorStrategy": "ID",
-        "locatorValue": "cardAccordionBtn",
-        "action": "CLICK",
-        "dynamicSleep": 1000
-      },
-      {
-        "stepName": "Enter Name On Card",
-        "locatorStrategy": "ID",
-        "locatorValue": "nameOnCard",
-        "action": "TYPE",
-        "inputValue": "Arpit",
-        "dynamicSleep": 500
-      },
-      {
-        "stepName": "Enter Card Number",
-        "locatorStrategy": "ID",
-        "locatorValue": "cardNoMasked",
-        "action": "TYPE",
-        "inputValue": "4111111111111111",
-        "dynamicSleep": 500
-      },
-      {
-        "stepName": "Select Expiry Month",
-        "locatorStrategy": "ID",
-        "locatorValue": "month",
-        "action": "SELECT_BY_VALUE",
-        "inputValue": "03",
-        "dynamicSleep": 500
-      },
-      {
-        "stepName": "Select Expiry Year",
-        "locatorStrategy": "ID",
-        "locatorValue": "year",
-        "action": "SELECT_BY_VALUE",
-        "inputValue": "2033",
-        "dynamicSleep": 500
-      },
-      {
-        "stepName": "Enter CVV",
-        "locatorStrategy": "ID",
-        "locatorValue": "cvv",
-        "action": "TYPE",
-        "inputValue": "123",
-        "dynamicSleep": 500
-      },
     {
-      "stepName":"Click Pay Now",
-      "locatorStrategy":"XPATH",
-      "locatorValue":"//button[@id='payBtn2' and contains(@style,'display: block')]",
-      "action":"CLICK_JS",
-      "dynamicSleep":5000
+      "stepName": "Open Cards Section",
+      "locatorStrategy": "ID",
+      "locatorValue": "nbAccordionBtn",
+      "action": "CLICK",
+      "dynamicSleep": 1000
+    },
+    {
+      "stepName": "Select Test Bank",
+      "locatorStrategy": "XPATH",
+      "locatorValue": "//input[@type='radio' and @value='Test Bank']",
+      "action": "CLICK_JS",
+      "dynamicSleep": 1000
+    },
+    {
+      "stepName": "Click Pay Now",
+      "locatorStrategy": "ID",
+      "locatorValue": "paytBtn1",
+      "action": "CLICK",
+      "dynamicSleep": 3000
     },
     {
       "stepName": "Enter OTP",
@@ -126,6 +93,11 @@
       "locatorValue": "//button[@onclick='cardsubmit()']",
       "action": "CLICK_JS",
       "dynamicSleep": 5000
+    },
+    {
+      "stepName": "Accept Transaction Alert",
+      "action": "ACCEPT_ALERT",
+      "dynamicSleep": 1000
     }
-    ]
+  ]
 }

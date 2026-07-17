@@ -32,16 +32,26 @@ public class WorkflowExecutor {
             String stakeholderPath,
             String citizenUrl
     ) {
-        String employeeUrl =
-                citizenUrl.replace(
-                        "/citizen/login",
-                        "/employee/login"
-                );
+        String employeeUrl = citizenUrl;
+
+        if (citizenUrl.contains("/citizen/login")) {
+            employeeUrl = citizenUrl.replace(
+                    "/citizen/login",
+                    "/employee/login"
+            );
+        }
+        logger.info("ENTERED executeWorkflow()");
+        logger.info("Workflow Path : {}", workflowPath);
+        logger.info("Stakeholder Path : {}", stakeholderPath);
+        logger.info("Citizen URL : {}", citizenUrl);
 
 
         WorkflowData workflow =
                 WorkflowConfigLoader.load(workflowPath);
+        logger.info("Workflow Loaded : {}", workflow.getModuleName());
         WorkflowDataStore.remove("APPLICATION_NO");
+        WorkflowDataStore.remove("WATER_APPLICATION_NO");
+        WorkflowDataStore.remove("SEWERAGE_APPLICATION_NO");
 
         logger.info(
                 "APPLICATION_NO RESET"
@@ -127,20 +137,44 @@ public class WorkflowExecutor {
                                         + WorkflowDataStore.get("APPLICATION_NO")
                         );
 
-                        String applicationNo =
-                                WorkflowDataStore.get("APPLICATION_NO");
+                        String applicationNo;
 
-                        if (applicationNo == null ||
-                                applicationNo.isBlank()) {
+                        switch (step.getModule().toUpperCase()) {
 
-                            throw new RuntimeException(
-                                    "APPLICATION_NO not found in WorkflowDataStore"
-                            );
+                            case "WATER":
+                            case "WATER_EMP":
+                                applicationNo =
+                                        WorkflowDataStore.get("WATER_APPLICATION_NO");
+                                break;
 
+                            case "SEWERAGE":
+                            case "SEWERAGE_EMP":
+                                applicationNo =
+                                        WorkflowDataStore.get("SEWERAGE_APPLICATION_NO");
+                                break;
+
+                            default:
+                                applicationNo =
+                                        WorkflowDataStore.get("APPLICATION_NO");
+                                break;
                         }
-                        logger.info(
-                                "CALLING EMPLOYEE SERVICE"
-                        );
+
+                        logger.info("Using Application No = {}", applicationNo);
+
+                        if (applicationNo == null || applicationNo.isBlank()) {
+                            throw new RuntimeException(
+                                    "Application number not found."
+                            );
+                        }
+
+                        if (!"INITIATOR".equalsIgnoreCase(step.getRole())) {
+
+                            if (applicationNo == null || applicationNo.isBlank()) {
+                                throw new RuntimeException(
+                                        "APPLICATION_NO not found in WorkflowDataStore"
+                                );
+                            }
+                        }
 
                         employeeTestService.runEmployeeTest(
                                 employeeUrl,

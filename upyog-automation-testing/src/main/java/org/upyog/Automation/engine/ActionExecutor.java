@@ -223,6 +223,28 @@ public class ActionExecutor {
                     executeSelectByValue(instruction);
                     break;
 
+                case "SCROLL_TO_ELEMENT":
+                    executeScrollToElement(instruction);
+                    break;
+
+                case "WAIT_VISIBLE":
+                    executeWaitVisible(instruction);
+                    break;
+
+                case "SELECT_DATE_RANGE":
+                    executeSelectDateRange();
+                    break;
+
+                case "ACCEPT_ALERT":
+
+                    Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+
+                    logger.info("Alert Message : {}", alert.getText());
+
+                    alert.accept();
+
+                    break;
+
 
                 default:
                     throw new IllegalArgumentException(
@@ -911,28 +933,39 @@ public class ActionExecutor {
             );
         }
 
-        WorkflowDataStore.put(
-                instruction.getInputValue(),
-                capturedValue
-        );
+        String key = instruction.getInputValue();
 
-        // ADD THIS
-        TestDataStore.PERMIT_NUMBER = capturedValue;
-        TestDataStore.PERMIT_DATE = capturedValue;
+        WorkflowDataStore.put(key, capturedValue);
 
+        if (!"WATER_APPLICATION_NO".equals(key)
+                && !"SEWERAGE_APPLICATION_NO".equals(key)) {
+
+            WorkflowDataStore.put("APPLICATION_NO", capturedValue);
+        }
+
+// Existing logic
+        if ("PERMIT_NUMBER".equals(key)) {
+            TestDataStore.PERMIT_NUMBER = capturedValue;
+        }
+
+        if ("PERMIT_DATE".equals(key)) {
+            TestDataStore.PERMIT_DATE = capturedValue;
+        }
         logger.info(
                 "Captured [{}] = {}",
-                instruction.getInputValue(),
+                key,
                 capturedValue
         );
 
-        Thread.sleep(
-                instruction.getDynamicSleep()
-
-        );
+        Thread.sleep(instruction.getDynamicSleep());
         logger.info(
-                "WorkflowDataStore APPLICATION_NO = {}",
-                WorkflowDataStore.get("APPLICATION_NO")
+                "Water App No = {}",
+                WorkflowDataStore.get("WATER_APPLICATION_NO")
+        );
+
+        logger.info(
+                "Sewerage App No = {}",
+                WorkflowDataStore.get("SEWERAGE_APPLICATION_NO")
         );
         logger.info(
                 "Captured Value = {}",
@@ -1309,5 +1342,110 @@ public class ActionExecutor {
                 "Selected value '{}' from dropdown",
                 instruction.getInputValue()
         );
+    }
+
+    private void executeScrollToElement(TestInstruction instruction) {
+
+        By locator = locatorResolver.resolveLocator(instruction);
+
+        WebElement element = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(locator)
+        );
+
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center', inline:'nearest'});",
+                element
+        );
+
+        logger.info("Scrolled to element");
+    }
+    private void executeWaitVisible(TestInstruction instruction) {
+
+        By locator = locatorResolver.resolveLocator(instruction);
+
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(locator)
+        );
+
+        logger.info(
+                "Element is visible: {}",
+                instruction.getLocatorValue()
+        );
+
+        if (instruction.getDynamicSleep() > 0) {
+            try {
+                Thread.sleep(instruction.getDynamicSleep());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+    private void clickCalendar() {
+
+        WebElement calendar =
+                wait.until(ExpectedConditions.elementToBeClickable(
+                        By.cssSelector("svg.date-range-calendar-icon")));
+
+        calendar.click();
+    }
+    private void clickContinuous() {
+
+        WebElement continuous =
+                wait.until(ExpectedConditions.elementToBeClickable(
+                        By.xpath("//span[contains(@class,'rdrDateDisplayItem')][.//input[@placeholder='Continuous']]")));
+
+        continuous.click();
+    }
+    private void clickDate(int day) {
+
+        By locator = By.xpath(
+                "//button[contains(@class,'rdrDay')][.//span[@class='rdrDayNumber']/span[text()='" + day + "']]"
+        );
+
+        WebElement date = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(locator)
+        );
+
+        actions.moveToElement(date)
+                .click()
+                .perform();
+
+        logger.info("Clicked Date = {}", day);
+    }
+
+    private void executeSelectDateRange() throws InterruptedException {
+
+        LocalDate start = LocalDate.now().plusDays(1);
+        LocalDate end = LocalDate.now().plusDays(3);
+
+        // Calendar already open from JSON step "Open Calendar"
+
+        // First date
+        clickDate(start.getDayOfMonth());
+
+        logger.info("Start Date Selected");
+
+        Thread.sleep(1000);
+
+        // Calendar closed automatically
+
+        // Open calendar again
+        clickCalendar();
+
+        Thread.sleep(800);
+
+        // Click Continuous box
+        clickContinuous();
+
+        logger.info("Clicked Continuous Box");
+
+        Thread.sleep(500);
+
+        // End date
+        clickDate(end.getDayOfMonth());
+
+        logger.info("End Date Selected");
+
+        logger.info("Date Range Selected : {} -> {}", start, end);
     }
 }

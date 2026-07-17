@@ -4,13 +4,13 @@
   "citizen": {
     "mobile": "7906413996",
     "otp": "123456",
-    "city": "City A"
+    "city": "Mohali"
   },
 
   "employee": {
     "username": "CHB_CEMP",
     "password": "eGov@123",
-    "city": "City A"
+    "city": "Mohali"
   },
 
   "vendor": {

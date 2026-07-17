@@ -6,12 +6,16 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.upyog.Automation.model.ReportDto;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.Arrays;
@@ -21,6 +25,9 @@ import java.util.Comparator;
 @RequestMapping("/api/report")
 public class ReportController {
 
+    private static final Logger logger =
+            LoggerFactory.getLogger(ReportController.class);
+
     private File getLatestReport() {
 
         File reportDir =
@@ -29,8 +36,7 @@ public class ReportController {
         File[] files =
                 reportDir.listFiles(
                         (dir, name) ->
-                                name.startsWith("Execution_")
-                                        && name.endsWith(".html")
+                                name.endsWith(".html")
                 );
 
         if (files == null || files.length == 0) {
@@ -93,13 +99,13 @@ public class ReportController {
         File[] files =
                 reportDir.listFiles(
                         (dir, name) ->
-                                name.startsWith("Execution_")
-                                        && name.endsWith(".html")
+                                name.endsWith(".html")
                 );
 
         if (files == null) {
             return ResponseEntity.ok(new String[0]);
         }
+        logger.info("Total reports found : {}", files.length);
         Arrays.sort(
                 files,
                 Comparator.comparingLong(File::lastModified)
@@ -172,13 +178,14 @@ public class ReportController {
     public List<ReportDto> getReportsByModule(@PathVariable String moduleName) {
 
         File reportDir = new File("target/reports");
+        logger.info("GET REPORTS API CALLED FOR MODULE : {}", moduleName);
 
         if (!reportDir.exists()) {
             return new ArrayList<>();
         }
 
         File[] files = reportDir.listFiles((dir, name) ->
-                name.startsWith("Execution_" + moduleName.toUpperCase() + "_")
+                name.startsWith(moduleName.toUpperCase() + "_")
                         && name.endsWith(".html"));
 
         if (files == null) {
@@ -188,7 +195,7 @@ public class ReportController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss a");
 
-        return java.util.Arrays.stream(files)
+        return Arrays.stream(files)
                 .sorted(Comparator.comparingLong(File::lastModified).reversed())
                 .limit(5)
                 .map(file -> {
@@ -196,6 +203,33 @@ public class ReportController {
                     Date modified = new Date(file.lastModified());
 
                     ReportDto dto = new ReportDto();
+
+                    logger.info("Processing report : {}", file.getName());
+
+                    try {
+
+                        String html = Files.readString(file.toPath());
+
+                        logger.info("HTML LENGTH = {}", html.length());
+                        logger.info("HAS fail-bg = {}", html.contains("fail-bg"));
+                        logger.info("HAS Fail = {}", html.contains("Fail"));
+                        logger.info("HAS FAIL = {}", html.contains("FAIL"));
+                        logger.info("FILE = {}", file.getAbsolutePath());
+
+                        if (html.contains("fail-bg")) {
+                            dto.setStatus("FAIL");
+                        } else {
+                            dto.setStatus("PASS");
+                        }
+
+                        logger.info("FINAL STATUS = {}", dto.getStatus());
+
+                    } catch (IOException e) {
+                        dto.setStatus("UNKNOWN");
+                    }
+
+                    logger.info("Final status : {}", dto.getStatus());
+
                     dto.setFileName(file.getName());
                     dto.setDate(dateFormat.format(modified));
                     dto.setTime(timeFormat.format(modified));

@@ -93,7 +93,7 @@
       "locatorStrategy": "XPATH",
       "locatorValue": "//input[@name='wasteRecieved']",
       "action": "TYPE",
-      "inputValue": "500",
+      "inputValue": "${septage.dump}",
       "dynamicSleep": 1000
     },{
       "stepName":"Take Action",

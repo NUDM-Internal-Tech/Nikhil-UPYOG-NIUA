@@ -8,19 +8,19 @@
       "type": "CITIZEN",
       "module": "WATER_AND_SEWERAGE"
     },
-
-    {
-      "name": "Employee Water Flow",
-      "type": "EMPLOYEE",
-      "module": "WATER",
-      "role": "UPYOGADMIN"
-    },
-
     {
       "name": "Employee Sewerage Flow",
       "type": "EMPLOYEE",
-      "module": "SEWERAGE",
-      "role": "UPYOGADMIN"
+      "module": "SEWERAGE_EMP",
+      "role": "SEWERAGE"
+    },
+    {
+      "name": "Employee Water Flow",
+      "type": "EMPLOYEE",
+      "module": "WATER_EMP",
+      "role": "WATER"
     }
+
+
   ]
 }

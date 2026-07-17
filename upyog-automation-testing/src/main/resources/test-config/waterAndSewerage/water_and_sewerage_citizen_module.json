@@ -29,7 +29,7 @@
       "locatorStrategy":"XPATH",
       "locatorValue":"//h2[contains(.,'Mobile number')]/following::input[1]",
       "action":"TYPE",
-      "inputValue":"7906413996"
+      "inputValue": "${mobile.number}"
     },
     {
       "stepName":"Search Property",
@@ -83,7 +83,7 @@
       "locatorStrategy":"CSS",
       "locatorValue":"input.employee-card-input",
       "action":"TYPE",
-      "inputValue":"10",
+      "inputValue":"${closets.proposed}",
       "dynamicSleep": 2000
     },
     {
@@ -106,7 +106,7 @@
       "locatorStrategy":"XPATH",
       "locatorValue":"(//input[contains(@class,'employee-card-input')])[1]",
       "action":"TYPE",
-      "inputValue":"10",
+      "inputValue":"${water.proposed}",
       "dynamicSleep":2000
     },
     {
@@ -114,7 +114,7 @@
       "locatorStrategy":"XPATH",
       "locatorValue":"(//input[contains(@class,'employee-card-input')])[2]",
       "action":"TYPE",
-      "inputValue":"3",
+      "inputValue":"${toilet.seats}",
       "dynamicSleep":2000
     },
     {
@@ -193,12 +193,19 @@
       "locatorStrategy":"XPATH",
       "locatorValue":"//button[contains(.,'Next')]",
       "action":"CLICK_JS",
-      "dynamicSleep": 2000
+      "dynamicSleep": 4000
+    },
+    {
+      "stepName": "Scroll To Submit",
+      "locatorStrategy": "XPATH",
+      "locatorValue": "//button[.//header[normalize-space()='SUBMIT']]",
+      "action": "SCROLL_TO_ELEMENT",
+      "dynamicSleep": 1000
     },
     {
       "stepName":"Submit Application",
-      "locatorStrategy":"XPATH",
-      "locatorValue":"//button[@class='submit-bar ' and @type='button'][.//header[text()='SUBMIT']]",
+      "locatorStrategy": "XPATH",
+      "locatorValue": "//button[contains(@class,'submit-bar') and @type='button'][.//header[normalize-space()='SUBMIT']]",
       "action":"CLICK_JS",
       "dynamicSleep": 2000
     },

@@ -214,7 +214,7 @@
       "locatorStrategy": "XPATH",
       "locatorValue":"//input[@placeholder='Enter road width in meters']",
       "action":"TYPE",
-      "inputValue":"200",
+      "inputValue":"${road.width}",
       "dynamicSleep": 1000
     },
     {
@@ -222,7 +222,7 @@
       "locatorStrategy":"XPATH",
       "locatorValue":"//input[@placeholder='Enter distance of pit from road']",
       "action":"TYPE",
-      "inputValue":"300",
+      "inputValue":"${distance.pit}",
       "dynamicSleep": 1000
     },
     {

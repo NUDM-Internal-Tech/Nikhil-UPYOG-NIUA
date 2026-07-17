@@ -88,7 +88,7 @@
       "locatorStrategy": "XPATH",
       "locatorValue": "//textarea[@name='comments']",
       "action": "TYPE",
-      "inputValue": "Product verified",
+      "inputValue": "${comment.verify}",
       "dynamicSleep": 500
     },
     {
@@ -128,7 +128,7 @@
       "locatorStrategy": "XPATH",
       "locatorValue": "//textarea[@name='comments']",
       "action": "TYPE",
-      "inputValue": "Pickup Alert",
+      "inputValue": "${comment.pickup}",
       "dynamicSleep": 500
     },
     {
@@ -176,7 +176,7 @@
       "locatorStrategy": "XPATH",
       "locatorValue": "//textarea[@name='comments']",
       "action": "TYPE",
-      "inputValue": "Completed",
+      "inputValue": "${comment.complete}",
       "dynamicSleep": 500
     },
     {

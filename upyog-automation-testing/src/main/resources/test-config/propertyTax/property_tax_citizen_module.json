@@ -314,7 +314,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"name",
       "action":"TYPE",
-      "inputValue":"Arpit Rao",
+      "inputValue": "${applicant.name}",
       "dynamicSleep":1000
     },
 
@@ -332,7 +332,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"mobileNumber",
       "action":"TYPE",
-      "inputValue":"7906413996",
+      "inputValue": "${mobile.number}",
       "dynamicSleep":1000
     },
 
@@ -341,7 +341,7 @@
       "locatorStrategy":"XPATH",
       "locatorValue":"//h2[contains(.,'Guardian')]/following::input[1]",
       "action":"TYPE",
-      "inputValue":"Ramesh Rao",
+      "inputValue":"${applicant.guardian}",
       "dynamicSleep":1000
     },
 
@@ -358,7 +358,7 @@
       "locatorStrategy":"NAME",
       "locatorValue":"email",
       "action":"TYPE",
-      "inputValue":"Asdj@gmail.com",
+      "inputValue": "${applicant.email}",
       "dynamicSleep":1000
     },
     {
