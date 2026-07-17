@@ -7,6 +7,7 @@ All notable changes to this module will be documented in this file.
 ### Changed
 - **LTS Upgrade**: Upgraded the project to Java 17 LTS.
 - **LTS Upgrade**: Upgraded Spring Boot to version 3.2.2.
+- **Namespace Migration**: Migrated imports from `javax.*` to `jakarta.*` (e.g., validation) to support Spring Boot 3.
 - **Dependencies Added/Upgraded**: 
   - Migrated from `commons-lang` to `commons-lang3` (v3.14.0) for Java 17 compatibility.
   - Added `springdoc-openapi-starter-webmvc-ui` (2.3.0) for Swagger/OpenAPI support with Spring Boot 3.
