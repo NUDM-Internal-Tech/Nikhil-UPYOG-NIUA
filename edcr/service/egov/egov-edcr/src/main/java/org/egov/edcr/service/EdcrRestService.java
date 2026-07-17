@@ -902,24 +902,29 @@ public class EdcrRestService {
             // Retrieve and populate plan PDF details for the cross-tenant BPA response
             List<String> planPdfs = new ArrayList<>();
             LOG.info("--applicationDetails for planpdfs: " + Arrays.toString(applnDtls));
+            LOG.info("applicationDetails length: " + applnDtls.length + ", Index 15 value: " + (applnDtls.length > 15 ? applnDtls[15] : "N/A"));
             if (applnDtls.length > 15 && applnDtls[15] != null) {
                 Long applicationDetailId = Long.valueOf(String.valueOf(applnDtls[15]));
                 List<EdcrPdfDetail> pdfDetails = edcrPdfDetailService.findByDcrApplicationId(applicationDetailId);
+                LOG.info("Fetched " + pdfDetails.size() + " plan PDFs for applicationDetailId: " + applicationDetailId);
                 for (EdcrPdfDetail planPdf : pdfDetails) {
+                    LOG.info("Processing planPdf: " + planPdf.getLayer() + ", ConvertedPdf: " + objectMapper.writeValueAsString(planPdf.getConvertedPdf()));
                     if (planPdf.getConvertedPdf() != null) {
-                        if (LOG.isInfoEnabled()) {
-                            LOG.info("Generating cross-tenant planPdf URL. Resolved tenantId: " + tenantId
-                                    + ", ThreadLocal tenantId: " + ApplicationThreadLocals.getTenantID()
-                                    + ", FileStoreId: " + planPdf.getConvertedPdf().getFileStoreId());
-                        }
+                        LOG.info("Generating cross-tenant planPdf URL. Resolved tenantId: " + tenantId
+                                + ", ThreadLocal tenantId: " + ApplicationThreadLocals.getTenantID()
+                                + ", FileStoreId: " + planPdf.getConvertedPdf().getFileStoreId());
+
                         // Generate download URL using the application's actual tenantId
                         String downloadURL = format(getFileDownloadUrl(
                                 planPdf.getConvertedPdf().getFileStoreId(),
                                 tenantId));
+                        LOG.info("Generated cross-tenant download URL for " + planPdf.getLayer() + ": " + downloadURL);
                         planPdfs.add(planPdf.getLayer().concat(" - ").concat(downloadURL));
+                    } else {
+                        LOG.info("No converted PDF found for planPdf: " + planPdf.getLayer());
                     }
                 }
-            }else{
+            } else {
                 LOG.info("No plan PDFs found for applicationDetailId: " + (applnDtls.length > 15 ? applnDtls[15] : "N/A"));
             }
             LOG.info("Setting planPDFs for cross-tenant response: " + planPdfs);
