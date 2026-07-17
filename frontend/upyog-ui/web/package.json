@@ -36,8 +36,9 @@
     "micro-ui-internals/packages/modules/challanGeneration",
     "micro-ui-internals/packages/react-components",
     "micro-ui-internals/packages/modules/ads",
-    "micro-ui-internals/packages/modules/gc"
-  ],  
+    "micro-ui-internals/packages/modules/gc",
+    "micro-ui-internals/packages/css"
+  ],
   "engines": {
     "node": ">=22"
   },
