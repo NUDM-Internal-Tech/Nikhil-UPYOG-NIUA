@@ -21,6 +21,7 @@ connectProducer().catch(err => {
 
 // Adapter preserves kafka-node send(payloads, callback) signature
 // so create.js and update.js need zero changes
+// callback follows Node.js error-first convention: callback(err) on failure, callback(null, true) on success.
 const send = async (payloads, callback) => {
   try {
     for (const payload of payloads) {
