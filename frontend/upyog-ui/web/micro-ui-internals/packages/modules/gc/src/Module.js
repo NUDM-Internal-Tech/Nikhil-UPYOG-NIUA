@@ -18,12 +18,10 @@ import EmployeeApp from "./pages/employee";
 import Inbox from "./pages/employee/Inbox";
 import SearchApp from "./pages/employee/SearchApp";
 import CreateApplication from "./pages/employee/Create";
-import GCECard from "./components/GCECard";
 
 const componentsToRegister = {
   GCCreate,
   GCCard,
-  GCECard,
   ApplicantDetails,
   GCSpecifications,
   GCPropertyLocDetails,
@@ -72,38 +70,8 @@ export const GCModule = ({ stateCode, userType, tenants }) => {
   return <CitizenApp />;
 };
 
-export const GCLinks = ({ matchPath, userType }) => {
-  const { t } = useTranslation();
-  const [, , clearParams] = Digit.Hooks.useSessionStorage("GC_REGISTRATION", {});
-
-  useEffect(() => {
-    clearParams();
-  }, []);
-
-  const links = [
-    {
-      i18nKey: t("GC_NEW_APPLICATION"),
-      link: `/${window?.contextPath}/citizen/gc/new-registration`,
-    },
-    {
-      i18nKey: t("GC_MY_APPLICATIONS"),
-      link: `/${window?.contextPath}/citizen/gc/my-applications`,
-    },
-  ];
-
-  return (
-    <CitizenHomeCard
-      header={t("ACTION_TEST_GC")}
-      links={links}
-      Icon={() => <PTIcon className="fill-path-primary-main" />}
-    />
-  );
-};
-
 
 export const GCComponents = {
   GCCard,
-  GCECard,
-  GCModule,
-  GCLinks,
+  GCModule
 };

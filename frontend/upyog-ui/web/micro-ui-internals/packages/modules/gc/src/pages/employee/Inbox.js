@@ -19,7 +19,7 @@ const Inbox = () => {
   const { isLoading, data } = Digit.Hooks.gc.useGCSearch({
     tenantId,
     // Request a larger limit so we can paginate locally
-    filters: { limit: 10000, offset: 0 }
+    filters: { limit: 10, offset: 0 }
   });
 
   let applications = data?.garbageAccounts || data?.GarbageApplications || data?.data || [];

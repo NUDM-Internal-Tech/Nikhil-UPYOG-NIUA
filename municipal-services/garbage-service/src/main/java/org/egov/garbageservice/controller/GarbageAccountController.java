@@ -42,7 +42,6 @@ import org.egov.tracer.model.CustomException;
 @Slf4j
 @Tag(name = "Garbage Account", description = "APIs for managing garbage accounts")
 @RestController
-@CrossOrigin("*") // Changed from "http://localhost:3000" to "*"
 @RequestMapping("/garbage-accounts")
 /**
  * REST controller exposing garbage account lifecycle and citizen-facing APIs.
