@@ -538,9 +538,15 @@ public class EdcrRestService {
 
         for (EdcrPdfDetail planPdf : edcrApplnDtl.getEdcrPdfDetails()) {
             if (planPdf.getConvertedPdf() != null) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Generating planPdf URL. Resolved tenantId: " + tenantId
+                            + ", ThreadLocal tenantId: " + ApplicationThreadLocals.getTenantID()
+                            + ", FileStoreId: " + planPdf.getConvertedPdf().getFileStoreId());
+                }
                 String downloadURL = format(getFileDownloadUrl(
                         planPdf.getConvertedPdf().getFileStoreId(),
-                        ApplicationThreadLocals.getTenantID()));
+                        tenantId));
+                LOG.info("Generated download URL for layer " + planPdf.getLayer() + ": " + downloadURL);
                 planPdfs.add(planPdf.getLayer().concat(" - ").concat(downloadURL));
 
             }
@@ -640,9 +646,16 @@ public class EdcrRestService {
 
         for (EdcrPdfDetail planPdf : edcrApplnDtl.getEdcrPdfDetails()) {
             if (planPdf.getConvertedPdf() != null) {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info("Generating planPdf URL. Resolved tenantId: " + tenantId
+                            + ", ThreadLocal tenantId: " + ApplicationThreadLocals.getTenantID()
+                            + ", FileStoreId: " + planPdf.getConvertedPdf().getFileStoreId());
+                }
                 String downloadURL = format(getFileDownloadUrl(
                         planPdf.getConvertedPdf().getFileStoreId(),
-                        ApplicationThreadLocals.getTenantID()));
+                        tenantId));
+                LOG.info("Generated download URL for layer " + planPdf.getLayer() + ": " + downloadURL);
+
                 planPdfs.add(planPdf.getLayer().concat(" - ").concat(downloadURL));
                 // Add null safety checks to prevent NPEs if the planDetail or its PDF list is empty
                 if (edcrDetail.getPlanDetail() != null && edcrDetail.getPlanDetail().getEdcrPdfDetails() != null) {
@@ -883,6 +896,11 @@ public class EdcrRestService {
             List<EdcrPdfDetail> pdfDetails = edcrPdfDetailService.findByDcrApplicationId(applicationDetailId);
             for (EdcrPdfDetail planPdf : pdfDetails) {
                 if (planPdf.getConvertedPdf() != null) {
+                    if (LOG.isInfoEnabled()) {
+                        LOG.info("Generating cross-tenant planPdf URL. Resolved tenantId: " + tenantId
+                                + ", ThreadLocal tenantId: " + ApplicationThreadLocals.getTenantID()
+                                + ", FileStoreId: " + planPdf.getConvertedPdf().getFileStoreId());
+                    }
                     // Generate download URL using the application's actual tenantId
                     String downloadURL = format(getFileDownloadUrl(
                             planPdf.getConvertedPdf().getFileStoreId(),
