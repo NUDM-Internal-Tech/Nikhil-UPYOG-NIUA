@@ -369,9 +369,9 @@ eSign:{
   },
 
  gc: {
-    create: "http://localhost:1235/gc-services/garbage-accounts/_create",
-    search: "http://localhost:1235/gc-services/garbage-accounts/_search",
-    update: "http://localhost:1235/gc-services/garbage-accounts/_update",
+    create: "/gc-services/garbage-accounts/_create",
+    search: "/gc-services/garbage-accounts/_search",
+    update: "/gc-services/garbage-accounts/_update",
   }
 };
 
