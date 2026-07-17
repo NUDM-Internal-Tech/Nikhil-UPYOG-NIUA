@@ -56,7 +56,6 @@ public class ServiceConstants {
     public static final String MDMS_MODULE_ESTATE      = "Estate";
     public static final String MDMS_MASTER_PENALTY     = "Penalty";
     public static final String MDMS_PENALTY_RATE_KEY   = "rate";
-    public static final String MDMS_DEFAULT_PENALTY    = "0.05";
 
     // Error codes
     public static final String PARSING_ERROR_CODE = "PARSING ERROR";
