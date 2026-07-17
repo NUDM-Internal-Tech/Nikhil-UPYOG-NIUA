@@ -117,14 +117,15 @@ public class MdmsUtil {
      * @param tenantId tenant identifier
      * @return penalty rate as a decimal value
      */
-    @SuppressWarnings("unchecked")
-    public BigDecimal getPenaltyRate(RequestInfo requestInfo, String tenantId) {
+   @SuppressWarnings("unchecked")
+   public BigDecimal getPenaltyRate(RequestInfo requestInfo, String tenantId) {
         try {
             Object mdmsData = mDMSCall(requestInfo, tenantId);
             Map<String, Object> mdmsMap = (Map<String, Object>) mdmsData;
             List<Map<String, Object>> penaltyList = (List<Map<String, Object>>)
                     ((Map<String, Object>) ((Map<String, Object>) mdmsMap
                             .get(MDMS_RES)).get(MDMS_MODULE_ESTATE)).get(MDMS_MASTER_PENALTY);
+    
             if (penaltyList != null && !penaltyList.isEmpty()) {
                 Object rate = penaltyList.get(0).get(MDMS_PENALTY_RATE_KEY);
                 if (rate != null) {
@@ -134,11 +135,20 @@ public class MdmsUtil {
                     return penaltyRate;
                 }
             }
-            log.warn("Penalty master empty in MDMS, defaulting to 5%");
+    
+            log.warn("Penalty master is empty in MDMS.");
+            throw new CustomException(
+                    "PENALTY_RATE_NOT_FOUND",
+                    "Penalty rate is not configured in MDMS."
+            );
+    
         } catch (Exception e) {
-            log.error("Failed to fetch penalty rate from MDMS, defaulting to 5%: {}", e.getMessage(), e);
+            log.error("Failed to fetch penalty rate from MDMS: {}", e.getMessage(), e);
+            throw new CustomException(
+                    "MDMS_FETCH_ERROR",
+                    "Unable to fetch penalty rate from MDMS."
+            );
         }
-        return new BigDecimal(MDMS_DEFAULT_PENALTY);
     }
 
     /**
