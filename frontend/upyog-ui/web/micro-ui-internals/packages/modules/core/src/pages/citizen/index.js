@@ -1,7 +1,7 @@
 import { BackButton, WhatsappIcon, Card, CitizenHomeCard, CitizenInfoLabel, PrivateRoute, AdvertisementModuleCard } from "@nudmcdgnpm/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Route, Routes,  Link } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import ErrorBoundary from "../../components/ErrorBoundaries";
 import { AppHome, processLinkData } from "../../components/Home";
 import TopBarSideBar from "../../components/TopBarSideBar";
@@ -101,22 +101,22 @@ const Home = (props) => {
   const hideSidebar = sidebarHiddenFor.some((e) => window.location.href.includes(e));
 
   const appRoutes = modules.map(({ code, tenants }, index) => {
-  const Module = Digit.ComponentRegistryService.getComponent(`${code}Module`);
-  return Module ? (
-    <Route
-      key={index}
-      path={`${code.toLowerCase()}/*`}
-      element={
-        <Module
-          stateCode={stateCode}
-          moduleCode={code}
-          userType="citizen"
-          tenants={getTenants(tenants, appTenants)}
-        />
-      }
-    />
-  ) : null;
-});
+    const Module = Digit.ComponentRegistryService.getComponent(`${code}Module`);
+    return Module ? (
+      <Route
+        key={index}
+        path={`${code.toLowerCase()}/*`}
+        element={
+          <Module
+            stateCode={stateCode}
+            moduleCode={code}
+            userType="citizen"
+            tenants={getTenants(tenants, appTenants)}
+          />
+        }
+      />
+    ) : null;
+  });
 
   const { data: advertisement } = Digit.Hooks.useCustomMDMS(
     Digit.ULBService.getStateId(),
@@ -140,66 +140,101 @@ const Home = (props) => {
       },
     }
   );
-
+  let FireNoc = [
+    {
+      "id": 6161,
+      "name": "NEW_APPLICATION",
+      "url": "digit-ui-card",
+      "displayName": "New Application",
+      "orderNumber": 1,
+      "parentModule": "FIRENOC",
+      "enabled": true,
+      "serviceCode": "FIRENOC",
+      "code": "null",
+      "path": "",
+      "navigationURL": "/digit-ui/citizen/firenoc/new-application",
+      "leftIcon": "CHBIcon",
+      "rightIcon": "",
+      "queryParams": "",
+      "sidebar": "digit-ui-links",
+      "sidebarURL": "/digit-ui/citizen/firenoc-home",
+      "link": "/digit-ui/citizen/firenoc/new-application",
+      "i18nKey": "New Application"
+    }
+  ]
+  if (linkData) {
+    linkData.FireNoc = FireNoc;
+  }
   const Advertisement = advertisement || [];
 
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage }, index) => {
-  let mdmsDataObj = isLinkDataFetched ? processLinkData(linkData, code, t) : undefined;
-  mdmsDataObj?.links && mdmsDataObj?.links.sort((a, b) => a.orderNumber - b.orderNumber);
+    let mdmsDataObj = isLinkDataFetched ? processLinkData(linkData, code, t) : undefined;
+    mdmsDataObj?.links && mdmsDataObj?.links.sort((a, b) => a.orderNumber - b.orderNumber);
 
-  return (
-    <React.Fragment key={index}>
-      <Route
-        path={`${code.toLowerCase()}-home`}
-        element={
-          <div className="moduleLinkHomePage">
-            <img src={"https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+%281920x500%29B+%282%29.jpg" || bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
-            <BackButton className="moduleLinkHomePageBackButton" />
-            {isMobile ? <h4 style={{top:"calc(16vw + 40px)",left:"1.5rem",position:"absolute",color:"white"}}>{t("MODULE_" + code.toUpperCase())}</h4> : <h1>{t("MODULE_" + code.toUpperCase())}</h1>}
-            <div className="moduleLinkHomePageModuleLinks">
-              {mdmsDataObj && (
-                <CitizenHomeCard
-                  header={t(mdmsDataObj?.header)}
-                  links={mdmsDataObj?.links}
-                  Icon={() => <span />}
-                  Info={code === "OBPS" ? () => (
-                    <CitizenInfoLabel
-                      style={{ margin: "0px", padding: "10px" }}
-                      info={t("CS_FILE_APPLICATION_INFO_LABEL")}
-                      text={t(`BPA_CITIZEN_HOME_STAKEHOLDER_INCLUDES_INFO_LABEL`)}
-                    />
-                  ) : null}
-                  isInfo={code === "OBPS" ? true : false}
-                />
-              )}
-            </div>
-            {code?.toUpperCase() === "ADS" && (
-              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
-                {Advertisement.map((ad, index) => (
-  <AdvertisementModuleCard
-    key={ad?.poleNo || ad?.title || index}
-    imageSrc={ad.imageSrc}
-    poleNo={ad.poleNo}
-    light={ad.light}
-    title={ad.title}
-    location={ad.location}
-    price={ad.price}
-    path={`/upyog-ui/citizen/${code.toLowerCase()}/`}
-    adType={ad.adtype}
-    faceArea={ad.faceArea}
-  />
-))}
+    if (code.toUpperCase() === "FIRENOC") {
+      const NOCCitizenHome = Digit?.ComponentRegistryService?.getComponent("NOCCitizenHome");
+      return (
+        <Route
+          path={`${code.toLowerCase()}-home`}
+          element={NOCCitizenHome ? <NOCCitizenHome /> : <div>Loading...</div>}
+          key={index}
+        />
+      );
+    }
+
+    return (
+      <React.Fragment key={index}>
+        <Route
+          path={`${code.toLowerCase()}-home`}
+          element={
+            <div className="moduleLinkHomePage">
+              <img src={"https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+%281920x500%29B+%282%29.jpg" || bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+              {isMobile ? <h4 style={{ top: "calc(16vw + 40px)", left: "1.5rem", position: "absolute", color: "white" }}>{t("MODULE_" + code.toUpperCase())}</h4> : <h1>{t("MODULE_" + code.toUpperCase())}</h1>}
+              <div className="moduleLinkHomePageModuleLinks">
+                {mdmsDataObj && (
+                  <CitizenHomeCard
+                    header={t(mdmsDataObj?.header)}
+                    links={mdmsDataObj?.links}
+                    Icon={() => <span />}
+                    Info={code === "OBPS" ? () => (
+                      <CitizenInfoLabel
+                        style={{ margin: "0px", padding: "10px" }}
+                        info={t("CS_FILE_APPLICATION_INFO_LABEL")}
+                        text={t(`BPA_CITIZEN_HOME_STAKEHOLDER_INCLUDES_INFO_LABEL`)}
+                      />
+                    ) : null}
+                    isInfo={code === "OBPS" ? true : false}
+                  />
+                )}
               </div>
-            )}
-            <StaticDynamicCard moduleCode={code?.toUpperCase()} />
-          </div>
-        }
-      />
-      <Route path={`${code.toLowerCase()}-faq`} element={<FAQsSection module={code?.toUpperCase()} />} />
-      <Route path={`${code.toLowerCase()}-how-it-works`} element={<HowItWorks module={code?.toUpperCase()} />} />
-    </React.Fragment>
-  );
-});
+              {code?.toUpperCase() === "ADS" && (
+                <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between" }}>
+                  {Advertisement.map((ad, index) => (
+                    <AdvertisementModuleCard
+                      key={ad?.poleNo || ad?.title || index}
+                      imageSrc={ad.imageSrc}
+                      poleNo={ad.poleNo}
+                      light={ad.light}
+                      title={ad.title}
+                      location={ad.location}
+                      price={ad.price}
+                      path={`/upyog-ui/citizen/${code.toLowerCase()}/`}
+                      adType={ad.adtype}
+                      faceArea={ad.faceArea}
+                    />
+                  ))}
+                </div>
+              )}
+              <StaticDynamicCard moduleCode={code?.toUpperCase()} />
+            </div>
+          }
+        />
+        <Route path={`${code.toLowerCase()}-faq`} element={<FAQsSection module={code?.toUpperCase()} />} />
+        <Route path={`${code.toLowerCase()}-how-it-works`} element={<HowItWorks module={code?.toUpperCase()} />} />
+      </React.Fragment>
+    );
+  });
 
 
   return (
@@ -215,7 +250,7 @@ const Home = (props) => {
         showSidebar={true}
         linkData={linkData}
         islinkDataLoading={islinkDataLoading}
-         />
+      />
 
       <div className="main center-container citizen-home-container mb-25">
         {hideSidebar ? null : (
@@ -253,13 +288,13 @@ const Home = (props) => {
           <Route path="select-location" element={<LocationSelection />} />
           <Route path="error" element={<ErrorComponent initData={initData} goToHome={() => navigate("/upyog-ui/citizen")} />} />
           <Route path="all-services" element={
-            <AppHome 
-            userType="citizen"
+            <AppHome
+              userType="citizen"
               modules={modules}
               getCitizenMenu={linkData}
               fetchedCitizen={isLinkDataFetched}
               isLoading={islinkDataLoading}
-              />} />
+            />} />
           <Route path="feedback" element={<PrivateRoute><CitizenFeedback /></PrivateRoute>} />
           <Route path="feedback-acknowledgement" element={<PrivateRoute><AcknowledgementCF /></PrivateRoute>} />
           <Route path="user/profile" element={<PrivateRoute><UserProfile stateCode={stateCode} userType={"citizen"} cityDetails={cityDetails} /></PrivateRoute>} />

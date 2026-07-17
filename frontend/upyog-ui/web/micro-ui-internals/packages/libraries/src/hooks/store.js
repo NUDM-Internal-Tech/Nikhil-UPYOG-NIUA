@@ -7,10 +7,15 @@ export const useStore = ({ stateCode, moduleCode, language }) => {
 };
 
 export const useInitStore = (stateCode, enabledModules) => {
-  const { isLoading, error, isError, data } = queryTemplate({
+  const { isPending, error, isError, data } = queryTemplate({
     queryKey: ["initStore", stateCode, enabledModules],
     queryFn: () => StoreService.digitInitData(stateCode, enabledModules),
     config: { staleTime: Infinity },
   });
-  return { isLoading, error, isError, data };
+
+  if (data) {
+    StoreService.setInitData(data);
+  }
+
+  return { isLoading: isPending, error, isError, data };
 };
