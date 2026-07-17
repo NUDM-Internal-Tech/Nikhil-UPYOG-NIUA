@@ -218,7 +218,7 @@ const searchUser = async (requestInfo, uuid, header, tenantId) => {
   return users.length ? users[0] : {};
 };
 
-export const searchByMobileNumber = async (mobileNumber, tenantId, header) => {
+export const searchByMobileNumber = async (mobileNumber, tenantId, header, requestInfo) => {
   var userSearchReqCriteria = {};
   userSearchReqCriteria.userType = "CITIZEN";
   userSearchReqCriteria.tenantId = tenantId;

@@ -54,7 +54,7 @@ app.use("/", api({ config }));
 app.use((err, req, res, next) => {
   console.log(err);
   if (!err.errorType) {
-    res.status(err.status).json(err.data);
+    res.status(err.status || 500).json(err.data || { message: err.message });
   } else if (err.errorType == "custom") {
     res.status(400).json(err.errorReponse);
   } else {

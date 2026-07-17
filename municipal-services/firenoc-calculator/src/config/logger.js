@@ -1,3 +1,4 @@
+"use strict";
 import envVariables from "../envVariables";
 import winston from "winston";
 
