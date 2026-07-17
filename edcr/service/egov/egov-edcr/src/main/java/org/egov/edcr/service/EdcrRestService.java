@@ -114,6 +114,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -266,7 +269,19 @@ public class EdcrRestService {
             restTemplate = new RestTemplate();
             StringBuilder uri = new StringBuilder(indexerHost).append(egovIndexerUrl);
             LOG.info("URL created: " + uri.toString());
-            restTemplate.postForObject(uri.toString(), data, Object.class, topicName);
+
+            // Explicitly set Content-Type and Accept headers to application/json
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // Wrap the payload data and the headers in an HttpEntity
+            HttpEntity<Object> entity = new HttpEntity<>(data, headers);
+
+            // Make the call using the HttpEntity.
+            // This forces Spring to serialize 'data' as JSON.
+            restTemplate.postForObject(uri.toString(), entity, Object.class, topicName);
+
+//            restTemplate.postForObject(uri.toString(), data, Object.class, topicName);
             LOG.info("Data pushed in topic->edcr-create-application.\n Data pushed=> \n" + data);
         } catch (RestClientException e) {
             LOG.error("ERROR occurred while trying to push the data to indexer : ", e);
