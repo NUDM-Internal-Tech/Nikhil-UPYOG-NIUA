@@ -148,7 +148,7 @@ export const searchApiResponse = async (request, next = {}) => {
       }
       firenocIdQuery = `${firenocIdQuery} )`;
 
-    } else firenocIdQuery = `${firenocIdQuery} 1=0`;
+    } else firenocIdQuery = `${firenocIdQuery}'${queryObj.mobileNumber}'`;
 
     //firenocIdQuery = `${firenocIdQuery} )`;
     console.log("Firenoc ID Query -> " + firenocIdQuery);

@@ -13,6 +13,6 @@ export const apiPaths = [
   "/chb-services", "/adv-services", "/employee-dashboard",
   "/verification-service", "/asset-services", "/vendor-management",
   "/tp-services", "/pgr-ai-services", "/gis-dx-service", "/individual",
-  "/bpa-calculator", "/request-service", "/challan-generation", "/ndc-services",
+  "/bpa-calculator", "/request-service", "/challan-generation", "/ndc-services", 
   "/estate-management", "/ndc-calculator", "/gc-services", "/firenoc-calculator", "/firenoc-services"
 ];

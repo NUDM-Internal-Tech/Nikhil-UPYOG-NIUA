@@ -1,9 +1,7 @@
-import { Card, KeyNote, SubmitBar, Toast, CardSubHeader } from "@nudmcdgnpm/digit-ui-react-components";
+import { Card, KeyNote, SubmitBar, Toast,CardSubHeader } from "@nudmcdgnpm/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import { Link, } from "react-router-dom";
-
+import { Link,  } from "react-router-dom";
 import { getSlotSearchCriteria } from "../../../utils";
 
 /*
@@ -40,10 +38,10 @@ const AdsApplication = ({ application, tenantId, buttonLabel }) => {
   };
   */
   const slotSearchData = Digit.Hooks.ads.useADSSlotSearch();
-  let formdata = {
-    advertisementSlotSearchCriteria: getSlotSearchCriteria(application?.cartDetails, tenantId, {}, undefined, application?.bookingId)
-  };
-
+    let formdata = {
+      advertisementSlotSearchCriteria: getSlotSearchCriteria(application?.cartDetails, tenantId, {}, undefined, application?.bookingId)
+    };
+   
   const getBookingDateRange = (bookingSlotDetails) => {
     if (!bookingSlotDetails || bookingSlotDetails.length === 0) {
       return t("CS_NA");
@@ -58,30 +56,30 @@ const AdsApplication = ({ application, tenantId, buttonLabel }) => {
     }
   };
 
-  const handleMakePayment = async () => {
-    try {
-      /* Await the mutation and capture the result directly */
-      const result = await slotSearchData.mutateAsync(formdata);
-      let SlotSearchData = {
-        bookingId: application?.bookingId,
-        tenantId: tenantId,
-        cartDetails: application?.cartDetails,
-      };
-      const isSlotBooked = result?.advertisementSlotAvailabiltityDetails?.some((slot) => slot.slotStaus === "BOOKED");
-      /* timerValue is resolved directly from top-level of response payload per backend contract */
-      const timerValue = result?.timerValue;
-      if (isSlotBooked) {
-        setShowToast({ error: true, label: t("ADS_ADVERTISEMENT_ALREADY_BOOKED") });
-      } else {
-        navigate(
-          `/upyog-ui/citizen/payment/my-bills/${"adv-services"}/${application?.bookingNo}`,
-          { state: { tenantId: application?.tenantId, bookingNo: application?.bookingNo, timerValue: timerValue, SlotSearchData: SlotSearchData } }
-        );
+      const handleMakePayment = async () => {
+        try {
+          /* Await the mutation and capture the result directly */
+          const result = await slotSearchData.mutateAsync(formdata);
+          let SlotSearchData={
+            bookingId:application?.bookingId,
+            tenantId: tenantId,
+            cartDetails:application?.cartDetails,
+          };
+          const isSlotBooked = result?.advertisementSlotAvailabiltityDetails?.some((slot) => slot.slotStaus === "BOOKED");
+          /* timerValue is resolved directly from top-level of response payload per backend contract */
+          const timerValue = result?.timerValue;
+          if (isSlotBooked) {
+            setShowToast({ error: true, label: t("ADS_ADVERTISEMENT_ALREADY_BOOKED") });
+          } else {
+            navigate(
+              `/upyog-ui/citizen/payment/my-bills/${"adv-services"}/${application?.bookingNo}`,
+              { state: { tenantId: application?.tenantId, bookingNo: application?.bookingNo, timerValue:timerValue, SlotSearchData:SlotSearchData } }
+            );
+          }
+      } catch (error) {
+        setShowToast({ error: true, label: t("CS_SOMETHING_WENT_WRONG") });
       }
-    } catch (error) {
-      setShowToast({ error: true, label: t("CS_SOMETHING_WENT_WRONG") });
-    }
-  };
+      };
   useEffect(() => {
     if (showToast) {
       const timer = setTimeout(() => {
@@ -92,9 +90,9 @@ const AdsApplication = ({ application, tenantId, buttonLabel }) => {
     }
   }, [showToast]);
   return <Card>
-    {/* <div> */}
-    <KeyNote keyValue={t("ADS_BOOKING_NO")} note={application?.bookingNo} />
-    {/* { timeRemaining>0 && (<CardSubHeader 
+       {/* <div> */}
+       <KeyNote keyValue={t("ADS_BOOKING_NO")} note={application?.bookingNo} />
+            {/* { timeRemaining>0 && (<CardSubHeader 
               style={{ 
                 textAlign: 'right', 
                 fontSize: "24px"
@@ -103,18 +101,18 @@ const AdsApplication = ({ application, tenantId, buttonLabel }) => {
               {t("CS_TIME_REMAINING")}: <span className="astericColor">{formatTime(timeRemaining)}</span>
              </CardSubHeader>)}
              </div> */}
-    <KeyNote keyValue={t("ADS_APPLICANT_NAME")} note={application?.applicantDetail?.applicantName} />
-    <KeyNote keyValue={t("ADS_BOOKING_DATE")} note={getBookingDateRange(application?.cartDetails)} />
-    <KeyNote keyValue={t("PT_COMMON_TABLE_COL_STATUS_LABEL")} note={t(`${application?.bookingStatus}`)} />
-    <div>
-      <Link to={`/upyog-ui/citizen/ads/application/${application?.bookingNo}/${application?.tenantId}`}>
-        <SubmitBar label={buttonLabel} />
-      </Link>
-      {(application.bookingStatus === "BOOKING_CREATED" || application.bookingStatus === "PAYMENT_FAILED" || application.bookingStatus === "PENDING_FOR_PAYMENT") && <SubmitBar label={t("CS_APPLICATION_DETAILS_MAKE_PAYMENT")} onSubmit={handleMakePayment} className="ads-auto-79" />}
-    </div>
-    {showToast && <Toast error={showToast.error} warning={showToast.warning} label={t(showToast.label)} onClose={() => {
+      <KeyNote keyValue={t("ADS_APPLICANT_NAME")} note={application?.applicantDetail?.applicantName} />
+      <KeyNote keyValue={t("ADS_BOOKING_DATE")} note={getBookingDateRange(application?.cartDetails)} />
+      <KeyNote keyValue={t("PT_COMMON_TABLE_COL_STATUS_LABEL")} note={t(`${application?.bookingStatus}`)} />
+      <div>
+        <Link to={`/upyog-ui/citizen/ads/application/${application?.bookingNo}/${application?.tenantId}`}>
+          <SubmitBar label={buttonLabel} />
+        </Link>
+        {(application.bookingStatus === "BOOKING_CREATED" || application.bookingStatus === "PAYMENT_FAILED" || application.bookingStatus === "PENDING_FOR_PAYMENT") && <SubmitBar label={t("CS_APPLICATION_DETAILS_MAKE_PAYMENT")} onSubmit={handleMakePayment} className="ads-auto-79" />}
+      </div>
+      {showToast && <Toast error={showToast.error} warning={showToast.warning} label={t(showToast.label)} onClose={() => {
       setShowToast(null);
     }} />}
-  </Card>;
+    </Card>;
 };
 export default AdsApplication;

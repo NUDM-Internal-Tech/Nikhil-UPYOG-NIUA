@@ -35,15 +35,9 @@ const renderTenantLogos = (stateInfo, tenants) => {
   });
 };
 
-let cachedInitData = null;
-
 export const StoreService = {
-  setInitData: (data) => {
-    cachedInitData = data;
-  },
-
   getInitData: () => {
-    return cachedInitData || Storage.get("initData");
+    return Storage.get("initData");
   },
 
   getBoundries: async (tenants) => {
@@ -103,7 +97,6 @@ export const StoreService = {
       locale: initData.selectedLanguage,
       tenantId: stateCode,
     });
-    cachedInitData = initData;
     Storage.set("initData", initData);
     initData.revenue_localities = revenue_localities;
     initData.localities = localities;
