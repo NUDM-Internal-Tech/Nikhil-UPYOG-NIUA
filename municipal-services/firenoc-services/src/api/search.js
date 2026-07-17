@@ -92,7 +92,7 @@ export const searchApiResponse = async (request, next = {}) => {
       queryObj.mobileNumber,
       envVariables.EGOV_DEFAULT_STATE_ID,
       header,
-      request.body.RequestInfo
+      request.body.RequestInfo // added requestInfo so that, it gets the user info and authtoken
     );
 
     //console.log("User Search Response-> " + userSearchResponse);

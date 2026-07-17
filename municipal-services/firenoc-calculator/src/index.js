@@ -15,6 +15,8 @@ var ssl = envVariables.DB_SSL;
 if (typeof ssl == "string")
   ssl = ssl.toLowerCase() == "true";
 
+/* Create a new pool instance to manage database connections inseatd of creating a new client for each request. 
+ This allows for better performance and resource management. */
 const pool = new Pool({
   user: envVariables.DB_USERNAME,
   host: envVariables.DB_HOST,

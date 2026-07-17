@@ -45,6 +45,7 @@ connectProducer().catch(err => {
 
 // Adapter to match the kafka-node send API shape used across the codebase:
 // send([{ topic, messages: stringValue }], callback)
+// callback follows Node.js error-first convention: callback(err) on failure, callback(null, true) on success.
 const send = async (payloads, callback) => {
   try {
     for (const payload of payloads) {

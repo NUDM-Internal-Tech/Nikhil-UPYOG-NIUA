@@ -2,6 +2,12 @@
 import httpClient from "../config/httpClient";
 import { addQueryArg } from "./index";
 
+/**
+ * Strip transport-level headers (host, content-length, transfer-encoding) from the incoming request
+ * before forwarding to downstream services, as these headers describe the original HTTP connection
+ * and would cause routing failures or malformed requests if forwarded as-is.
+ */
+
 const STRIP_HEADERS = ["content-length", "host", "transfer-encoding"];
 
 export const httpRequest = async ({
