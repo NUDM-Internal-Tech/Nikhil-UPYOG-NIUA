@@ -13,14 +13,13 @@ export const GCServices = {
       params: { tenantId },
       auth: true,
     }),
-  search: async ({ tenantId, filters, auth, data }) => {
-    const res = await Request({
+  search: ({ tenantId, filters, auth }) => {
+    Request({
       url: Urls.gc.search,
       useCache: false,
       setTimeParam: false,
       method: "POST",
       auth: auth === false ? auth : true,
-      data: data || {},
       userService: auth === false ? auth : true,
       params: { tenantId, ...filters },
     });
