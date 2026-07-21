@@ -638,34 +638,6 @@ const RequestInfo = {
       description: "unique API ID",
       maxLength: 128
     },
-    // ver: {
-    //   type: "string",
-    //   description:
-    //     "API version - for HTTP based request this will be same as used in path",
-    //   maxLength: 32
-    // },
-    // ts: {
-    //   type: "integer",
-    //   // format: "int64",
-    //   description: "time in epoch"
-    // },
-    // action: {
-    //   type: "string",
-    //   description:
-    //     "API action to be performed like _create, _update, _search (denoting POST, PUT, GET) or _oauth etc",
-    //   maxLength: 32
-    // },
-    // did: {
-    //   type: "string",
-    //   description: "Device ID from which the API is called",
-    //   maxLength: 1024
-    // },
-    // key: {
-    //   type: "string",
-    //   description:
-    //     "API key (API key provided to the caller in case of server to server communication)",
-    //   maxLength: 256
-    // },
     msgId: {
       type: "string",
       description: "Unique request message id from the caller",
