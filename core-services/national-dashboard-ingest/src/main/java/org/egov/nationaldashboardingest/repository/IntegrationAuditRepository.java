@@ -15,7 +15,7 @@ public class IntegrationAuditRepository {
 
     public int markTimedOutInitiatedRequests(long requestTimeThreshold, long lastModifiedTime) {
         String sql = """
-                UPDATE eg_integration_message_detail
+                UPDATE ug_external_api_message_detail
                 SET status = ?, last_modified_time = ?
                 WHERE status = ? AND request_time < ?
                 """;

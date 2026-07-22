@@ -16,7 +16,7 @@ public class ExternalApiAuditReconciliationJob {
     @Autowired
     private ApplicationProperties applicationProperties;
 
-    //@Scheduled(fixedDelayString = "${integration.audit.reconciliation.interval-ms:300000}")
+    //@Scheduled(cron = "0 0 6 * * *", zone = "Asia/Kolkata")
     public void reconcileStaleRequests() {
         long now = System.currentTimeMillis();
         long requestTimeThreshold = now - applicationProperties.getIntegrationAuditStaleThresholdMs();

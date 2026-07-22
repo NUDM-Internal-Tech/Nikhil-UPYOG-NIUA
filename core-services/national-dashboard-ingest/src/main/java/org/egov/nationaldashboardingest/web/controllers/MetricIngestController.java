@@ -86,8 +86,8 @@ public class MetricIngestController {
             return ingestRequest.getRequestInfo().getUserInfo().getTenantId();
         }
         if (ingestRequest.getIngestData() != null && !ingestRequest.getIngestData().isEmpty()) {
-            return ingestRequest.getIngestData().get(0).getState();
+            return ingestRequest.getIngestData().get(0).getUlb();
         }
-        return "default";
+        return null;
     }
 }

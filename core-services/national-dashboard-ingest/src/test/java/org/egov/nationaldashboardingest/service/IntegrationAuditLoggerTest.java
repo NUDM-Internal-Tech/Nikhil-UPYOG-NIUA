@@ -3,8 +3,8 @@ package org.egov.nationaldashboardingest.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.egov.nationaldashboardingest.config.ApplicationProperties;
 import org.egov.nationaldashboardingest.producer.Producer;
-import org.egov.nationaldashboardingest.utils.IntegrationAuditConstants;
-import org.egov.nationaldashboardingest.web.models.IntegrationRequestEventWrapper;
+import org.egov.nationaldashboardingest.utils.ExternalApiAuditConstants;
+import org.egov.nationaldashboardingest.web.models.ExternalApiRequestEventWrapper;
 import org.egov.nationaldashboardingest.web.models.ExternalApiResponseEventWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,24 +58,24 @@ class IntegrationAuditLoggerTest {
         ResponseEntity<String> response = integrationAuditLogger.logInboundApi(
                 "1a54beda-1b3f-42b1-830a-c7a9d83ed46e",
                 "pb",
-                IntegrationAuditConstants.API_NATIONAL_DASHBOARD_METRIC_INGEST,
+                ExternalApiAuditConstants.API_NATIONAL_DASHBOARD_METRIC_INGEST,
                 Map.of("request", "payload"),
                 () -> ResponseEntity.ok("success"));
 
         verify(producer, times(2)).push(any(), eventCaptor.capture());
-        IntegrationRequestEventWrapper requestWrapper = (IntegrationRequestEventWrapper) eventCaptor.getAllValues().get(0);
+        ExternalApiRequestEventWrapper requestWrapper = (ExternalApiRequestEventWrapper) eventCaptor.getAllValues().get(0);
         ExternalApiResponseEventWrapper responseWrapper = (ExternalApiResponseEventWrapper) eventCaptor.getAllValues().get(1);
 
-        assertEquals("pb", requestWrapper.getIntegrationRequest().getTenantId());
+        assertEquals("pb", requestWrapper.getApiRequestEvent().getTenantId());
         assertEquals("1a54beda-1b3f-42b1-830a-c7a9d83ed46e",
-                requestWrapper.getIntegrationRequest().getCorrelationId());
-        assertEquals(IntegrationAuditConstants.API_NATIONAL_DASHBOARD_METRIC_INGEST,
-                requestWrapper.getIntegrationRequest().getExternalApiName());
-        assertEquals(IntegrationAuditConstants.DIRECTION_INBOUND,
-                requestWrapper.getIntegrationRequest().getDirection());
-        assertEquals(requestWrapper.getIntegrationRequest().getCorrelationId(),
+                requestWrapper.getApiRequestEvent().getCorrelationId());
+        assertEquals(ExternalApiAuditConstants.API_NATIONAL_DASHBOARD_METRIC_INGEST,
+                requestWrapper.getApiRequestEvent().getExternalApiName());
+        assertEquals(ExternalApiAuditConstants.DIRECTION_INBOUND,
+                requestWrapper.getApiRequestEvent().getDirection());
+        assertEquals(requestWrapper.getApiRequestEvent().getCorrelationId(),
                 responseWrapper.getApiResponseEvent().getCorrelationId());
-        assertEquals(IntegrationAuditConstants.STATUS_SUCCESS, responseWrapper.getApiResponseEvent().getStatus());
+        assertEquals(ExternalApiAuditConstants.STATUS_SUCCESS, responseWrapper.getApiResponseEvent().getStatus());
         assertEquals(HttpStatus.OK.value(), responseWrapper.getApiResponseEvent().getHttpStatusCode());
         assertNotNull(responseWrapper.getApiResponseEvent().getDurationMs());
         assertEquals("success", response.getBody());
@@ -94,7 +94,7 @@ class IntegrationAuditLoggerTest {
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> integrationAuditLogger.logInboundApi(
                 "1a54beda-1b3f-42b1-830a-c7a9d83ed46e",
                 "pb",
-                IntegrationAuditConstants.API_NATIONAL_DASHBOARD_METRIC_INGEST,
+                ExternalApiAuditConstants.API_NATIONAL_DASHBOARD_METRIC_INGEST,
                 Map.of("uri", "http://localhost:8280/national-dashboard/metric/_ingest"),
                 () -> {
                     throw exception;
@@ -102,15 +102,15 @@ class IntegrationAuditLoggerTest {
 
         assertEquals(exception, thrown);
         verify(producer, times(2)).push(any(), eventCaptor.capture());
-        IntegrationRequestEventWrapper requestWrapper = (IntegrationRequestEventWrapper) eventCaptor.getAllValues().get(0);
+        ExternalApiRequestEventWrapper requestWrapper = (ExternalApiRequestEventWrapper) eventCaptor.getAllValues().get(0);
         ExternalApiResponseEventWrapper responseWrapper = (ExternalApiResponseEventWrapper) eventCaptor.getAllValues().get(1);
 
-        assertEquals(requestWrapper.getIntegrationRequest().getCorrelationId(),
+        assertEquals(requestWrapper.getApiRequestEvent().getCorrelationId(),
                 responseWrapper.getApiResponseEvent().getCorrelationId());
-        assertEquals(IntegrationAuditConstants.STATUS_FAILED, responseWrapper.getApiResponseEvent().getStatus());
+        assertEquals(ExternalApiAuditConstants.STATUS_FAILED, responseWrapper.getApiResponseEvent().getStatus());
         assertEquals(HttpStatus.BAD_REQUEST.value(), responseWrapper.getApiResponseEvent().getHttpStatusCode());
         assertNotNull(responseWrapper.getApiResponseEvent().getErrorDetails());
-        assertEquals(IntegrationAuditConstants.ERROR_TYPE_CLIENT,
+        assertEquals(ExternalApiAuditConstants.ERROR_TYPE_CLIENT,
                 responseWrapper.getApiResponseEvent().getErrorDetails().getErrorType());
         verify(producer).push(eq("integration-request-initiated"), any());
         verify(producer).push(eq("integration-response-received"), any());
