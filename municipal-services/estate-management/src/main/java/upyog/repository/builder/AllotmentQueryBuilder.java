@@ -11,11 +11,11 @@ import java.util.List;
 public class AllotmentQueryBuilder {
     
     private static final String BASE_SEARCH_QUERY = "SELECT " +
-            "allotment_id, estate_no, tenant_id, user_uuid, allotee_name, mobile_number, " +
+            "allotment_id, allotment_no, due_date, estate_no, tenant_id, user_uuid, allotee_name, mobile_number, " +
             "alternate_contact_no, email_id, agreement_start_date, agreement_end_date, " +
             "duration, rate, monthly_rent, advance_payment, allotment_date, " +
             "advance_payment_date, eoffice_file_no, asset_reference_no, property_type, " +
-            "citizen_request_letter, allotment_letter, signed_deed, billing_cycle, " +
+            "citizen_request_letter, allotment_letter, signed_deed, billing_cycle, status, " +
             "createdby, lastmodifiedby, createdtime, lastmodifiedtime " +
             "FROM ug_em_allotment_details";
     
@@ -41,6 +41,12 @@ public class AllotmentQueryBuilder {
             if (StringUtils.hasText(criteria.getAssetNo())) {
                 conditions.add("estate_no = ?");
                 preparedStmtList.add(criteria.getAssetNo());
+            }
+            
+            // Add allotment number condition
+            if (StringUtils.hasText(criteria.getAllotmentNo())) {
+                conditions.add("allotment_no = ?");
+                preparedStmtList.add(criteria.getAllotmentNo());
             }
             
             // Add allottee name condition
@@ -71,7 +77,38 @@ public class AllotmentQueryBuilder {
         // Add order by clause
         query.append(" ORDER BY createdtime DESC");
         
-        return query.toString();
+        return addPaginationWrapper(query.toString(), preparedStmtList, criteria);
+    }
+
+    private static final String PAGINATION_WRAPPER =
+            "SELECT * FROM (SELECT *, DENSE_RANK() OVER (ORDER BY createdtime DESC) offset_ FROM ({}) result) result_offset WHERE offset_ > ? AND offset_ <= ? ORDER BY createdtime DESC";
+
+    private String addPaginationWrapper(String query, List<Object> preparedStmtList, AllotmentSearchCriteria criteria) {
+        int limit = 20;
+        int offset = 0;
+
+        if (criteria.getLimit() == null && criteria.getOffset() == null) {
+            limit = -1;
+        }
+
+        if (criteria.getLimit() != null && criteria.getLimit() <= 100)
+            limit = criteria.getLimit();
+
+        if (criteria.getLimit() != null && criteria.getLimit() > 100) {
+            limit = 100;
+        }
+
+        if (criteria.getOffset() != null)
+            offset = criteria.getOffset();
+
+        if (limit == -1) {
+            return query;
+        } else {
+            preparedStmtList.add(offset);
+            preparedStmtList.add(limit + offset);
+        }
+
+        return PAGINATION_WRAPPER.replace("{}", query);
     }
     
     /**
@@ -87,6 +124,7 @@ public class AllotmentQueryBuilder {
         query.append(" WHERE allotment_id = ? AND tenant_id = ?");
         preparedStmtList.add(allotmentId);
         preparedStmtList.add(tenantId);
+        query.append(" ORDER BY createdtime DESC");
         return query.toString();
     }
     
@@ -101,6 +139,7 @@ public class AllotmentQueryBuilder {
         StringBuilder query = new StringBuilder(BASE_SEARCH_QUERY);
         query.append(" WHERE estate_no = ?");
         preparedStmtList.add(estateNo);
+        query.append(" ORDER BY createdtime DESC");
         return query.toString();
     }
 }

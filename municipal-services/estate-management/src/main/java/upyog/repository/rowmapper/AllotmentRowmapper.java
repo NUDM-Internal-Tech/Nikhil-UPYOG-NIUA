@@ -16,10 +16,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @Slf4j
@@ -30,7 +27,7 @@ public class AllotmentRowmapper implements ResultSetExtractor<List<Allotment>> {
 
     @Override
     public List<Allotment> extractData(ResultSet rs) throws SQLException {
-        Map<String, Allotment> allotmentMap = new HashMap<>();
+        Map<String, Allotment> allotmentMap = new LinkedHashMap<>();
         
         while (rs.next()) {
             String allotmentId = rs.getString("allotment_id");
@@ -40,6 +37,8 @@ public class AllotmentRowmapper implements ResultSetExtractor<List<Allotment>> {
                 allotment = new Allotment();
                 
                 allotment.setAllotmentId(allotmentId);
+                allotment.setAllotmentNo(rs.getString("allotment_no"));
+                allotment.setDueDate(getLocalDate(rs, "due_date"));
                 allotment.setAssetNo(rs.getString("estate_no"));
                 allotment.setTenantId(rs.getString("tenant_id"));
                 allotment.setUserUuid(rs.getString("user_uuid"));
@@ -61,6 +60,7 @@ public class AllotmentRowmapper implements ResultSetExtractor<List<Allotment>> {
                 allotment.setAllotmentLetter(rs.getString("allotment_letter"));
                 allotment.setSignedDeed(rs.getString("signed_deed"));
                 allotment.setBillingCycle(rs.getString("billing_cycle"));
+                allotment.setStatus(rs.getString("status"));
 
 
                 AuditDetails auditDetails = AuditDetails.builder()

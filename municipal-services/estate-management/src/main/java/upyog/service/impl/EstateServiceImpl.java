@@ -153,6 +153,23 @@ public class EstateServiceImpl implements EstateService {
         // Create demand for the allotment
         demandService.createDemand(request, true);
         
+        // Update corresponding asset allotment status to ALLOTTED
+        try {
+            AssetSearchCriteria assetSearchCriteria = new AssetSearchCriteria();
+            assetSearchCriteria.setEstateNo(allotment.getAssetNo());
+            assetSearchCriteria.setTenantId(allotment.getTenantId());
+            List<Asset> assets = estateRepository.searchAssets(assetSearchCriteria);
+            if (assets != null && !assets.isEmpty()) {
+                Asset asset = assets.get(0);
+                asset.setAssetAllotmentStatus(ServiceConstants.STATUS_ALLOTTED);
+                AssetRequest assetRequest = new AssetRequest(request.getRequestInfo(), List.of(asset));
+                estateRepository.save(estateConfiguration.getEstateAssetUpdateTopic(), assetRequest);
+                log.info("Updated Asset allotment status to ALLOTTED for estateNo: {}", allotment.getAssetNo());
+            }
+        } catch (Exception e) {
+            log.error("Failed to update asset allotment status on allotment creation: {}", e.getMessage(), e);
+        }
+        
         estateRepository.save(estateConfiguration.getEstateAllotmentSaveTopic(), request);
 
         log.info("Allotment created successfully. ID: {}", allotment.getAllotmentId());

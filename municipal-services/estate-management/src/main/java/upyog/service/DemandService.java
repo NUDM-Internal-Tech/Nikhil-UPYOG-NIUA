@@ -81,7 +81,7 @@ public class DemandService {
                 demandRepository.searchAllDemands(
                         requestInfo,
                         allotment.getTenantId(),
-                        allotment.getAssetNo(),
+                        allotment.getAllotmentNo(),
                         config.getBusinessServiceName());
 
         boolean alreadyGenerated =
@@ -123,7 +123,7 @@ public class DemandService {
                 demandRepository.searchDemand(
                         requestInfo,
                         allotment.getTenantId(),
-                        allotment.getAssetNo(),
+                        allotment.getAllotmentNo(),
                         config.getBusinessServiceName());
 
         BigDecimal bookingFeeAmount;
@@ -204,7 +204,7 @@ public class DemandService {
         }
 
         Demand demand = Demand.builder()
-                .consumerCode(allotment.getAssetNo())
+                .consumerCode(allotment.getAllotmentNo())
                 .demandDetails(demandDetails)
                 .payer(payer)
                 .tenantId(allotment.getTenantId())
@@ -256,6 +256,24 @@ public class DemandService {
                 config.getSchedulerLogTopic(),
                 Map.of("schedulerLog", schedulerLog));
 
+        // Update allotment due date and status to PENDING_FOR_PAYMENT
+        try {
+            allotment.setDueDate(periodTo);
+            allotment.setStatus(ServiceConstants.STATUS_PENDING_FOR_PAYMENT);
+            String updaterUuid = requestInfo.getUserInfo() != null ? requestInfo.getUserInfo().getUuid() : ServiceConstants.STATUS_SYSTEM;
+            if (allotment.getAuditDetails() != null) {
+                allotment.getAuditDetails().setLastModifiedBy(updaterUuid);
+                allotment.getAuditDetails().setLastModifiedTime(System.currentTimeMillis());
+            } else {
+                allotment.setAuditDetails(upyog.util.EstateUtil.getAuditDetails(updaterUuid, false));
+            }
+            AllotmentRequest allotmentRequest = new AllotmentRequest(requestInfo, List.of(allotment));
+            estateRepository.save(config.getEstateAllotmentUpdateTopic(), allotmentRequest);
+            log.info("Updated Allotment due date to {} and status to PENDING_FOR_PAYMENT for allotmentId: {}", periodTo, allotment.getAllotmentId());
+        } catch (Exception e) {
+            log.error("Failed to update allotment due date and status on demand generation: {}", e.getMessage(), e);
+        }
+
         log.info(
                 "Demand generated successfully for allotment {}",
                 allotment.getAllotmentId());
@@ -273,7 +291,7 @@ public class DemandService {
     public List<Demand> createDemand(AllotmentRequest allotmentRequest, boolean generateDemand) {
 
         String tenantId = allotmentRequest.getAllotments().get(0).getTenantId();
-        String consumerCode = allotmentRequest.getAllotments().get(0).getAssetNo();
+        String consumerCode = allotmentRequest.getAllotments().get(0).getAllotmentNo();
         Allotment allotment = allotmentRequest.getAllotments().get(0);
 
         User user = allotmentRequest.getRequestInfo().getUserInfo();
