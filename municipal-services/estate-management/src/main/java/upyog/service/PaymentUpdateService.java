@@ -13,6 +13,7 @@ import upyog.web.models.*;
 import java.util.List;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ public class PaymentUpdateService {
             String tenantId = paymentRequest.getPayment().getTenantId();
             String userUuid = paymentRequest.getRequestInfo().getUserInfo() != null
                     ? paymentRequest.getRequestInfo().getUserInfo().getUuid() : ServiceConstants.STATUS_SYSTEM;
-            long now = System.currentTimeMillis();
+            long now = Instant.now().toEpochMilli();
             LocalDate today = LocalDate.now();
 
             log.info("Processing payment for consumerCode: {}, amount: {}", consumerCode, paidAmount);

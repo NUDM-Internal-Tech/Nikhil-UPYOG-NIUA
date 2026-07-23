@@ -3,6 +3,7 @@ package upyog.repository.builder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import upyog.web.models.AssetSearchCriteria;
+import upyog.util.EstateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,38 +71,7 @@ public class AssetQueryBuilder {
         // Add order by clause
         query.append(" ORDER BY createdtime DESC");
         
-        return addPaginationWrapper(query.toString(), preparedStmtList, criteria);
-    }
-
-    private static final String PAGINATION_WRAPPER =
-            "SELECT * FROM (SELECT *, DENSE_RANK() OVER (ORDER BY createdtime DESC) offset_ FROM ({}) result) result_offset WHERE offset_ > ? AND offset_ <= ? ORDER BY createdtime DESC";
-
-    private String addPaginationWrapper(String query, List<Object> preparedStmtList, AssetSearchCriteria criteria) {
-        int limit = 20;
-        int offset = 0;
-
-        if (criteria.getLimit() == null && criteria.getOffset() == null) {
-            limit = -1;
-        }
-
-        if (criteria.getLimit() != null && criteria.getLimit() <= 100)
-            limit = criteria.getLimit();
-
-        if (criteria.getLimit() != null && criteria.getLimit() > 100) {
-            limit = 100;
-        }
-
-        if (criteria.getOffset() != null)
-            offset = criteria.getOffset();
-
-        if (limit == -1) {
-            return query;
-        } else {
-            preparedStmtList.add(offset);
-            preparedStmtList.add(limit + offset);
-        }
-
-        return PAGINATION_WRAPPER.replace("{}", query);
+        return EstateUtil.addPaginationWrapper(query.toString(), preparedStmtList, criteria.getLimit(), criteria.getOffset());
     }
     
     /**

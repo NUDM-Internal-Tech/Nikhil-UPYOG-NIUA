@@ -3,6 +3,7 @@ package upyog.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -229,7 +230,7 @@ public class DemandService {
                         ? requestInfo.getUserInfo().getUuid()
                         : ServiceConstants.STATUS_SYSTEM;
 
-        long now = System.currentTimeMillis();
+        long now = Instant.now().toEpochMilli();
 
         SchedulerLog schedulerLog =
                 SchedulerLog.builder()
@@ -263,7 +264,7 @@ public class DemandService {
             String updaterUuid = requestInfo.getUserInfo() != null ? requestInfo.getUserInfo().getUuid() : ServiceConstants.STATUS_SYSTEM;
             if (allotment.getAuditDetails() != null) {
                 allotment.getAuditDetails().setLastModifiedBy(updaterUuid);
-                allotment.getAuditDetails().setLastModifiedTime(System.currentTimeMillis());
+                allotment.getAuditDetails().setLastModifiedTime(Instant.now().toEpochMilli());
             } else {
                 allotment.setAuditDetails(upyog.util.EstateUtil.getAuditDetails(updaterUuid, false));
             }
