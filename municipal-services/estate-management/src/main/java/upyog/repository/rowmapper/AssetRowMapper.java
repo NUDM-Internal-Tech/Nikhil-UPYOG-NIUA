@@ -23,6 +23,9 @@ public class AssetRowMapper implements ResultSetExtractor<List<Asset>> {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Extracts database query result rows directly into an ArrayList of assets.
+     */
     @Override
     public List<Asset> extractData(ResultSet rs) throws SQLException {
         List<Asset> assets = new ArrayList<>();

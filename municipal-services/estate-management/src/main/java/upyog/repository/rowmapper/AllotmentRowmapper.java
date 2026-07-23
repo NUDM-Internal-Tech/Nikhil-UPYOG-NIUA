@@ -25,6 +25,9 @@ public class AllotmentRowmapper implements ResultSetExtractor<List<Allotment>> {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /**
+     * Extracts database query result rows directly into an ArrayList of allotments.
+     */
     @Override
     public List<Allotment> extractData(ResultSet rs) throws SQLException {
         List<Allotment> allotments = new ArrayList<>();
