@@ -154,7 +154,6 @@ const FinanceSideBar = ({ activePath, setActivePath, configEmployeeSideBar1 }) =
                 to={targetPath}
                 className={`sidebar-link ${isActive ? "active" : ""}`}
                 title={displayLabel}
-                style={{ textDecoration: "none", padding: "20px", display: "flex", justifyContent: "flex-start", alignItems: "center", width: "max-content", minWidth: "100%" }}
               >
                 <div className="actions">
                   {leftIcon}
