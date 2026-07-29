@@ -982,7 +982,13 @@ config:
         dockerfile: "build/maven/Dockerfile"
       - work-dir: "municipal-services/ndc-services/src/main/resources/db"
         image-name: "ndc-services-db"
-
+        
+  - name: "builds/upyog/business-services/dashboard-data-extractor"
+    build:
+      - work-dir: "business-services/dashboard-data-extractor"
+        image-name: "dashboard-data-extractor"
+        dockerfile: "build/maven/Dockerfile"
+        
   - name: "builds/upyog/municipal-services/ndc-calculator"
     build:
       - work-dir: "municipal-services/ndc-calculator"
