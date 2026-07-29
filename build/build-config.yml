@@ -364,21 +364,25 @@ config:
     build:
       - work-dir: "core-services/libraries/enc-client"
         image-name: "enc-client"
+        dockerfile: "build/maven/Dockerfile"
         
   - name: "builds/upyog/core-services/libraries/services-common"
     build:
       - work-dir: "core-services/libraries/services-common"
         image-name: "services-common"
+        dockerfile: "build/maven/Dockerfile"
         
   - name: "builds/upyog/core-services/libraries/digit-models"
     build:
       - work-dir: "core-services/libraries/digit-models"
         image-name: "digit-models"
+        dockerfile: "build/maven/Dockerfile"
                 
   - name: "builds/upyog/core-services/libraries/tracer"
     build:
       - work-dir: "core-services/libraries/tracer"
         image-name: "tracer"
+        dockerfile: "build/maven/Dockerfile"
 
   - name: "builds/upyog/core-services/nlp-engine"
     build:
