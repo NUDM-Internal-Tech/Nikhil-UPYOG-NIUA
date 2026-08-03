@@ -1025,3 +1025,13 @@ config:
         dockerfile: "build/maven/Dockerfile"
       - work-dir: "core-services/upyog-draft-service/src/main/resources/db"
         image-name: "upyog-draft-service-db"
+
+
+  - name: "builds/upyog/municipal-services/upyog-aggregation-service"
+    build:
+      - work-dir: "municipal-services/upyog-aggregation-service"
+        image-name: "upyog-aggregation-service"
+        dockerfile: "municipal-services/upyog-aggregation-service/Dockerfile"
+
+
+
