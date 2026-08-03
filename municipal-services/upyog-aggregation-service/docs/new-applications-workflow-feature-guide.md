@@ -2,9 +2,7 @@
 
 ## How the Service Works & Feature Integration Guide: "New Applications from Workflow"
 
-> **Audience:** An experienced Java solution architect (12+ years) building their first Go service.
-> Every Go concept in this document is mapped to its closest Java/Spring equivalent.
->
+
 > **Scope:** Part 1 explains how the service works end to end, file by file.
 > Part 2 is a complete integration walkthrough for one real feature — **fetching all new
 > applications from the workflow service (`egov-workflow-v2`)** — including every file that
