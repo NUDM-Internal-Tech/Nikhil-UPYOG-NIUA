@@ -115,14 +115,14 @@ const EmployeeModuleCard = ({ Icon, moduleName, kpis = [], links = [], isCitizen
 const ModuleCardFullWidth = ({ moduleName,  links = [], isCitizen = false, className, styles, headerStyle, subHeader, subHeaderLink }) => {
   return (
     <div className={className ? className : "employeeCard card-home customEmployeeCard home-action-cards"} style={styles ? styles : {}}>
-      <div className="complaint-links-container" style={{ padding: "10px" }}>
+      <div className="complaint-links-container" style={{ padding: "var(--spacing-10px)" }}>
         <div className="header" style={isCitizen ? { padding: "0px" } : headerStyle}>
           <span className="text removeHeight">{moduleName}</span>
           <span className="link">
             <a href={subHeaderLink}>
-              <span className={"inbox-total"} style={{ display: "flex", alignItems: "center", color: "#a82227", fontWeight: "bold" }}>
+              <span className={"inbox-total"} style={{ display: "flex", alignItems: "center", color: "var(--primary-main)", fontWeight: "var(--weight-bold)" }}>
                 {subHeader || "-"}
-                <span style={{ marginLeft: "10px" }}>
+                <span style={{ marginLeft: "var(--spacing-10px)" }}>
                   {" "}
                   <ArrowRightInbox />
                 </span>

@@ -60,12 +60,12 @@ const AdvertisementModuleCard = ({ imageSrc, title, location, poleNo, price, pat
           }}
         />
       </div>
-      <div style={{ padding: "10px" }}>
-        <p style={{ margin: "0", color: "#a82227" }}>{light}</p>
-        <h3 style={{ margin: "5px 0", fontWeight: "bold" }}>{title}</h3>
+      <div style={{ padding: "var(--spacing-10px)" }}>
+        <p style={{ margin: "0", color: "var(--primary-main)" }}>{light}</p>
+        <h3 style={{ margin: "var(--spacing-5px) 0", fontWeight: "var(--weight-bold)" }}>{title}</h3>
         <p>
           {location} (
-          <button type="button" style={{ marginLeft: "5px", color: "#a82227" }}>
+          <button type="button" style={{ marginLeft: "var(--spacing-5px)", color: "var(--primary-main)" }}>
             View Map
           </button>
           )
@@ -78,14 +78,14 @@ const AdvertisementModuleCard = ({ imageSrc, title, location, poleNo, price, pat
           <button
             type="button"
             onClick={handleViewAvailability}
-            style={{ backgroundColor: "green", color: "white", border: "1px solid #ccc", padding: "5px 10px", borderRadius: "4px" }}
+            style={{ backgroundColor: "var(--success)", color: "var(--white)", border: "var(--border-width-sm) solid var(--border)", padding: "var(--spacing-5px) var(--spacing-10px)", borderRadius: "var(--border-radius-sm)" }}
           >
             View Availability
           </button>
           <button
             type="button"
             onClick={handleBookNow}
-            style={{ backgroundColor: "#a82227", color: "white", border: "1px solid #ccc", padding: "5px 10px", borderRadius: "4px" }}
+            style={{ backgroundColor: "var(--primary-main)", color: "var(--white)", border: "var(--border-width-sm) solid var(--border)", padding: "var(--spacing-5px) var(--spacing-10px)", borderRadius: "var(--border-radius-sm)" }}
           >
             Book Now
           </button>
