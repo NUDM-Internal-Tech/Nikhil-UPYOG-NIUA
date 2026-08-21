@@ -30,7 +30,7 @@ const ArrowDown = ({ className, onClick, styles, disable }) => (
     style={{ ...styles }}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    fill={disable ? "#9E9E9E" : "black"}
+    fill={disable ? "var(--grey-dark)" : "var(--black)"}
     className={className}
     onClick={onClick}
     width="18px"
@@ -97,7 +97,7 @@ const DeleteBtn = ({ className, onClick, fill }) => (
 );
 
 const SuccessSvg = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#00703C" className={className}>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--success)" className={className}>
     <path d="M0 0h24v24H0V0z" fill="none" />
     <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z" />
   </svg>
@@ -170,7 +170,7 @@ const DownloadImgIcon = () => (
 
 const PrevIcon = () => (
   <svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1.99997 0L0.589966 1.41L5.16997 6L0.589966 10.59L1.99997 12L7.99997 6L1.99997 0Z" fill="#0B0C0C" />
+    <path d="M1.99997 0L0.589966 1.41L5.16997 6L0.589966 10.59L1.99997 12L7.99997 6L1.99997 0Z" fill="var(--text-primary)" />
   </svg>
 );
 
@@ -260,7 +260,7 @@ const DocumentSVG = () => (
   <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M46.6667 6.6665H20C16.3334 6.6665 13.3667 9.6665 13.3667 13.3332L13.3334 66.6665C13.3334 70.3332 16.3 73.3332 19.9667 73.3332H60C63.6667 73.3332 66.6667 70.3332 66.6667 66.6665V26.6665L46.6667 6.6665ZM53.3334 59.9998H26.6667V53.3332H53.3334V59.9998ZM53.3334 46.6665H26.6667V39.9998H53.3334V46.6665ZM43.3334 29.9998V11.6665L61.6667 29.9998H43.3334Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -275,7 +275,7 @@ const PDFSvg = ({
   <svg {...{ className, width, height, style, viewBox }} fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M46.6667 6.6665H20C16.3334 6.6665 13.3667 9.6665 13.3667 13.3332L13.3334 66.6665C13.3334 70.3332 16.3 73.3332 19.9667 73.3332H60C63.6667 73.3332 66.6667 70.3332 66.6667 66.6665V26.6665L46.6667 6.6665ZM53.3334 59.9998H26.6667V53.3332H53.3334V59.9998ZM53.3334 46.6665H26.6667V39.9998H53.3334V46.6665ZM43.3334 29.9998V11.6665L61.6667 29.9998H43.3334Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -329,12 +329,12 @@ const FilterSvg = ({ className }) => (
 
 const SortSvg = ({ className }) => (
   <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M8 16H24V13.3333H8V16ZM0 0V2.66667H24V0H0ZM8 9.33333H24V6.66667H8V9.33333Z" fill="#505A5F" />
+    <path d="M8 16H24V13.3333H8V16ZM0 0V2.66667H24V0H0ZM8 9.33333H24V6.66667H8V9.33333Z" fill="var(--text-secondary)" />
   </svg>
 );
 
 const Close = ({ className, style }) => (
-  <svg style={{ ...style }} focusable="false" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24" fill="#9E9E9E" className={className}>
+  <svg style={{ ...style }} focusable="false" viewBox="0 0 24 24" aria-hidden="true" width="24" height="24" fill="var(--grey-dark)" className={className}>
     <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path>
   </svg>
 );
@@ -373,7 +373,7 @@ export const LanguageIcon = ({ className, styles }) => (
 
 export const LogoutIcon = ({ className, styles }) => (
   <svg className={className}  viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ ...styles }}>
-<path d="M15 4L13.59 5.41L16.17 8H6V10H16.17L13.59 12.58L15 14L20 9L15 4ZM2 2H10V0H2C0.9 0 0 0.9 0 2V16C0 17.1 0.9 18 2 18H10V16H2V2Z" fill="#505A5F"/>
+<path d="M15 4L13.59 5.41L16.17 8H6V10H16.17L13.59 12.58L15 14L20 9L15 4ZM2 2H10V0H2C0.9 0 0 0.9 0 2V16C0 17.1 0.9 18 2 18H10V16H2V2Z" fill="var(--text-secondary)"/>
 </svg>
 );
 
@@ -442,7 +442,7 @@ function CloseSvg({ onClick }) {
   );
 }
 
-const UpwardArrow = ({ color = "#00703C", rotate = 0, marginRight = 0 }) => (
+const UpwardArrow = ({ color = "var(--success)", rotate = 0, marginRight = 0 }) => (
   <svg
     style={{ display: "inline-block", verticalAlign: "baseline", transform: `rotate(${rotate}deg)`, marginRight: `${marginRight}px` }}
     width="11"
@@ -470,7 +470,7 @@ const DownloadIcon = ({ styles, className, onClick }) => (
   >
     <path
       d="M18.8337 8.5H13.5003V0.5H5.50033V8.5H0.166992L9.50033 17.8333L18.8337 8.5ZM0.166992 20.5V23.1667H18.8337V20.5H0.166992Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -479,7 +479,7 @@ const GenericFileIcon = () => (
   <svg width="80" height="100" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M50 0H10C4.5 0 0.0500011 4.5 0.0500011 10L0 90C0 95.5 4.45 100 9.95 100H70C75.5 100 80 95.5 80 90V30L50 0ZM60 80H20V70H60V80ZM60 60H20V50H60V60ZM45 35V7.5L72.5 35H45Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -522,7 +522,7 @@ const Details = () => (
   <svg width="22" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M11 0.5C6 0.5 1.73 3.61 0 8C1.73 12.39 6 15.5 11 15.5C16 15.5 20.27 12.39 22 8C20.27 3.61 16 0.5 11 0.5ZM11 13C8.24 13 6 10.76 6 8C6 5.24 8.24 3 11 3C13.76 3 16 5.24 16 8C16 10.76 13.76 13 11 13ZM11 5C9.34 5 8 6.34 8 8C8 9.66 9.34 11 11 11C12.66 11 14 9.66 14 8C14 6.34 12.66 5 11 5Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -531,7 +531,7 @@ const FilterIcon = ({ onClick }) => (
   <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={onClick}>
     <path
       d="M0.666904 2.48016C3.36024 5.9335 8.33357 12.3335 8.33357 12.3335V20.3335C8.33357 21.0668 8.93357 21.6668 9.6669 21.6668H12.3336C13.0669 21.6668 13.6669 21.0668 13.6669 20.3335V12.3335C13.6669 12.3335 18.6269 5.9335 21.3202 2.48016C22.0002 1.60016 21.3736 0.333496 20.2669 0.333496H1.72024C0.613571 0.333496 -0.0130959 1.60016 0.666904 2.48016Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -540,7 +540,7 @@ const RefreshIcon = () => (
   <svg width="16" height="22" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M8 5V8L12 4L8 0V3C3.58 3 0 6.58 0 11C0 12.57 0.46 14.03 1.24 15.26L2.7 13.8C2.25 12.97 2 12.01 2 11C2 7.69 4.69 5 8 5ZM14.76 6.74L13.3 8.2C13.74 9.04 14 9.99 14 11C14 14.31 11.31 17 8 17V14L4 18L8 22V19C12.42 19 16 15.42 16 11C16 9.43 15.54 7.97 14.76 6.74Z"
-      fill="#0B0C0C"
+      fill="var(--text-primary)"
     />
   </svg>
 );
@@ -549,7 +549,7 @@ const RefreshSVG = () => (
   <svg width="17" height="17" viewBox="0 0 16 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M8 5V8L12 4L8 0V3C3.58 3 0 6.58 0 11C0 12.57 0.46 14.03 1.24 15.26L2.7 13.8C2.25 12.97 2 12.01 2 11C2 7.69 4.69 5 8 5ZM14.76 6.74L13.3 8.2C13.74 9.04 14 9.99 14 11C14 14.31 11.31 17 8 17V14L4 18L8 22V19C12.42 19 16 15.42 16 11C16 9.43 15.54 7.97 14.76 6.74Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -558,7 +558,7 @@ const PrintIcon = () => (
   <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M17 5H3C1.34 5 0 6.34 0 8V14H4V18H16V14H20V8C20 6.34 18.66 5 17 5ZM14 16H6V11H14V16ZM17 9C16.45 9 16 8.55 16 8C16 7.45 16.45 7 17 7C17.55 7 18 7.45 18 8C18 8.55 17.55 9 17 9ZM16 0H4V4H16V0Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -585,7 +585,7 @@ const InfoBannerIcon = ({ fill = "#3498DB" }) => {
 const InfoIcon = () => {
   return (
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 5H11V7H9V5ZM9 9H11V15H9V9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="#505A5F"/>
+    <path d="M9 5H11V7H9V5ZM9 9H11V15H9V9ZM10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18Z" fill="var(--text-secondary)"/>
     </svg>
 
   );
@@ -595,7 +595,7 @@ const ShareIcon = ({ styles, className }) => (
   <svg style={{ ...styles }} className={className} width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M15 14.08C14.24 14.08 13.56 14.38 13.04 14.85L5.91 10.7C5.96 10.47 6 10.24 6 10C6 9.76 5.96 9.53 5.91 9.3L12.96 5.19C13.5 5.69 14.21 6 15 6C16.66 6 18 4.66 18 3C18 1.34 16.66 0 15 0C13.34 0 12 1.34 12 3C12 3.24 12.04 3.47 12.09 3.7L5.04 7.81C4.5 7.31 3.79 7 3 7C1.34 7 0 8.34 0 10C0 11.66 1.34 13 3 13C3.79 13 4.5 12.69 5.04 12.19L12.16 16.35C12.11 16.56 12.08 16.78 12.08 17C12.08 18.61 13.39 19.92 15 19.92C16.61 19.92 17.92 18.61 17.92 17C17.92 15.39 16.61 14.08 15 14.08Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -806,7 +806,7 @@ const MapMarker = () => (
   <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M5 0.333496C2.42 0.333496 0.333328 2.42016 0.333328 5.00016C0.333328 6.16016 0.666661 7.24683 1.27333 8.22683C1.90666 9.2535 2.73999 10.1335 3.37999 11.1602C3.69333 11.6602 3.91999 12.1268 4.15999 12.6668C4.33333 13.0335 4.47333 13.6668 5 13.6668C5.52666 13.6668 5.66666 13.0335 5.83333 12.6668C6.08 12.1268 6.29999 11.6602 6.61333 11.1602C7.25333 10.1402 8.08666 9.26016 8.72 8.22683C9.33333 7.24683 9.66666 6.16016 9.66666 5.00016C9.66666 2.42016 7.58 0.333496 5 0.333496ZM5 6.8335C4.07999 6.8335 3.33333 6.08683 3.33333 5.16683C3.33333 4.24683 4.07999 3.50016 5 3.50016C5.92 3.50016 6.66666 4.24683 6.66666 5.16683C6.66666 6.08683 5.92 6.8335 5 6.8335Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -817,7 +817,7 @@ const Clock = () => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M7.992 0C3.576 0 0 3.584 0 8C0 12.416 3.576 16 7.992 16C12.416 16 16 12.416 16 8C16 3.584 12.416 0 7.992 0ZM7.99994 14.4C4.46393 14.4 1.59993 11.536 1.59993 7.99999C1.59993 4.46399 4.46393 1.59999 7.99994 1.59999C11.5359 1.59999 14.3999 4.46399 14.3999 7.99999C14.3999 11.536 11.5359 14.4 7.99994 14.4ZM7.20003 4H8.40003V8.2L12 10.336L11.4 11.32L7.20003 8.8V4Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -841,7 +841,7 @@ const SearchIcon = ({ className }) => (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M12.5 11H11.71L11.43 10.73C12.41 9.59 13 8.11 13 6.5C13 2.91 10.09 0 6.5 0C2.91 0 0 2.91 0 6.5C0 10.09 2.91 13 6.5 13C8.11 13 9.59 12.41 10.73 11.43L11 11.71V12.5L16 17.49L17.49 16L12.5 11ZM6.5 11C4.01 11 2 8.99 2 6.5C2 4.01 4.01 2 6.5 2C8.99 2 11 4.01 11 6.5C11 8.99 8.99 11 6.5 11Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -904,7 +904,7 @@ const EditPencilIcon = ({ className, width = 18, height = 18 }) => (
   <svg className={className} width={width} height={height} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M9.126 5.12482L11.063 3.18782L14.81 6.93482L12.873 8.87282L9.126 5.12482ZM17.71 2.62982L15.37 0.289816C15.1826 0.103565 14.9292 -0.000976562 14.665 -0.000976562C14.4008 -0.000976563 14.1474 0.103565 13.96 0.289816L12.13 2.11982L15.88 5.86982L17.71 3.99982C17.8844 3.81436 17.9815 3.56938 17.9815 3.31482C17.9815 3.06025 17.8844 2.81528 17.71 2.62982ZM5.63 8.62982L0 14.2498V17.9998H3.75L9.38 12.3798L12.873 8.87282L9.126 5.12482L5.63 8.62982Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -1004,7 +1004,7 @@ const PrintBtnCommon = () => (
   <svg width="41" height="41" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M32.1663 13.8333H8.83301C6.06634 13.8333 3.83301 16.0667 3.83301 18.8333V28.8333H10.4997V35.5H30.4997V28.8333H37.1663V18.8333C37.1663 16.0667 34.933 13.8333 32.1663 13.8333ZM27.1663 32.1667H13.833V23.8333H27.1663V32.1667ZM32.1663 20.5C31.2497 20.5 30.4997 19.75 30.4997 18.8333C30.4997 17.9167 31.2497 17.1667 32.1663 17.1667C33.083 17.1667 33.833 17.9167 33.833 18.8333C33.833 19.75 33.083 20.5 32.1663 20.5ZM30.4997 5.5H10.4997V12.1667H30.4997V5.5Z"
-      fill="#505A5F"
+      fill="var(--text-secondary)"
     />
   </svg>
 );
@@ -1022,18 +1022,18 @@ const HelpLineIcon = ({ className, styles }) => (
   <svg className={className} style={{ ...styles }} width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M22 0H2C0.9 0 0 0.9 0 2V16C0 17.1 0.9 18 2 18H22C23.1 18 23.99 17.1 23.99 16L24 2C24 0.9 23.1 0 22 0ZM8 3C9.66 3 11 4.34 11 6C11 7.66 9.66 9 8 9C6.34 9 5 7.66 5 6C5 4.34 6.34 3 8 3ZM14 15H2V14C2 12 6 10.9 8 10.9C10 10.9 14 12 14 14V15ZM17.85 11H19.49L21 13L19.01 14.99C17.7 14.01 16.73 12.61 16.28 11C16.1 10.36 16 9.69 16 9C16 8.31 16.1 7.64 16.28 7C16.73 5.38 17.7 3.99 19.01 3.01L21 5L19.49 7H17.85C17.63 7.63 17.5 8.3 17.5 9C17.5 9.7 17.63 10.37 17.85 11Z"
-      fill="#0B0C0C"
+      fill="var(--text-primary)"
     />
   </svg>
 );
 
 const ServiceCenterIcon = ({ className, styles }) => (
   <svg className={className} style={{ ...styles }} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7 10H4V17H7V10Z" fill="#0B0C0C" />
-    <path d="M13.5 10H10.5V17H13.5V10Z" fill="#0B0C0C" />
-    <path d="M22 19H2V22H22V19Z" fill="#0B0C0C" />
-    <path d="M20 10H17V17H20V10Z" fill="#0B0C0C" />
-    <path d="M12 1L2 6V8H22V6L12 1Z" fill="#0B0C0C" />
+    <path d="M7 10H4V17H7V10Z" fill="var(--text-primary)" />
+    <path d="M13.5 10H10.5V17H13.5V10Z" fill="var(--text-primary)" />
+    <path d="M22 19H2V22H22V19Z" fill="var(--text-primary)" />
+    <path d="M20 10H17V17H20V10Z" fill="var(--text-primary)" />
+    <path d="M12 1L2 6V8H22V6L12 1Z" fill="var(--text-primary)" />
   </svg>
 );
 

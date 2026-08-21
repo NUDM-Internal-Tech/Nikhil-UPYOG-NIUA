@@ -23,7 +23,7 @@ const Breadcrumb = (props) => {
         return (
           <li key={ci} style={{ ...props.style || crumb?.style }} className="bread-crumb--item">
             {isLast(ci) || !crumb?.path || crumb?.isclickable == false ? (
-              <span style={props?.spanStyle ? { ...props?.spanStyle, color: "#0B0C0C" } : { color: "#0B0C0C" }}>{crumb.content}</span>
+              <span style={props?.spanStyle ? { ...props?.spanStyle, color: "var(--text-primary)" } : { color: "var(--text-primary)" }}>{crumb.content}</span>
             ) : (
             (crumb?.isredirected ? <span onClick={() => {navigate(`${crumb?.path?.pathname}`, { ...crumb?.path?.state })}}>
               <LinkButton label={crumb.content} />

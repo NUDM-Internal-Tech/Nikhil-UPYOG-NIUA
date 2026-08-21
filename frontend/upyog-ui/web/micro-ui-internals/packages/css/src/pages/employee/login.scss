@@ -60,7 +60,7 @@
 .employeeForgotPassword {
   .submit-bar {
     @apply w-full;
-    background-color: #5a1166 !important;
+    background-color: var(--purple) !important;
   }
 }
 .employeeChangePassword .submit-bar {

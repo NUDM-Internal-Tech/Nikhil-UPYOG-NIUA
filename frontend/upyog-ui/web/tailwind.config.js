@@ -52,6 +52,7 @@ const variablesPlugin = plugin(function ({ addBase }) {
             "--error": extend.colors.error,
             "--success": extend.colors.success,
             "--black": extend.colors.black,
+            "--purple": extend.colors.purple,
             "--white": extend.colors.white,
             "--grey-dark": extend.colors.grey.dark,
             "--grey-mid": extend.colors.grey.mid,

@@ -125,7 +125,7 @@ const UploadPitPhoto = (props) => {
                 width: "100%",
                 backgroundColor: "#d6d5d4",
                 borderStyle: "solid",
-                borderBottom: "1px solid #464646",
+                borderBottom: "1px solid var(--input-border)",
                 padding: "4px 40px",
                 margin: "8px 0px",
                 cursor: "pointer",
