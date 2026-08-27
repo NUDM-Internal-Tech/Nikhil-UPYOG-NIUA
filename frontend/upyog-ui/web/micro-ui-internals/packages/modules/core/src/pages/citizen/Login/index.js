@@ -7,6 +7,8 @@ import SelectMobileNumber from "./SelectMobileNumber";
 import SelectOtp from "./SelectOtp";
 import SelectName from "./SelectName";
 import { subYears, format } from "date-fns";
+import Background from "../../../components/Background";
+
 const TYPE_REGISTER = { type: "register" };
 const TYPE_LOGIN = { type: "login" };
 const DEFAULT_USER = "digit-user";
@@ -115,15 +117,15 @@ const Login = ({ stateCode, isUserRegistered = true }) => {
     };
     if (isUserRegistered) {
       const [res, err] = await sendOtp({ otp: { ...data, ...TYPE_LOGIN } });
-      if (!err) {
-        setCanSubmitNo(true);
-        navigate(`${path}/otp`, { replace: true, state: { from: getFromLocation(location.state, searchParams), role: location.state?.role } });
-        return;
-      } else {
+      if (!res && err) {
         setCanSubmitNo(true);
         if (!(location.state && location.state.role === "FSM_DSO")) {
           navigate(`/upyog-ui/citizen/register/name`, { replace: true, state: { from: getFromLocation(location.state, searchParams), data: data } });
         }
+      } else {
+        setCanSubmitNo(true);
+        navigate(`${path}/otp`, { replace: true, state: { from: getFromLocation(location.state, searchParams), role: location.state?.role } });
+        return;
       }
       if (location.state?.role) {
         setCanSubmitNo(true);
@@ -256,44 +258,46 @@ const Login = ({ stateCode, isUserRegistered = true }) => {
   };
 
   return (
-    <div className="citizen-form-wrapper">
-      <AppContainer>
-        <BackButton />
-        <Routes>
-          <Route
-            index
-            element={
-              <SelectMobileNumber
-                onSelect={selectMobileNumber}
-                config={stepItems[0]}
-                mobileNumber={params.mobileNumber || ""}
-                onMobileChange={handleMobileChange}
-                canSubmit={canSubmitNo}
-                showRegisterLink={isUserRegistered && !location.state?.role}
-                t={t}
-              />
-            }
-          />
-          <Route
-            path="otp"
-            element={
-              <SelectOtp
-                config={{ ...stepItems[1], texts: { ...stepItems[1].texts, cardText: `${stepItems[1].texts.cardText} ${params.mobileNumber || ""}` } }}
-                onOtpChange={handleOtpChange}
-                onResend={resendOtp}
-                onSelect={selectOtp}
-                otp={params.otp}
-                error={isOtpValid}
-                canSubmit={canSubmitOtp}
-                t={t}
-              />
-            }
-          />
-          <Route path="name" element={<SelectName config={stepItems[2]} onSelect={selectName} t={t} isDisabled={canSubmitName} />} />
-        </Routes>
-        {error && <Toast error={true} label={error} onClose={() => setError(null)} />}
-      </AppContainer>
-    </div>
+    <Background>
+      <div className="citizen-form-wrapper">
+        <AppContainer>
+          <BackButton />
+          <Routes>
+            <Route
+              index
+              element={
+                <SelectMobileNumber
+                  onSelect={selectMobileNumber}
+                  config={stepItems[0]}
+                  mobileNumber={params.mobileNumber || ""}
+                  onMobileChange={handleMobileChange}
+                  canSubmit={canSubmitNo}
+                  showRegisterLink={isUserRegistered && !location.state?.role}
+                  t={t}
+                />
+              }
+            />
+            <Route
+              path="otp"
+              element={
+                <SelectOtp
+                  config={{ ...stepItems[1], texts: { ...stepItems[1].texts, cardText: `${stepItems[1].texts.cardText} ${params.mobileNumber || ""}` } }}
+                  onOtpChange={handleOtpChange}
+                  onResend={resendOtp}
+                  onSelect={selectOtp}
+                  otp={params.otp}
+                  error={isOtpValid}
+                  canSubmit={canSubmitOtp}
+                  t={t}
+                />
+              }
+            />
+            <Route path="name" element={<SelectName config={stepItems[2]} onSelect={selectName} t={t} isDisabled={canSubmitName} />} />
+          </Routes>
+          {error && <Toast error={true} label={error} onClose={() => setError(null)} />}
+        </AppContainer>
+      </div>
+    </Background>
   );
 };
 

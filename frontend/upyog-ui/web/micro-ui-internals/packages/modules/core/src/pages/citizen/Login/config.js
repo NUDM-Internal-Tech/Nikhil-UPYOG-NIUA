@@ -4,7 +4,7 @@ export const loginSteps = [
       header: "CS_LOGIN_PROVIDE_MOBILE_NUMBER",
       cardText: "CS_LOGIN_TEXT",
       nextText: "CS_COMMONS_NEXT",
-      submitBarLabel: "CS_COMMONS_NEXT",
+      submitBarLabel: "Get OTP",
     },
     inputs: [
       {

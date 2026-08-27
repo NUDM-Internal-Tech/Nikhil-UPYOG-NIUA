@@ -204,18 +204,20 @@ const Home = (props) => {
 
   return (
     <div className={classname}>
-      <TopBarSideBar t={t}
-        stateInfo={stateInfo}
-        userDetails={userDetails}
-        CITIZEN={CITIZEN}
-        cityDetails={cityDetails}
-        mobileView={mobileView}
-        handleUserDropdownSelection={handleUserDropdownSelection}
-        logoUrl={logoUrl}
-        showSidebar={true}
-        linkData={linkData}
-        islinkDataLoading={islinkDataLoading}
-         />
+      {!hideSidebar && (
+        <TopBarSideBar t={t}
+          stateInfo={stateInfo}
+          userDetails={userDetails}
+          CITIZEN={CITIZEN}
+          cityDetails={cityDetails}
+          mobileView={mobileView}
+          handleUserDropdownSelection={handleUserDropdownSelection}
+          logoUrl={logoUrl}
+          showSidebar={true}
+          linkData={linkData}
+          islinkDataLoading={islinkDataLoading}
+        />
+      )}
 
       <div className="main center-container citizen-home-container mb-25">
         {hideSidebar ? null : (

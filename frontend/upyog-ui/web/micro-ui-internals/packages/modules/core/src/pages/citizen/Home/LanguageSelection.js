@@ -1,48 +1,21 @@
-import React, { useMemo } from "react";
-import { PageBasedInput, Loader, RadioButtons, CardHeader } from "@nudmcdgnpm/digit-ui-react-components";
-import { useTranslation } from "react-i18next";
-
+import React, { useEffect } from "react";
+import { Loader } from "@nudmcdgnpm/digit-ui-react-components";
 
 const LanguageSelection = () => {
-  const { t } = useTranslation();
   const navigate = Digit.Hooks.useCustomNavigate();
-
-  const { data: { languages, stateInfo } = {}, isLoading } = Digit.Hooks.useStore.getInitData();
+  const { data: { stateInfo } = {}, isLoading } = Digit.Hooks.useStore.getInitData();
   const selectedLanguage = Digit.StoreData.getCurrentLanguage();
 
-  const texts = useMemo(
-    () => ({
-      header: t("CS_COMMON_CHOOSE_LANGUAGE"),
-      submitBarLabel: t("CORE_COMMON_CONTINUE"),
-    }),
-    [t]
-  );
+  useEffect(() => {
+    if (!isLoading && stateInfo) {
+      // Skip language screen: use existing selected language or fallback to English, then go to login
+      const targetLanguage = selectedLanguage || "en_IN";
+      Digit.LocalizationService.changeLanguage(targetLanguage, stateInfo.code);
+      navigate(`/upyog-ui/citizen/login`);
+    }
+  }, [isLoading, stateInfo]);
 
-  const RadioButtonProps = useMemo(
-    () => ({
-      options: languages,
-      optionsKey: "label",
-      additionalWrapperClass: "reverse-radio-selection-wrapper",
-      onSelect: (language) => Digit.LocalizationService.changeLanguage(language.value, stateInfo.code),
-      selectedOption: languages?.filter((i) => i.value === selectedLanguage)[0],
-    }),
-    [selectedLanguage, languages]
-  );
-
-  function onSubmit() {
-    navigate(`/upyog-ui/citizen/select-location`);
-  }
-
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <div className="selection-card-wrapper">
-      <PageBasedInput texts={texts} onSubmit={onSubmit}>
-        <CardHeader>{t("CS_COMMON_CHOOSE_LANGUAGE")}</CardHeader>
-        <RadioButtons {...RadioButtonProps} />
-      </PageBasedInput>
-    </div>
-  );
+  return <Loader />;
 };
 
 export default LanguageSelection;

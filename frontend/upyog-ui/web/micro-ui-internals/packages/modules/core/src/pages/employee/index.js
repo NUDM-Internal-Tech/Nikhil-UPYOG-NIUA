@@ -73,32 +73,7 @@ const EmployeeApp = ({
                 }
               >
                 <div className="loginnn">
-                  <div className="login-logo-wrapper">
-                    <div className="logoNiua"></div>
-                  </div>
-                  <picture>
-                    <source
-                      id="backgroung-login"
-                      media="(min-width: 950px)"
-                      srcSet="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+(1920x1080).jpg"
-                      style={{ position: "absolute", height: "100%", width: "100%" }}
-                    />
-                    <source
-                      media="(min-width: 250px)"
-                      srcSet="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+%28500x900%29.jpg"
-                    />
-                    <img
-                      src="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+(1920x1080).jpg"
-                      alt="imagealttext"
-                      style={{
-                        position: "absolute",
-                        height: "100%",
-                        width: "100%",
-                        zIndex: "1",
-                        display: window.location.href.includes("user/profile") ? "none" : "",
-                      }}
-                    />
-                  </picture>
+                  {/* Background handles the layout picture internally */}
                   <Routes>
                     <Route path="login" element={<EmployeeLogin />} />
                     <Route path="forgot-password" element={<ForgotPassword />} />

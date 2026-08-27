@@ -258,3 +258,722 @@ background-color: white !important;
 .employeeForgotPassword{
   z-index: 2;
 }
+
+/* Premium Split Layout Login Styling */
+.login-split-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.login-left-section {
+  width: 58%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 80px;
+  box-sizing: border-box;
+  z-index: 5;
+}
+
+.login-left-content {
+  max-width: 540px;
+}
+
+/* Top Header Controls (Language & Help) */
+.login-top-header-controls {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+  display: flex;
+  gap: 24px;
+  z-index: 10;
+
+  .control-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--purple);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .language-selector {
+    background: rgba(255, 255, 255, 0.65);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(90, 17, 102, 0.12);
+    backdrop-filter: blur(4px);
+  }
+}
+
+.login-subheading-tagline {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-top: -6px;
+  margin-bottom: 28px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Unified White Features Card */
+.login-features-list-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  backdrop-filter: blur(8px);
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.25s;
+
+  .feature-list-row-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+
+    &:hover {
+      transform: translateX(4px);
+    }
+  }
+
+  .feature-row-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(90, 17, 102, 0.06);
+    color: var(--purple);
+    flex-shrink: 0;
+  }
+
+  .feature-row-text {
+    h4 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--purple);
+      margin: 0 0 1px 0;
+    }
+    p {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+  }
+}
+
+/* Left Column Bottom Emblem Row */
+.login-left-footer-emblem-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.4s;
+
+  .footer-emblem-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--purple);
+    font-weight: 600;
+
+    svg {
+      color: var(--purple);
+      opacity: 0.8;
+      flex-shrink: 0;
+    }
+  }
+}
+
+/* Right Section Wrapper as Solid White Panel */
+.login-right-section {
+  width: 42%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 60px 48px;
+  box-sizing: border-box;
+  z-index: 5;
+  box-shadow: -4px 0 32px rgba(0, 0, 0, 0.04);
+  border-left: 1px solid rgba(0, 0, 0, 0.05);
+  animation: slideInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  .citizen-form-wrapper {
+    width: 100% !important;
+    max-width: 420px !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .digit-app-container, .AppContainer {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  /* Inner default cards become transparent inside the mockup card */
+  .card, .employeeCard {
+    background: transparent !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+    border: none !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+
+    /* Hide the legacy card headers */
+    .card-header, h1.card-header, h3.card-header, .card-text {
+      display: none !important;
+    }
+  }
+
+  /* Align back button inside the card body */
+  .back-btn2 {
+    display: none !important;
+  }
+
+  /* Dynamic inputs overrides to look modern & rounded */
+  input[type="text"], input[type="password"], input[type="number"], .employee-select-wrap {
+    border: 1.5px solid rgba(90, 17, 102, 0.15) !important;
+    border-radius: 10px !important;
+    height: 48px !important;
+    padding: 10px 16px !important;
+    transition: all 0.2s ease !important;
+
+    &:focus {
+      border-color: var(--purple) !important;
+      box-shadow: 0 0 0 3px rgba(90, 17, 102, 0.1) !important;
+    }
+  }
+
+  /* OTP / Next button override */
+  .submit-bar, .submit-bar-disabled {
+    width: 100% !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    border: none !important;
+    height: 48px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 8px !important;
+    margin-top: 24px !important;
+
+    header {
+      font-weight: 700 !important;
+      font-size: 16px !important;
+      text-align: center !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+  }
+
+  .submit-bar {
+    background: linear-gradient(135deg, var(--purple) 0%, #731484 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(90, 17, 102, 0.2) !important;
+    transition: all 0.2s ease !important;
+
+    header {
+      color: #ffffff !important;
+    }
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba(90, 17, 102, 0.3) !important;
+      transform: translateY(-1px) !important;
+    }
+  }
+
+  .submit-bar-disabled {
+    background: #dfd8e3 !important;
+    color: #9a859e !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+
+    header {
+      color: #9a859e !important;
+    }
+  }
+}
+
+/* Solid Panel Content Centering Wrapper */
+.login-mockup-solid-content {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  .mockup-card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .mockup-mobile-icon-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: rgba(90, 17, 102, 0.06);
+      color: var(--purple);
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--purple);
+      margin: 0 0 4px 0;
+      font-family: Roboto, Outfit, sans-serif;
+    }
+
+    p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+  }
+
+  .mockup-card-body {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Solid Panel Trust Badges Grid */
+.solid-panel-trust-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 24px;
+  margin-top: 12px;
+
+  .trust-column-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .trust-column-icon {
+    color: var(--purple);
+    opacity: 0.8;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+  }
+
+  .trust-column-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    strong {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--purple);
+    }
+
+    span {
+      font-size: 9px;
+      color: var(--text-secondary);
+      line-height: 1.25;
+      margin-top: 1px;
+    }
+  }
+}
+
+/* Copyright footer label at the very bottom */
+.login-mockup-copyright {
+  margin-top: 20px;
+  font-size: 10.5px;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: 500;
+  text-align: center;
+}
+
+.upyog-logo-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.upyog-logo-branding {
+  display: flex;
+  flex-direction: column;
+}
+
+.upyog-logo-text {
+  font-family: Roboto, Outfit, sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--purple);
+  line-height: 1;
+}
+
+.upyog-tagline {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.login-left-content {
+  max-width: 540px;
+  animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.login-heading {
+  font-family: Roboto, Outfit, sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+
+.login-subheading {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+.login-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  &:nth-child(1) { animation-delay: 0.25s; }
+  &:nth-child(2) { animation-delay: 0.4s; }
+  &:nth-child(3) { animation-delay: 0.55s; }
+
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    background: rgba(255, 255, 255, 0.85);
+    border-color: var(--purple);
+    box-shadow: 0 12px 24px rgba(90, 17, 102, 0.08);
+  }
+}
+
+.feature-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  flex-shrink: 0;
+}
+
+/* Entrance Animations Keyframes */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature-text {
+  h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--purple);
+    margin: 0 0 2px 0;
+  }
+  p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+}
+
+/* Hide NIUA background absolute overlays inside the main page */
+.loginContainer {
+  padding-top: 0 !important;
+  background: none !important;
+}
+
+.loginnn {
+  min-height: 100vh;
+}
+
+/* Make sure footer copyright section sits clean in left section */
+.login-left-section div[style*="position: fixed"] {
+  position: absolute !important;
+  background: transparent !important;
+}
+
+@media screen and (max-width: 900px) {
+  .login-split-container {
+    flex-direction: column;
+  }
+  .login-left-section {
+    display: none;
+  }
+  .login-right-section {
+    width: 100%;
+    min-height: 100vh;
+    background: rgba(255, 255, 255, 0.88);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.login-bg-picture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.login-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 42% center; /* Shift focus slightly left to keep all citizens fully visible in the left 58% of the screen */
+}
+
+.citizen .login-split-container {
+  margin-top: -80px !important;
+  min-height: 100vh !important;
+}
+
+/* Language Dropdown Menu Overlay */
+.language-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #ffffff;
+  border: 1px solid rgba(90, 17, 102, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(90, 17, 102, 0.1);
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  z-index: 100;
+
+  .dropdown-menu-item {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--purple);
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    text-align: left;
+
+    &:hover {
+      background: rgba(90, 17, 102, 0.05);
+    }
+
+    &.active {
+      background: var(--purple) !important;
+      color: #ffffff !important;
+    }
+  }
+}
+
+/* White contrast styling for emblem bottom row inside purple background overlay */
+.login-left-footer-emblem-row {
+  .footer-emblem-badge {
+    color: #ffffff !important;
+
+    svg {
+      color: #ffffff !important;
+      opacity: 0.95;
+    }
+  }
+}
+
+/* Override inline width and style DigiLocker button & visual order layout */
+.login-right-section {
+  /* Enforce flex ordering to swap Next and DigiLocker buttons strictly on the citizen login page */
+  .citizen .card, .citizen .employeeCard, .citizen form {
+    display: flex !important;
+    flex-direction: column !important;
+
+    /* Push other elements below by default */
+    & > * {
+      order: 5 !important;
+    }
+
+    /* 1. Mobile number field label & wrapper (login page only) */
+    .card-label, label, .label-container, .field-container, .field, div:has(input[type="text"]), .label-field-pair {
+      order: 1 !important;
+    }
+
+    /* 2. Consent check container (login page only) */
+    .citizen-consent-form, div:has(input[type="checkbox"]), .CitizenConsentForm {
+      order: 2 !important;
+    }
+
+    /* 3. Get OTP (submit) button - only reordered on login page using sibling matching */
+    .field-container ~ .submit-bar, 
+    .field-container ~ .submit-bar-disabled,
+    .citizen-consent-form ~ .submit-bar,
+    .citizen-consent-form ~ .submit-bar-disabled {
+      order: 3 !important;
+      margin-top: 16px !important;
+    }
+
+    /* 4. DigiLocker button wrapper (login page only) */
+    .col-md-4, div[style*="width:40%"], div[style*="width: 40%"] {
+      order: 4 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-top: 16px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+
+      /* OR Divider line */
+      &:before {
+        content: "OR" !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        color: var(--text-secondary) !important;
+        margin-bottom: 16px !important;
+        margin-top: 8px !important;
+        position: relative !important;
+        
+        /* Left and right divider lines */
+        background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.1)) no-repeat center left,
+                    linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.1)) no-repeat center right;
+        background-size: 44% 1px, 44% 1px;
+      }
+    }
+  }
+
+  .digilocker-btn {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;
+    border: 1.5px solid var(--purple) !important;
+    border-radius: 10px !important;
+    height: 48px !important;
+    color: var(--purple) !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    box-shadow: 0 2px 8px rgba(90, 17, 102, 0.05) !important;
+    transition: all 0.2s ease !important;
+    gap: 12px !important;
+    margin-top: 0px !important; /* margin is handled by divider before it */
+
+    img {
+      width: 24px !important;
+      height: 24px !important;
+      object-fit: contain !important;
+      margin-right: 0px !important;
+    }
+
+    &:hover {
+      background: rgba(90, 17, 102, 0.03) !important;
+      box-shadow: 0 4px 12px rgba(90, 17, 102, 0.1) !important;
+    }
+  }
+}
+
+/* Global top-level override to force DigiLocker wrapper container to take 100% width */
+.col.col-md-4[style*="width"], 
+.col-md-4[style*="width"], 
+div[style*="width:40%"], 
+div[style*="width: 40%"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+}

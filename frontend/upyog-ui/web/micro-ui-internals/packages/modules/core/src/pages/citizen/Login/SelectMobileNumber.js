@@ -41,7 +41,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
           {data?.linkPrefix && <span>{t(`${data?.linkPrefix}_`)}</span>}
           {data?.link && <span id={data?.linkId} onClick={(e) => { onLinkClick(e) }} style={{ color: "#a82227", cursor: "pointer" }}>{t(`${data?.link}_`)}</span>}
           {data?.linkPostfix && <span>{t(`${data?.linkPostfix}_`)}</span>}
-          {(index == isCCFEnabled?.checkBoxLabels?.length - 1) && t("LABEL")}
+          {(index == isCCFEnabled?.checkBoxLabels?.length - 1) && null}
         </span>
       })}
     </span>
@@ -132,7 +132,7 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
           setMdmsConfig={setMdmsConfig}
         />
       </div>)}
-      <div className="col col-md-4  text-md-center p-0" style={{width:"40%", marginTop:"5px"}}>
+      <div className="col col-md-4  text-md-center p-0" style={{width:"100%", marginTop:"5px", display:"flex", justifyContent:"center"}}>
         <button
           className="digilocker-btn"
           type="button"
