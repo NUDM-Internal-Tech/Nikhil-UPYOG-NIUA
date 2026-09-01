@@ -3,39 +3,85 @@ import { useTranslation } from "react-i18next";
 
 const Background = ({ children }) => {
   const { t } = useTranslation();
-  const bgUrl = `${(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}/login-bg.png`;
+  const baseUrl = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+  const bgUrl = `${baseUrl}/login-bg.png`;
   const { data: { languages, stateInfo } = {} } = Digit.Hooks.useStore.getInitData();
   const selectedLanguage = Digit.StoreData.getCurrentLanguage();
   const [showDropdown, setShowDropdown] = React.useState(false);
 
   return (
-    <div className="login-split-container" style={{ zIndex: "2", position: "relative" }}>
-      {/* Page background picture */}
-      <picture className="login-bg-picture">
-        <source media="(min-width: 950px)" srcSet={bgUrl} />
-        <source media="(min-width: 250px)" srcSet={bgUrl} />
-        <img src={bgUrl} alt="background" className="login-bg-img" />
-      </picture>
+    <div className="login-page-wrapper">
+      {/* Top Government Header Bar */}
+      <header className="login-top-govt-header">
+        <div className="top-govt-brand">
+          <img 
+            src={`${baseUrl}/upyog-logo.png`} 
+            alt="UPYOG Logo" 
+            className="top-govt-upyog-logo" 
+          />
+        </div>
 
-      {/* Left Branding Column */}
-      <div className="login-left-section">
-        <div className="login-left-content">
-          <div className="login-left-main-flow">
-            <div className="upyog-logo-header-official">
-              <img 
-                src={`${(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}/upyog-logo.png`} 
-                alt="UPYOG Logo" 
-                className="upyog-official-logo-img" 
-              />
+        <div className="top-govt-center">
+          <img 
+            src={`${baseUrl}/up-seal.svg`} 
+            alt="UP Seal" 
+            className="top-govt-seal" 
+            onError={(e) => { e.currentTarget.src = `${baseUrl}/up-seal.png`; }}
+          />
+          <div className="top-govt-state-name">
+            <span className="top-govt-hindi">उत्तर प्रदेश सरकार</span>
+            <span className="top-govt-english">Government of Uttar Pradesh</span>
+          </div>
+        </div>
+
+        <div className="top-govt-leaders">
+          <div className="top-govt-leader-item">
+            <img 
+              src={`${baseUrl}/yogi-header.png`} 
+              alt="Yogi Adityanath" 
+              className="top-govt-leader-photo" 
+            />
+            <div className="top-govt-leader-info">
+              <span className="top-govt-leader-name">Yogi Adityanath</span>
+              <span className="top-govt-leader-title">Hon'ble Chief Minister</span>
+              <span className="top-govt-leader-subtitle">Uttar Pradesh</span>
             </div>
+          </div>
 
-            <h1 className="login-heading">
-              {t("CORE_LOGIN_ONE_PLATFORM", "One Platform,")}<br />
-              {t("CORE_LOGIN_MANY_SERVICES", "Many Services")}
-            </h1>
-            <p className="login-subheading-tagline">
-              Smart City &bull; Better Services &bull; Digital Tomorrow
-            </p>
+          <div className="top-govt-leader-item">
+            <img 
+              src={`${baseUrl}/modi-header.png`} 
+              alt="Narendra Modi" 
+              className="top-govt-leader-photo" 
+            />
+            <div className="top-govt-leader-info">
+              <span className="top-govt-leader-name">Narendra Modi</span>
+              <span className="top-govt-leader-title">Hon'ble Prime Minister</span>
+              <span className="top-govt-leader-subtitle">Government of India</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div className="login-split-container" style={{ zIndex: "2", position: "relative" }}>
+        {/* Page background picture */}
+        <picture className="login-bg-picture">
+          <source media="(min-width: 950px)" srcSet={bgUrl} />
+          <source media="(min-width: 250px)" srcSet={bgUrl} />
+          <img src={bgUrl} alt="background" className="login-bg-img" />
+        </picture>
+
+        {/* Left Branding Column */}
+        <div className="login-left-section">
+          <div className="login-left-content">
+            <div className="login-left-main-flow">
+              <h1 className="login-heading">
+                {t("CORE_LOGIN_ONE_PLATFORM", "One Platform,")}<br />
+                {t("CORE_LOGIN_MANY_SERVICES", "Many Services")}
+              </h1>
+              <p className="login-subheading-tagline">
+                Smart City &bull; Better Services &bull; Digital Tomorrow
+              </p>
 
             {/* Unified White Features Card */}
             <div className="login-features-list-card">
@@ -217,6 +263,7 @@ const Background = ({ children }) => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

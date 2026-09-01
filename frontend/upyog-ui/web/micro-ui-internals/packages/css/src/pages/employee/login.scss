@@ -820,12 +820,12 @@ background-color: white !important;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 42% center; /* Shift focus slightly left to keep all citizens fully visible in the left 58% of the screen */
+  object-position: 45% bottom; /* Shift focus to keep all citizens and bottom bench fully visible in the left 58% of the screen */
 }
 
 .citizen .login-split-container {
-  margin-top: -80px !important;
-  min-height: 100vh !important;
+  margin-top: 0px !important;
+  min-height: calc(100vh - 72px) !important;
 }
 
 /* Language Dropdown Menu Overlay */
