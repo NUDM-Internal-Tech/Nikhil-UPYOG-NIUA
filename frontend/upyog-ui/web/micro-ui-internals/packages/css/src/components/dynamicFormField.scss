@@ -20,7 +20,7 @@
     margin-top: 20px;
     margin-bottom: var(--spacing-md);
     font-size: var(--font-size-xl);
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
     color: #333;
   }
 
@@ -37,7 +37,7 @@
   &__unit {
     margin-left: var(--spacing-xs);
     font-size: var(--font-size-xs);
-    color: #767676;
+    color: var(--text-secondary);
     font-weight: var(--weight-regular);
   }
 
@@ -158,7 +158,7 @@
   }
 
   &__suggest-no {
-    font-weight: 600;
+    font-weight: var(--weight-medium);
   }
 
   &__suggest-sub {
@@ -231,7 +231,7 @@
   .field-unit {
     margin-left: var(--spacing-xs);
     font-size: var(--font-size-xs);
-    color: #767676;
+    color: var(--text-secondary);
     font-weight: var(--weight-regular);
   }
 }

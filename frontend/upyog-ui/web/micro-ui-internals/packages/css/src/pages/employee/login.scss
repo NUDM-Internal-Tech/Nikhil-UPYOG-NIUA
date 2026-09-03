@@ -86,7 +86,7 @@
   font-size: var(--font-size-2xl);
 }
 .loginFormStyleEmployee .employeeCard .card-label, .employeeForgotPassword .employeeCard .card-label{
-  font-weight: 600 !important;
+  font-weight: var(--weight-medium) !important;
   font-size: var(--font-size-sm) !important;
   line-height: 10px !important;
   color: var(--text-primary);
@@ -96,7 +96,7 @@
   margin-bottom: 20px;
 }
 .employeeCard .card-label{
-  font-weight: normal;
+  font-weight: var(--weight-regular);
   font-size: var(--font-size-md);
   line-height: 19px;
   color: var(--text-primary);
@@ -108,7 +108,7 @@
   font-size: var(--font-size-xs);
 }
 .employeeForgotPassword .employeeCard .card-label-desc {
-  font-weight: normal;
+  font-weight: var(--weight-regular);
   font-size: var(--font-size-md);
   line-height: var(--spacing-lg);
   color: var(--text-secondary);
@@ -120,7 +120,7 @@
   color: var(--text-secondary);
 }
 .employeeCard .card-label{
-  font-weight: 600 !important;
+  font-weight: var(--weight-medium) !important;
   font-size: var(--font-size-sm) !important;
   line-height: 10px !important;
   color: var(--text-primary);

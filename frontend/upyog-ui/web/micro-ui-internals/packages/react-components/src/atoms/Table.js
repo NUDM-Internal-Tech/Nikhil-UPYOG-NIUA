@@ -155,7 +155,7 @@ const Table = ({
                   return (
                     <td key={cellKey} {...restCellProps}>
                       {cell.attachment_link ? (
-                        <a style={{ color: "var(--link-normal)" }} href={cell.attachment_link}>
+                        <a className="text-link-normal" href={cell.attachment_link}>
                           {cell.render("Cell")}
                         </a>
                       ) : (

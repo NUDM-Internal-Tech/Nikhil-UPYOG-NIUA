@@ -42,7 +42,7 @@ const DashboardBox = ({ t = (val) => val, svgIcon, header, info, subHeader, link
               return (
                 <div key={index} className="employeeCard-info-data">
                   <span>{t(info[key])}</span>
-                  <span style={{ fontWeight: "bold" }}>{t(key)}</span>
+                  <span className="font-bold">{t(key)}</span>
                 </div>
               );
             })}

@@ -17,7 +17,7 @@
   transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
 }
 .accordion-title {
-  font-weight: 600;
+  font-weight: var(--weight-medium);
   cursor: pointer;
   color: #666;
   padding: 0.5em 0em;
@@ -57,14 +57,14 @@
   padding: 2px;
 }
 .notice_and_circular_heading_mb header {
-  font-weight: var(--weight-var(--weight-var(--weight-bold)));
+  font-weight: var(--weight-bold);
   font-size: var(--font-size-md) !important;
   line-height: var(--spacing-lg);
   margin-right: 50px;
 }
 .notice_and_circular_heading_mb .card-caption {
   padding-left: 30px;
-  font-weight: normal;
+  font-weight: var(--weight-regular);
   font-size: var(--font-size-xs);
   line-height: var(--spacing-lg);
   color: var(--text-secondary);
@@ -78,7 +78,7 @@
   padding-bottom: 20px;
 }
 .notice_and_circular_text p {
-  font-weight: normal;
+  font-weight: var(--weight-regular);
   font-size: var(--font-size-xs);
   line-height: 14px;
   color: var(--text-secondary);
@@ -88,10 +88,10 @@
   margin-bottom: 10px;
 }
 .notice_and_circular_caption .card-caption {
-  font-weight: normal;
+  font-weight: var(--weight-regular);
   font-size: 10px;
   line-height: 18px;
-  color: #A3A3A3;
+  color: var(--grey-dark);
 }
 .view_download_main {
   display: flex;
@@ -106,7 +106,7 @@
       align-items: center;
       p {
         padding-left: 10px;
-        font-weight: normal;
+        font-weight: var(--weight-regular);
         font-size: var(--font-size-md);
         line-height: 19px;
         color: var(--focus);
@@ -126,7 +126,7 @@
         align-items: center;
         p {
           padding-left: 10px;
-          font-weight: normal;
+          font-weight: var(--weight-regular);
           font-size: var(--font-size-md);
           line-height: 19px;
           color: var(--focus);

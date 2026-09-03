@@ -36,15 +36,7 @@ const AdvertisementModuleCard = ({ imageSrc, title, location, poleNo, price, pat
   };
   return (
     <div
-      style={{
-        border: "1px solid #ccc",
-        backgroundColor: "white",
-        borderRadius: "8px",
-        overflow: "hidden",
-        maxWidth: "30%",
-        margin: "10px auto",
-        minWidth: "24%",
-      }}
+      className="bg-white rounded-md" style={{ border: "1px solid #ccc", overflow: "hidden", maxWidth: "30%", margin: "10px auto", minWidth: "24%" }}
     >
       <div style={{ width: "100%", height: "200px", position: "relative",padding: "10px"}}>
         <img
@@ -60,32 +52,32 @@ const AdvertisementModuleCard = ({ imageSrc, title, location, poleNo, price, pat
           }}
         />
       </div>
-      <div style={{ padding: "var(--spacing-10px)" }}>
-        <p style={{ margin: "0", color: "var(--primary-main)" }}>{light}</p>
-        <h3 style={{ margin: "var(--spacing-5px) 0", fontWeight: "var(--weight-bold)" }}>{title}</h3>
+      <div className="p-sm">
+        <p className="text-primary-main m-0">{light}</p>
+        <h3 className="font-bold my-xs">{title}</h3>
         <p>
           {location} (
-          <button type="button" style={{ marginLeft: "var(--spacing-5px)", color: "var(--primary-main)" }}>
+          <button type="button" className="text-primary-main ml-xs">
             View Map
           </button>
           )
         </p>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="flex justify-between">
           <p>Pole No: {poleNo}</p>
           <p>₹ {price}</p>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div className="flex justify-between">
           <button
             type="button"
             onClick={handleViewAvailability}
-            style={{ backgroundColor: "var(--success)", color: "var(--white)", border: "var(--border-width-sm) solid var(--border)", padding: "var(--spacing-5px) var(--spacing-10px)", borderRadius: "var(--border-radius-sm)" }}
+            className="bg-success rounded-sm text-white border-sm border-solid border-border py-xs px-sm"
           >
             View Availability
           </button>
           <button
             type="button"
             onClick={handleBookNow}
-            style={{ backgroundColor: "var(--primary-main)", color: "var(--white)", border: "var(--border-width-sm) solid var(--border)", padding: "var(--spacing-5px) var(--spacing-10px)", borderRadius: "var(--border-radius-sm)" }}
+            className="bg-primary-main rounded-sm text-white border-sm border-solid border-border py-xs px-sm"
           >
             Book Now
           </button>

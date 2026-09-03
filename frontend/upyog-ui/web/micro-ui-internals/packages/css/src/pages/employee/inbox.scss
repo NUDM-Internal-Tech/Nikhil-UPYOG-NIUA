@@ -73,7 +73,7 @@
     margin-right: var(--spacing-xl);
     span:nth-child(2) {
       @apply font-bold;
-      color: #4f5a5f;
+      color: var(--text-secondary);
     }
   }
   .employeeCard-info-data {
@@ -594,12 +594,12 @@ background-size: cover
     position: absolute;
     margin-bottom: -10%;
     left: 6%;
-    box-shadow: 1px 5px 6px 0px #e3e4e3;
+    box-shadow: 1px 5px 6px 0px var(--grey-bg);
     border-radius: 10px;
 }
 .text-employee-card{
   font-size: 1.5rem;
-  font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+  font-weight: var(--weight-bold);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   position: absolute;
   top:10%;
@@ -628,7 +628,7 @@ background-size: cover
   }
   .row {
     color: #b1b4b6;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     font-size: var(--font-size-md);
   }
 }
@@ -647,7 +647,7 @@ background-size: cover
     padding: 10px 35px;
     color: rgb(244, 119, 56);
     border-bottom: var(--border-width-lg) solid rgb(244, 119, 56);
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
   }
 
   .search-tab-head-selected:focus {
@@ -667,7 +667,7 @@ background-size: cover
 
   h2 {
     font-size: var(--font-size-md);
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
   }
 }
 

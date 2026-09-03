@@ -13,7 +13,7 @@ const Close = () => (
 
 const CloseBtn = (props) => {
     return (
-        <div className="icon-bg-secondary" onClick={props.onClick} style={{ backgroundColor: "#FFFFFF" }}>
+        <div className="icon-bg-secondary" onClick={props.onClick} className="bg-white">
             <Close />
         </div>
     );
@@ -59,7 +59,7 @@ const CitizenConsentForm = ({ t, styles, mdmsConfig = "", setMdmsConfig, labels 
                             src={`${url}`}
                         ></iframe>
                     </div> : 
-                    <div style={{width: "100%", height: "100px", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <div className="flex justify-center items-center" style={{ width: "100%", height: "100px" }}>
                         {t("COMMON_URL_NOT_FOUND")}
                     </div>}
 

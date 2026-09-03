@@ -90,7 +90,7 @@
   font-size: var(--font-size-lg);
   line-height: 21px;
   color: var(--text-primary);
-  font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+  font-weight: var(--weight-bold);
 }
 
 .responses-container {
@@ -158,7 +158,7 @@ border-radius: var(--border-radius-sm);
 .date-response {
 display: flex;
 flex-direction: row;
-font-weight: var(--weight-var(--weight-var(--weight-bold)));
+font-weight: var(--weight-bold);
 @apply gap-10 ;
 }
 .divide {

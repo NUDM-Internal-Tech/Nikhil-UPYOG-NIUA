@@ -61,7 +61,7 @@
     position: absolute;
     top: -4px;
     right: -93px;
-    color: #008000;
+    color: var(--success);
     padding: 5px;
     border-radius: 30px;
     width: 30px;
@@ -116,7 +116,7 @@
 }
 
 .ads-auto-24 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
@@ -148,7 +148,7 @@
     background-color: #fff;
     padding: 15px 20px;
     font-size: var(--font-size-lg);
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     z-index: 10px;
 }
@@ -192,7 +192,7 @@
 
 .ads-auto-35 {
     margin: 5px 0;
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 .ads-auto-36 {
@@ -328,7 +328,7 @@
     margin-right: var(--spacing-sm);
     margin: 5px;
     color: blue;
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 
@@ -389,7 +389,7 @@
     position: absolute;
     right: 83px;
     background-color: var(--white);
-    color: #008000;
+    color: var(--success);
     padding: var(--spacing-xs);
     border-radius: 30px;
     margin: 1px 0 1px 0;
@@ -748,22 +748,22 @@
 
 .asset-auto-29 {
     margin-left: var(--spacing-sm);
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 .asset-auto-30 {
-    border: var(--border-width-sm) solid #e0e0e0;
+    border: var(--border-width-sm) solid var(--grey-bg);
     padding: 6px;
 }
 
 .asset-auto-31 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 
 /* components/inbox/Status.js */
 .asset-auto-32 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 
@@ -774,7 +774,7 @@
 }
 
 .asset-auto-34 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     color: rgba(212, 53, 28);
     padding-left: var(--spacing-sm);
     margin-top: -20px;
@@ -2237,26 +2237,26 @@
 
 .pt-auto-21 {
     margin-left: var(--spacing-sm);
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 .pt-auto-22 {
-    border: var(--border-width-sm) solid #e0e0e0;
+    border: var(--border-width-sm) solid var(--grey-bg);
     padding: 6px;
 }
 
 .pt-auto-23 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 .pt-auto-24 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 
 /* components/inbox/Status.js */
 .pt-auto-25 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 
@@ -2293,7 +2293,7 @@
 }
 
 .pt-auto-32 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     color: white;
 }
 
@@ -2333,7 +2333,7 @@
 
 /* pageComponents/Mutate/Comments.js */
 .pt-auto-38 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 
@@ -2351,7 +2351,7 @@
 .pt-auto-41 {
     padding-bottom: 10px;
     padding-top: 3px;
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
     font-size: var(--font-size-md);
     line-height: 19px;
     color: var(--text-primary);
@@ -2362,33 +2362,33 @@
 }
 
 .pt-auto-43 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 
 /* pageComponents/Mutate/PropertyMarketValue.js */
 .pt-auto-44 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 
 /* pageComponents/Mutate/ReasonForTransfer.js */
 .pt-auto-45 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 
 /* pageComponents/Mutate/RegistrationDocument.js */
 .pt-auto-46 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 .pt-auto-47 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 .pt-auto-48 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 .pt-auto-49 {
@@ -2444,14 +2444,14 @@
 .pt-auto-57 {
     padding-bottom: 10px;
     padding-top: 3px;
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
     font-size: var(--font-size-md);
     line-height: 19px;
     color: var(--text-primary);
 }
 
 .pt-auto-58 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 
@@ -3019,7 +3019,7 @@
 }
 
 .pt-auto-153 {
-    color: #A52A2A;
+    color: var(--primary-main);
 }
 
 
@@ -3099,7 +3099,7 @@
 }
 
 .pt-auto-166 {
-    font-weight: 700px;
+    font-weight: var(--weight-bold);
 }
 
 .pt-auto-167 {
@@ -3131,7 +3131,7 @@
 
 /* utils/UploadFile.js */
 .pt-auto-171 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
 }
 
 .pt-auto-172 {
@@ -3176,7 +3176,7 @@
 }
 
 .pt-inline-inbox-search-error {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     color: rgba(212, 53, 28);
     padding-left: var(--spacing-sm);
     margin-top: -20px;
@@ -3216,7 +3216,7 @@
 }
 
 .pt-inline-view-timeline-btn {
-    color: #a52a2a;
+    color: var(--primary-main);
 }
 
 .pt-inline-subheader {
@@ -3367,22 +3367,22 @@
 
 .wt-auto-17 {
     margin-left: var(--spacing-sm);
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 .wt-auto-18 {
-    border: var(--border-width-sm) solid #e0e0e0;
+    border: var(--border-width-sm) solid var(--grey-bg);
     padding: 6px;
 }
 
 .wt-auto-19 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 
 /* components/inbox/Status.js */
 .wt-auto-20 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 
@@ -3393,7 +3393,7 @@
 }
 
 .wt-auto-22 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     color: rgba(212, 53, 28);
     padding-left: var(--spacing-sm);
     margin-top: -20px;
@@ -3689,7 +3689,7 @@
 }
 
 .ws-auto-4 {
-    color: #E50000;
+    color: var(--error);
 }
 
 .ws-auto-5 {
@@ -3818,7 +3818,7 @@
 
 /* pageComponents/WSActivationCommentsDetails.js */
 .ws-auto-31 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 
@@ -3830,19 +3830,19 @@
 
 /* pageComponents/WSActivationDetails.js */
 .ws-auto-33 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 .ws-auto-34 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 .ws-auto-35 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 .ws-auto-36 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 
@@ -3879,7 +3879,7 @@
 
 /* pageComponents/WSActivationSupportingDocuments.js */
 .ws-auto-42 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 
@@ -3889,7 +3889,7 @@
 }
 
 .ws-auto-44 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 .ws-auto-45 {
@@ -4011,7 +4011,7 @@
 }
 
 .ws-auto-67 {
-    font-weight: 700px;
+    font-weight: var(--weight-bold);
     margin-bottom: var(--spacing-sm);
 }
 
@@ -4059,7 +4059,7 @@
 }
 
 .ws-auto-77 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
     line-height: var(--spacing-xl);
 }
 
@@ -4142,7 +4142,7 @@
 
 .ws-auto-95 {
     margin-top: -5px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     display: inline;
 }
 
@@ -4153,7 +4153,7 @@
 
 .ws-auto-97 {
     margin-top: -5px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     display: inline;
 }
 
@@ -4164,7 +4164,7 @@
 
 .ws-auto-99 {
     margin-top: -5px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     display: inline;
 }
 
@@ -4188,7 +4188,7 @@
 
 .ws-auto-104 {
     margin-top: -5px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     display: inline;
 }
 
@@ -4215,7 +4215,7 @@
 }
 
 .ws-auto-109 {
-    font-weight: 700px;
+    font-weight: var(--weight-bold);
     margin-bottom: var(--spacing-sm);
 }
 
@@ -4265,7 +4265,7 @@
 }
 
 .ws-auto-119 {
-    font-weight: var(--weight-var(--weight-var(--weight-bold)));
+    font-weight: var(--weight-bold);
     line-height: var(--spacing-xl);
 }
 
@@ -4309,7 +4309,7 @@
 }
 
 .ws-auto-128 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 
@@ -4319,7 +4319,7 @@
 }
 
 .ws-auto-130 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 .ws-auto-131 {
@@ -4415,7 +4415,7 @@
 
 .ws-auto-149 {
     margin-top: -5px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     display: inline;
 }
 
@@ -4426,7 +4426,7 @@
 
 .ws-auto-151 {
     margin-top: -5px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     display: inline;
 }
 
@@ -4776,7 +4776,7 @@
 }
 
 .ws-auto-213 {
-    color: #A52A2A;
+    color: var(--primary-main);
 }
 
 .ws-auto-214 {
@@ -5067,7 +5067,7 @@
 
 .ws-auto-270 {
     padding-right: 60px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 .ws-auto-271 {
@@ -5105,7 +5105,7 @@
 
 .ws-auto-278 {
     padding-right: 60px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
 }
 
 .ws-auto-279 {
@@ -5229,7 +5229,7 @@
 }
 
 .ws-auto-302 {
-    color: #A52A2A;
+    color: var(--primary-main);
 }
 
 .ws-auto-303 {
@@ -5573,20 +5573,20 @@
 
 .tl-auto-16 {
     margin-left: var(--spacing-sm);
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 .tl-auto-17 {
-    border: var(--border-width-sm) solid #e0e0e0;
+    border: var(--border-width-sm) solid var(--grey-bg);
     padding: 6px;
 }
 
 .tl-auto-18 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 .tl-auto-19 {
-    font-weight: normal;
+    font-weight: var(--weight-regular);
 }
 
 
@@ -5602,7 +5602,7 @@
 }
 
 .tl-auto-22 {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+    font-weight: var(--weight-bold);
     color: rgba(212, 53, 28);
     padding-left: var(--spacing-sm);
     margin-top: -20px;
@@ -6241,7 +6241,7 @@
 
 /* pageComponents/TLTradeUnitsEmployeeInitial.js */
 .tl-auto-136 {
-    color: #F47738;
+    color: var(--primary-light);
     width: fit-content;
 }
 
@@ -6327,7 +6327,7 @@
 }
 
 .tl-auto-151 {
-    color: #A52A2A;
+    color: var(--primary-main);
 }
 
 .tl-auto-152 {
@@ -6445,7 +6445,7 @@
 }
 
 .tl-auto-172 {
-    color: #A52A2A;
+    color: var(--primary-main);
 }
 
 

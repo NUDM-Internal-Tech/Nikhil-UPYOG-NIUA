@@ -15,7 +15,7 @@ const PrivacyMaskIcon = ({ className, style = {} }) => (
   // <svg width="22" height="15" viewBox="0 0 22 15" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
   //   <path
   //     d="M11 0C6 0 1.73 3.11 0 7.5C1.73 11.89 6 15 11 15C16 15 20.27 11.89 22 7.5C20.27 3.11 16 0 11 0ZM11 12.5C8.24 12.5 6 10.26 6 7.5C6 4.74 8.24 2.5 11 2.5C13.76 2.5 16 4.74 16 7.5C16 10.26 13.76 12.5 11 12.5ZM11 4.5C9.34 4.5 8 5.84 8 7.5C8 9.16 9.34 10.5 11 10.5C12.66 10.5 14 9.16 14 7.5C14 5.84 12.66 4.5 11 4.5Z"
-  //     fill="#EEEEEE"
+  //     fill="var(--grey-mid)"
   //   />
   // </svg>
   <svg width="22" height="15" viewBox="0 0 22 15" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} style={style}>
@@ -57,13 +57,13 @@ const ArrowForward = ({ className, onClick }) => (
 
 const ArrowToFirst = ({ className, onClick }) => (
   <svg width="18px" height="18px" viewBox="0 0 13 12" fill="black" xmlns="http://www.w3.org/2000/svg" className={className} onClick={onClick}>
-    <path d="M12.41 10.59L7.82 6L12.41 1.41L11 0L5 6L11 12L12.41 10.59ZM0 0H2V12H0V0Z" fill="#505a5f"></path>
+    <path d="M12.41 10.59L7.82 6L12.41 1.41L11 0L5 6L11 12L12.41 10.59ZM0 0H2V12H0V0Z" fill="var(--text-secondary)"></path>
   </svg>
 );
 
 const ArrowToLast = ({ className, onClick }) => (
   <svg width="18px" height="18px" viewBox="0 0 13 12" fill="black" xmlns="http://www.w3.org/2000/svg" className={className} onClick={onClick}>
-    <path d="M0.589844 1.41L5.17984 6L0.589844 10.59L1.99984 12L7.99984 6L1.99984 0L0.589844 1.41ZM10.9998 0H12.9998V12H10.9998V0Z" fill="#505a5f" />
+    <path d="M0.589844 1.41L5.17984 6L0.589844 10.59L1.99984 12L7.99984 6L1.99984 0L0.589844 1.41ZM10.9998 0H12.9998V12H10.9998V0Z" fill="var(--text-secondary)" />
   </svg>
 );
 
@@ -104,7 +104,7 @@ const SuccessSvg = ({ className }) => (
 );
 
 const ErrorSvg = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#d4351c" className={className}>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--error)" className={className}>
     <path d="M0 0h24v24H0V0z" fill="none" />
     <circle cx="12" cy="19" r="2" />
     <path d="M10 3h4v12h-4z" />
@@ -383,7 +383,7 @@ export const LoginIcon = ({ className, styles }) => (
   </svg>
 );
 const CalendarIcon = (props) => (
-  <svg {...props} fill={props.isdisabled ? "#e3e3e3" : "Black"} xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+  <svg {...props} fill={props.isdisabled ? "var(--grey-bg)" : "Black"} xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
     <path d="M0 0h24v24H0z" fill="none" />
     <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z" />
   </svg>
@@ -391,7 +391,7 @@ const CalendarIcon = (props) => (
 
 const SortDown = (style) => (
   <svg
-    style={{ display: "inline-block", height: "16px", ...style }}
+    className="inline-block" style={{ height: "16px", ...style }}
     xmlns="http://www.w3.org/2000/svg"
     enableBackground="new 0 0 24 24"
     height="24"
@@ -405,7 +405,7 @@ const SortDown = (style) => (
 
 const SortUp = (style) => (
   <svg
-    style={{ display: "inline-block", height: "16px", ...style }}
+    className="inline-block" style={{ height: "16px", ...style }}
     xmlns="http://www.w3.org/2000/svg"
     enableBackground="new 0 0 24 24"
     height="24"
@@ -620,7 +620,7 @@ const DropIcon = ({ className, styles }) => (
 
 const Person = (style) => (
   <svg
-    style={{ display: "inline-block", fontSize: "16px", ...style }}
+    className="inline-block text-md" style={{ ...style }}
     width="24"
     height="24"
     viewBox="0 0 40 40"
@@ -823,7 +823,7 @@ const Clock = () => (
 );
 
 const TickMark = ({ fillColor = "white" }) => (
-  <svg style={{ display: "inline-block", margin: "auto" }} width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg className="inline-block" style={{ margin: "auto" }} width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4.75012 8.1275L1.62262 5L0.557617 6.0575L4.75012 10.25L13.7501 1.25L12.6926 0.192505L4.75012 8.1275Z" fill={fillColor} />
   </svg>
 );

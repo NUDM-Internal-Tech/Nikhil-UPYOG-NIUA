@@ -23,7 +23,7 @@
 }
 
 .cg-note-strong {
-    font-weight: bolder;
+    font-weight: var(--weight-bold);
     color: green
 }
 
@@ -49,13 +49,13 @@
 .cg-total-text {
     font-size: var(--font-size-2xl);
     padding: 10px 0px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))))
+    font-weight: var(--weight-bold)
 }
 
 .cg-section-title {
     font-size: var(--font-size-2xl);
     padding: 10px 0px;
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))))
+    font-weight: var(--weight-bold)
 }
 
 .cg-card-margin-top {
@@ -131,7 +131,7 @@
 .cg-loader-spinner {
     width: 64px;
     height: 64px;
-    border: var(--border-width-xl) solid #1976d2;
+    border: var(--border-width-xl) solid var(--link-normal);
     border-top: var(--border-width-xl) solid transparent;
     border-radius: 50%;
     animation: cg-spin 1.2s linear infinite
@@ -190,12 +190,12 @@
 }
 
 .cg-clear-search-border {
-    border: var(--border-width-sm) solid #e0e0e0;
+    border: var(--border-width-sm) solid var(--grey-bg);
     padding: 6px
 }
 
 .cg-clear-search-mobile {
-    border: var(--border-width-sm) solid #e0e0e0;
+    border: var(--border-width-sm) solid var(--grey-bg);
     padding: 6px;
     margin-top: 5px
 }
@@ -300,6 +300,6 @@
 
 /* Action link color used in utils getActionButton */
 .cg-link-action {
-    color: #FE7A51;
+    color: var(--primary-light);
     cursor: pointer
 }

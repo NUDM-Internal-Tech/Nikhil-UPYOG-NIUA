@@ -4,7 +4,7 @@ const themeConfig = require("./tailwind.theme.json");
 
 const theme = themeConfig.config.theme;
 const extend = theme.extend || {};
-const pageContainer = themeConfig.config.pageContainer || {};
+const pageContainer = extend.pageContainer || {};
 const pageLayouts = pageContainer.layouts || [];
 
 extend.gridTemplateColumns = {

@@ -12,7 +12,7 @@ margin-right:25px;
 }
 
 .dss-header-label{
-  font-weight: 600 !important;
+  font-weight: var(--weight-medium) !important;
   font-size: 22px !important;
   white-space: pre-line;
 }
@@ -209,7 +209,7 @@ border-color: rgba(244, 119, 56, var(--border-opacity));
   margin-left: 13%;
 }
 .tab-header{
-  font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))));
+  font-weight: var(--weight-bold);
   font-size: var(--font-size-md);
   line-height: 19px;
   border-bottom: var(--border-width-sm) solid #b1b4b6;

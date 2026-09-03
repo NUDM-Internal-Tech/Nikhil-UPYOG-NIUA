@@ -344,7 +344,7 @@ input[type="number"] {
 }
 
 .bill-summary {
-  border: #e8e7e6 solid var(--border-width-sm);
+  border: var(--border) solid var(--border-width-sm);
   @apply bg-grey-light w-full;
 
   .bill-account-details {
@@ -381,9 +381,9 @@ input[type="number"] {
 
   .payment-amount-front {
     @apply absolute z-10 w-10 flex justify-center items-center;
-    background-color: #efefef;
+    background-color: var(--grey-bg);
     padding: 7px 12px;
-    color: #9a9a9a;
+    color: var(--grey-dark);
   }
 }
 
@@ -494,7 +494,7 @@ input[type="number"] {
 }
 
 .underline {
-  border-color: #e7e6e6;
+  border-color: var(--border);
   @apply mb-sm;
 }
 
@@ -686,7 +686,7 @@ input[type="number"] {
   }
   .row {
     color: #b1b4b6;
-    font-weight: var(--weight-var(--weight-bold));
+    font-weight: var(--weight-bold);
     font-size: var(--font-size-md);
   }
 }
@@ -709,7 +709,7 @@ input[type="number"] {
   }
   .row {
     color: #b1b4b6;
-    font-weight: var(--weight-var(--weight-bold));
+    font-weight: var(--weight-bold);
     font-size: var(--font-size-md);
   }
 }
@@ -720,7 +720,7 @@ input[type="number"] {
 }
 .modal-body-ws {
   padding: 1rem;
-  font-weight: var(--weight-var(--weight-bold));
+  font-weight: var(--weight-bold);
   color: var(--text-primary);
   font-size: var(--font-size-2xl);
   margin-bottom: 1rem;
@@ -749,7 +749,7 @@ min-height: calc(100vh - 8em);
     background-color:#d7aefc !important;
 }
 .icon-banner-employee svg{
-  background-color:#bf2f3b !important;
+  background-color: var(--primary-main) !important;
   width: var(--spacing-2xl);
   height: var(--spacing-2xl);
 }
@@ -765,11 +765,11 @@ min-height: calc(100vh - 8em);
     height: fit-content;
     border-radius: 5px;
     font-family: sans-serif;
-    font-weight: var(--weight-var(--weight-bold));
+    font-weight: var(--weight-bold);
 }
 .employee .inboxButton{
   padding: 5px 15px;
-  background: #ba2b36
+  background: var(--primary-main);
 }
 .citizen .inboxButton{
   padding: 15px;

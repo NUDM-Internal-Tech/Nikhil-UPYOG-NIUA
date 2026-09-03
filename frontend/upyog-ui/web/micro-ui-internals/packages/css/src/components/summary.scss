@@ -10,7 +10,7 @@
     margin-bottom: 25px;
 
     p:only-child {
-      font-weight: var(--weight-var(--weight-var(--weight-bold)));
+      font-weight: var(--weight-bold);
       font-size: var(--font-size-2xl);
     }
 
@@ -18,7 +18,7 @@
       margin-right: 25px;
 
       p:not(:first-child) {
-        font-weight: var(--weight-var(--weight-var(--weight-bold)));
+        font-weight: var(--weight-bold);
         font-size: var(--font-size-2xl);
       }
     }

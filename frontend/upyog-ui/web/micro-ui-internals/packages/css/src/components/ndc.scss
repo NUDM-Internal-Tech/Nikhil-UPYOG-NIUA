@@ -24,7 +24,7 @@
 .ndc-loader-spinner {
     width: 64px;
     height: 64px;
-    border: var(--border-width-xl) solid #1976d2;
+    border: var(--border-width-xl) solid var(--link-normal);
     border-top: var(--border-width-xl) solid transparent;
     border-radius: 50%;
     animation: ndc-spin 1.2s linear infinite
@@ -92,7 +92,7 @@
 }
 
 .ndc-strong-label {
-    font-weight: var(--weight-var(--weight-var(--weight-var(--weight-bold))))
+    font-weight: var(--weight-bold)
 }
 
 /* Banner defaults for NDC response */

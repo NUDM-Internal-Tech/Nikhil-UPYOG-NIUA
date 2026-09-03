@@ -159,7 +159,7 @@ const SearchApplication = ({
                     {/* Render validation errors */}
                     {formState?.dirtyFields?.[input.name] ? (
                       <span
-                        style={{ fontWeight: "700", color: "rgba(212, 53, 28)", paddingLeft: "8px", marginTop: "-20px", fontSize: "12px" }}
+                        className="font-bold text-xs" style={{ color: "rgba(212, 53, 28)", paddingLeft: "8px", marginTop: "-20px" }}
                         className="inbox-search-form-error"
                       >
                         {formState?.errors?.[input.name]?.message}
@@ -170,7 +170,7 @@ const SearchApplication = ({
 
               {/* Render the "Clear All" link for inbox pages */}
               {isInboxPage && (
-                <div style={{ gridColumn: "2/3", textAlign: "right", paddingTop: "10px" }} className="input-fields">
+                <div className="text-right" style={{ gridColumn: "2/3", paddingTop: "10px" }} className="input-fields">
                   <div>{clearAll()}</div>
                 </div>
               )}
