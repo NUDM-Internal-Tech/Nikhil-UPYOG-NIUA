@@ -25,7 +25,7 @@
   height: var(--spacing-xl) !important;
   margin-top: -16px !important;
   z-index: 999;
-  background-color:var(--white)eb;
+  background-color:var(--white);
 }
 @screen dt {
   .employeeForgotPassword .employeeCard .field .field-container .component-in-front {
@@ -34,18 +34,18 @@
     height: var(--spacing-xl) !important;
     margin-top: -16px !important;
     z-index: 999;
-    background-color: var(--white)eb;
+    background-color: var(--white);
 
   }
  .loginFormStyleEmployee .employeeCard, .banner .bannerCard{
     min-width: 270px !important;
    
-    background-color: var(--white)d6 !important
+    background-color: var(--white) !important
   }
   .employeeForgotPassword .employeeCard, .employeeChangePassword .employeeCard{
     max-width: 270px !important;
     min-width: 270px !important;
-    background-color: var(--white)eb
+    background-color: var(--white)
   }
 }
 
@@ -170,14 +170,14 @@
   .loginFormStyleEmployee .employeeCard, .banner .bannerCard{
     min-width: 270px !important;
     z-index: 10 !important;
-    background-color: var(--white)d6 !important;
+    background-color: var(--white) !important;
     margin-top: 0 !important;
   }
   .employeeForgotPassword .employeeCard, .employeeChangePassword .employeeCard{
     max-width: 250px !important;
     min-width: 250px !important;
     margin-top: -50% !important;
-    background-color: var(--white)eb;
+    background-color: var(--white);
   }
 }
 .employeeChangePassword .employeeCard .card-text{
@@ -241,7 +241,7 @@ background-color: white !important;
   .loginFormStyleEmployee .employeeForgotPassword
   {
     margin-top: -50% !important;
-    background-color: var(--white)eb !important;
+    background-color: var(--white) !important;
     z-index: 2;
   }
   .psuedo-banner{
