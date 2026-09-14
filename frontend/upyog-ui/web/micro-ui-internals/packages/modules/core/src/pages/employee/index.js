@@ -43,6 +43,8 @@ const EmployeeApp = ({
   sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
   const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf"
 
+  const isLogin = location?.pathname?.includes("user/login");
+
   return (
     <div className="employee">
       <Routes>
@@ -65,40 +67,46 @@ const EmployeeApp = ({
                 />
               )}
               <div
-                className={isUserProfile ? "grounded-container" : "loginContainer"}
+                className={isUserProfile ? "grounded-container" : isLogin ? "w-full min-h-screen" : "loginContainer"}
                 style={
                   isUserProfile
                     ? { padding: 0, paddingTop: "80px", marginLeft: mobileView ? "" : "64px" }
+                    : isLogin
+                    ? { padding: "0px" }
                     : { "--banner-url": `url(${stateInfo?.bannerUrl})`, padding: "0px" }
                 }
               >
-                <div className="loginnn">
-                  <div className="login-logo-wrapper">
-                    <div className="logoNiua"></div>
-                  </div>
-                  <picture>
-                    <source
-                      id="backgroung-login"
-                      media="(min-width: 950px)"
-                      srcSet="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+(1920x1080).jpg"
-                      style={{ position: "absolute", height: "100%", width: "100%" }}
-                    />
-                    <source
-                      media="(min-width: 250px)"
-                      srcSet="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+%28500x900%29.jpg"
-                    />
-                    <img
-                      src="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+(1920x1080).jpg"
-                      alt="imagealttext"
-                      style={{
-                        position: "absolute",
-                        height: "100%",
-                        width: "100%",
-                        zIndex: "1",
-                        display: window.location.href.includes("user/profile") ? "none" : "",
-                      }}
-                    />
-                  </picture>
+                <div className={isLogin ? "w-full min-h-screen" : "loginnn"}>
+                  {!isLogin && (
+                    <div className="login-logo-wrapper">
+                      <div className="logoNiua"></div>
+                    </div>
+                  )}
+                  {!isLogin && (
+                    <picture>
+                      <source
+                        id="backgroung-login"
+                        media="(min-width: 950px)"
+                        srcSet="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+(1920x1080).jpg"
+                        style={{ position: "absolute", height: "100%", width: "100%" }}
+                      />
+                      <source
+                        media="(min-width: 250px)"
+                        srcSet="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+%28500x900%29.jpg"
+                      />
+                      <img
+                        src="https://nugp-assets.s3.ap-south-1.amazonaws.com/nugp+asset/Banner+UPYOG+(1920x1080).jpg"
+                        alt="imagealttext"
+                        style={{
+                          position: "absolute",
+                          height: "100%",
+                          width: "100%",
+                          zIndex: "1",
+                          display: window.location.href.includes("user/profile") ? "none" : "",
+                        }}
+                      />
+                    </picture>
+                  )}
                   <Routes>
                     <Route path="login" element={<EmployeeLogin />} />
                     <Route path="forgot-password" element={<ForgotPassword />} />

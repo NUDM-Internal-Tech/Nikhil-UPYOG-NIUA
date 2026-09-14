@@ -122,18 +122,30 @@ const SelectOtp = ({ config, otp, onOtpChange, onResend, onSelect, t, error, use
   }
 
   return (
-    <FormStep onSelect={onSelect} config={config} t={t} isDisabled={!(otp?.length === 6 && canSubmit)}>
-      <OTPInput length={6} onChange={onOtpChange} value={otp} />
-      {timeLeft > 0 ? (
-        <CardText>{`${t("CS_RESEND_ANOTHER_OTP")} ${timeLeft} ${t("CS_RESEND_SECONDS")}`}</CardText>
-      ) : (
-        <p className="card-text-button" onClick={handleResendOtp}>
-          {t("CS_RESEND_OTP")}
-        </p>
-      )}
-      {!error && <CardLabelError>{t("CS_INVALID_OTP")}</CardLabelError>}
-      {errorRegister && <CardLabelError>{t("CS_ALREADY_REGISTERED")}</CardLabelError>}
-    </FormStep>)
+    <div>
+      <FormStep onSelect={onSelect} config={config} t={t} isDisabled={!(otp?.length === 6 && canSubmit)}>
+        <OTPInput length={6} onChange={onOtpChange} value={otp} />
+        {!error && <CardLabelError>{t("CS_INVALID_OTP")}</CardLabelError>}
+        {errorRegister && <CardLabelError>{t("CS_ALREADY_REGISTERED")}</CardLabelError>}
+      </FormStep>
+
+      <div style={{ marginTop: "14px", textAlign: "center" }}>
+        {timeLeft > 0 ? (
+          <p className="card-text" style={{ fontSize: "13px", color: "#64748B", margin: 0 }}>
+            {`${t("CS_RESEND_ANOTHER_OTP")} ${timeLeft} ${t("CS_RESEND_SECONDS")}`}
+          </p>
+        ) : (
+          <p
+            className="card-text-button"
+            style={{ margin: 0, cursor: "pointer", color: "var(--primary-main, #a82227)", fontWeight: 600, fontSize: "13px", textDecoration: "underline" }}
+            onClick={handleResendOtp}
+          >
+            {t("CS_RESEND_OTP")}
+          </p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default SelectOtp;

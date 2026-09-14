@@ -38,10 +38,10 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
       {isCCFEnabled?.checkBoxLabels?.map((data, index) => {
         return <span key={data?.linkId || index}>
           {/* {index == 0 && "CCF"} */}
-          {data?.linkPrefix && <span>{t(`${data?.linkPrefix}_`)}</span>}
+          {data?.linkPrefix && <span>{t(`${data?.linkPrefix}_`)} </span>}
           {data?.link && <span id={data?.linkId} onClick={(e) => { onLinkClick(e) }} className="text-primary-main cursor-pointer">{t(`${data?.link}_`)}</span>}
-          {data?.linkPostfix && <span>{t(`${data?.linkPostfix}_`)}</span>}
-          {(index == isCCFEnabled?.checkBoxLabels?.length - 1) && t("LABEL")}
+          {data?.linkPostfix && <span> {t(`${data?.linkPostfix}_`)}</span>}
+          {(index == isCCFEnabled?.checkBoxLabels?.length - 1) && t("LABEL") !== "LABEL" && t("LABEL")}
         </span>
       })}
     </span>
@@ -100,68 +100,75 @@ const SelectMobileNumber = ({ t, onSelect, showRegisterLink, mobileNumber, onMob
     register(e)
   }
 
-  return (
-    <FormStep
-      isDisabled={checkDisbaled()}
-      onSelect={onSelect}
-      config={config}
-      t={t}
-      componentInFront="+91"
-      onChange={handleMobileChange}
-      value={mobileNumber}
-    >
-      {error && <p style={{color:"red"}}>{error}</p>}
-      {isCCFEnabled?.isCitizenConsentFormEnabled && (
-      <div>
-        <CheckBox
-          className="form-field"
-          label={checkLabels()}
-          value={isCheckBox}
-          checked={isCheckBox}
-          style={{ marginTop: "5px", marginLeft: "55px" }}
-          styles={{marginBottom: "30px"}}
-          onChange={setTermsAndPolicyDetails}
-        />
+  const citizenForm = (
+    <div>
+      <FormStep
+        isDisabled={checkDisbaled()}
+        onSelect={onSelect}
+        config={config}
+        t={t}
+        componentInFront="+91"
+        onChange={handleMobileChange}
+        value={mobileNumber}
+      >
+        {error && <p style={{color:"red"}}>{error}</p>}
+        {isCCFEnabled?.isCitizenConsentFormEnabled && (
+        <div>
+          <CheckBox
+            className="form-field"
+            label={checkLabels()}
+            value={isCheckBox}
+            checked={isCheckBox}
+            styles={{ marginTop: "12px", marginBottom: "16px" }}
+            onChange={setTermsAndPolicyDetails}
+          />
 
-        <CitizenConsentForm
-          styles={{}}
-          t={t}
-          isCheckBoxChecked={setTermsAndPolicyDetails}
-          labels={isCCFEnabled?.checkBoxLabels}
-          mdmsConfig={mdmsConfig}
-          setMdmsConfig={setMdmsConfig}
-        />
-      </div>)}
-      <div className="col col-md-4  text-md-center p-0" style={{width:"40%", marginTop:"5px"}}>
+          <CitizenConsentForm
+            styles={{}}
+            t={t}
+            isCheckBoxChecked={setTermsAndPolicyDetails}
+            labels={isCCFEnabled?.checkBoxLabels}
+            mdmsConfig={mdmsConfig}
+            setMdmsConfig={setMdmsConfig}
+          />
+        </div>)}
+      </FormStep>
+
+      <div className="w-full text-center p-0" style={{ width: "100%", marginTop: "12px" }}>
         <button
           className="digilocker-btn"
           type="button"
           onClick={(e) => setShowToast(true)}
         >
           <img
-          src="https://meripehchaan.gov.in/assets/img/icon/digi.png"
-          className="mr-2"
-          style={{ width: "12%" }}
+            src="https://meripehchaan.gov.in/assets/img/icon/digi.png"
+            className="mr-2"
+            style={{ width: "18px", height: "18px", objectFit: "contain" }}
           />
           {t("CORE_COMMON_DGILOCKER_REGISTER")}
         </button>
-     { showToast &&   <Modal
-      headerBarMain={<Heading label={t("Consent")} />}
-      headerBarEnd={<CloseBtn onClick={closeModal} />}
-      actionCancelLabel={"Cancel"}
-      actionCancelOnSubmit={closeModal}
-      actionSaveLabel={"Ok"}
-      actionSaveOnSubmit={(e)=>setModal(e)}
-      formId="modal-action"
-    > <div style={{ width: "100%" }}>
-    <Card>
-      <p>By selecting this option, I am providing my consent to associate my Upyog account with my DigiLocker ID</p>
-    </Card>
-     </div>
-      </Modal>}
-                </div>
-    </FormStep>
+        {showToast && (
+          <Modal
+            headerBarMain={<Heading label={t("Consent")} />}
+            headerBarEnd={<CloseBtn onClick={closeModal} />}
+            actionCancelLabel={"Cancel"}
+            actionCancelOnSubmit={closeModal}
+            actionSaveLabel={"Ok"}
+            actionSaveOnSubmit={(e) => setModal(e)}
+            formId="modal-action"
+          >
+            <div style={{ width: "100%" }}>
+              <Card>
+                <p>By selecting this option, I am providing my consent to associate my Upyog account with my DigiLocker ID</p>
+              </Card>
+            </div>
+          </Modal>
+        )}
+      </div>
+    </div>
   );
+
+  return citizenForm;
 };
 
 export default SelectMobileNumber;

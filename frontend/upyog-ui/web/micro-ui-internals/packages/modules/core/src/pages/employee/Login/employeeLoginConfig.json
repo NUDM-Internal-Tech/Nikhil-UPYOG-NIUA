@@ -1,0 +1,318 @@
+{
+  "pageKey": "employee-login",
+  "tenantId": "up",
+  "themeType": "EMPLOYEE",
+  "status": "DEFAULT",
+  "meta": { "title": "Employee Login", "locale": "en" },
+  "context": {
+    "brand_name": "UPYOG",
+    "state_name": "Uttar Pradesh",
+    "state_name_local": "उत्तर प्रदेश सरकार",
+    "country_name": "Government of India",
+    "official_1_name": "Yogi Adityanath",
+    "official_1_title": "Hon'ble Chief Minister",
+    "official_2_name": "Narendra Modi",
+    "official_2_title": "Hon'ble Prime Minister",
+    "heroHeading_text": "One Platform,\nMany Services",
+    "heroTagline_text": "Smart City • Better Services • Digital Tomorrow",
+    "loginHeading_text": "Employee Login",
+    "loginSubheading_text": "Access urban services with ease",
+    "username_label": "User Name",
+    "password_label": "Password",
+    "city_label": "City",
+    "continue_label": "Continue",
+    "forgot_password_label": "Forgot Password?"
+  },
+
+  "sections": [
+    {
+      "id": "header",
+      "layoutMode": "flex-row",
+      "order": 1,
+      "style": {
+        "background": "#FFFFFF",
+        "padding": "10px 28px",
+        "borderBottom": "1px solid #E2E8F0",
+        "boxShadow": "0 1px 3px rgba(0, 0, 0, 0.05)"
+      },
+      "widgets": [
+        {
+          "id": "headerLeftGroup",
+          "type": "iconPhotoGroup",
+          "position": { "order": 1 },
+          "props": {
+            "align": "left",
+            "gap": "14px",
+            "items": [
+              {
+                "itemId": "upyog_logo",
+                "kind": "logo",
+                "showDivider": false,
+                "src": "https://in-egov-assets.s3.ap-south-1.amazonaws.com/images/Upyog-logo.png",
+                "size": "32px",
+                "order": 1
+              },
+              {
+                "itemId": "emblem",
+                "kind": "photo",
+                "showDivider": true,
+                "src": "https://niuatt-filestore.s3.ap-south-1.amazonaws.com/pg/ADS/September/7/1788776434718rquLVLYYhk.png",
+                "shape": "circle",
+                "size": "44px",
+                "order": 2
+              },
+              {
+                "itemId": "state_title",
+                "kind": "text",
+                "label": "{{state_name_local}}",
+                "sublabel": "Government of {{state_name}}",
+                "order": 3
+              }
+            ]
+          }
+        },
+        {
+          "id": "headerRightGroup",
+          "type": "iconPhotoGroup",
+          "position": { "order": 2 },
+          "props": {
+            "align": "right",
+            "gap": "20px",
+            "items": [
+              {
+                "itemId": "official_cm",
+                "kind": "photo",
+                "src": "https://niuatt-filestore.s3.ap-south-1.amazonaws.com/pg/ADS/September/7/1788776555844qwYglejpOa.png",
+                "shape": "circle",
+                "size": "42px",
+                "label": "{{official_1_name}}",
+                "sublabel": "{{official_1_title}}",
+                "caption": "{{state_name}}",
+                "order": 1
+              },
+              {
+                "itemId": "official_pm",
+                "kind": "photo",
+                "src": "https://niuatt-filestore.s3.ap-south-1.amazonaws.com/pg/ADS/September/7/1788776429409OEYJksPZlG.png",
+                "shape": "circle",
+                "size": "42px",
+                "label": "{{official_2_name}}",
+                "sublabel": "{{official_2_title}}",
+                "caption": "{{country_name}}",
+                "order": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "heroPanel",
+      "layoutMode": "absolute",
+      "order": 2,
+      "widthPercent": 58,
+      "style": { "background": "#0F172A", "position": "relative", "overflow": "hidden" },
+      "widgets": [
+        {
+          "id": "heroBackground",
+          "type": "backgroundImage",
+          "position": { "x": "0%", "y": "0%", "width": "100%", "height": "100%" },
+          "props": {
+            "images": [
+              "https://niuatt-filestore.s3.ap-south-1.amazonaws.com/pg/ADS/September/7/1788776411397KnsZEAXxpe.png"
+            ],
+            "interval": 5000,
+            "alt": "City infrastructure",
+            "fit": "cover"
+          }
+        },
+        {
+          "id": "heroOverlayGradient",
+          "type": "overlay",
+          "position": { "x": "0%", "y": "0%", "width": "100%", "height": "100%" },
+          "props": {
+            "gradient": "linear-gradient(135deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.6) 46%, rgba(0, 0, 0, 0.38) 100%)"
+          }
+        },
+        {
+          "id": "heroBadge",
+          "type": "badge",
+          "position": { "x": "6%", "y": "9%", "zIndex": 10 },
+          "props": {
+            "text": "UPYOG Digital Governance",
+            "background": "rgba(255, 255, 255, 0.16)",
+            "border": "1px solid rgba(255, 255, 255, 0.28)",
+            "color": "#FFFFFF",
+            "fontSize": "11px",
+            "fontWeight": "700"
+          }
+        },
+        {
+          "id": "heroHeading",
+          "type": "heading",
+          "position": { "x": "6%", "y": "15%", "width": "480px", "zIndex": 10 },
+          "style": { "textShadow": "0 2px 10px rgba(0, 0, 0, 0.75)", "lineHeight": "1.2" },
+          "props": {
+            "text": "{{heroHeading_text}}",
+            "fontSize": "32px",
+            "fontWeight": "800",
+            "color": "#FFFFFF"
+          }
+        },
+        {
+          "id": "heroTagline",
+          "type": "text",
+          "position": { "x": "6%", "y": "26%", "width": "480px", "zIndex": 10 },
+          "style": { "textShadow": "0 1px 6px rgba(0, 0, 0, 0.65)", "fontWeight": "500" },
+          "props": {
+            "text": "{{heroTagline_text}}",
+            "fontSize": "14px",
+            "color": "#E2E8F0"
+          }
+        },
+        {
+          "id": "heroFeatureCard",
+          "type": "featureCard",
+          "position": { "x": "6%", "y": "33%", "width": "355px", "zIndex": 10 },
+          "style": {
+            "background": "rgba(255, 255, 255, 0.94)",
+            "backdropFilter": "blur(18px)",
+            "borderRadius": "18px",
+            "boxShadow": "0 20px 30px -5px rgba(0, 0, 0, 0.3), 0 8px 12px -5px rgba(0, 0, 0, 0.2)",
+            "padding": "20px 22px",
+            "border": "1px solid rgba(255, 255, 255, 0.85)"
+          },
+          "props": {
+            "gap": "14px",
+            "items": [
+              {
+                "itemId": "feat_1",
+                "kind": "icon",
+                "icon": "CalendarIcon",
+                "color": "#a82227",
+                "label": "Process Applications",
+                "sublabel": "Efficient citizen application processing"
+              },
+              {
+                "itemId": "feat_2",
+                "kind": "icon",
+                "icon": "FileTextIcon",
+                "color": "#a82227",
+                "label": "Track Workflows",
+                "sublabel": "Real-time verification and inspection workflows"
+              },
+              {
+                "itemId": "feat_3",
+                "kind": "icon",
+                "icon": "BellIcon",
+                "color": "#a82227",
+                "label": "Instant Approvals",
+                "sublabel": "Automated notifications and escalations"
+              },
+              {
+                "itemId": "feat_4",
+                "kind": "icon",
+                "icon": "ShieldIcon",
+                "color": "#a82227",
+                "label": "Secure & Trusted",
+                "sublabel": "Role-based authenticated employee access"
+              }
+            ]
+          }
+        }
+      ]
+    },
+
+    {
+      "id": "loginPanel",
+      "layoutMode": "flex-column",
+      "order": 3,
+      "widthPercent": 42,
+      "style": {
+        "background": "#F4F6F8",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "padding": "32px 24px",
+        "boxSizing": "border-box"
+      },
+      "widgets": [
+        {
+          "id": "loginCardContainer",
+          "type": "card",
+          "style": {
+            "background": "#FFFFFF",
+            "borderRadius": "24px",
+            "boxShadow": "0 20px 40px -10px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)",
+            "border": "1px solid #E2E8F0",
+            "padding": "34px 28px 22px 28px",
+            "width": "100%",
+            "maxWidth": "400px",
+            "margin": "0 auto"
+          },
+          "props": {
+            "widgets": [
+              {
+                "id": "loginIcon",
+                "type": "icon",
+                "style": { "margin": "0 auto 10px auto" },
+                "props": {
+                  "name": "UserIcon",
+                  "size": "26px",
+                  "containerSize": "56px",
+                  "shape": "circle",
+                  "background": "var(--primary-main, #a82227)",
+                  "color": "#FFFFFF",
+                  "border": "none"
+                }
+              },
+              {
+                "id": "loginHeading",
+                "type": "heading",
+                "props": {
+                  "text": "{{loginHeading_text}}",
+                  "fontSize": "24px",
+                  "fontWeight": "800",
+                  "align": "center",
+                  "color": "#0F172A"
+                }
+              },
+              {
+                "id": "loginSubheading",
+                "type": "text",
+                "style": { "marginBottom": "14px", "marginTop": "4px" },
+                "props": {
+                  "text": "{{loginSubheading_text}}",
+                  "fontSize": "14px",
+                  "align": "center",
+                  "color": "#64748B"
+                }
+              },
+              {
+                "id": "formSlot",
+                "type": "customSlot",
+                "props": { "slotName": "employeeLoginForm" }
+              }
+            ]
+          }
+        },
+        {
+          "id": "trustBadgeRow",
+          "type": "iconPhotoGroup",
+          "style": { "marginTop": "20px", "justifyContent": "center", "flexWrap": "nowrap", "width": "100%" },
+          "props": {
+            "align": "center",
+            "gap": "18px",
+            "flexWrap": "nowrap",
+            "items": [
+              { "itemId": "badge_1", "kind": "icon", "icon": "ShieldIcon", "color": "#16A34A", "size": "16px", "label": "Secure", "sublabel": "Encrypted" },
+              { "itemId": "badge_2", "kind": "icon", "icon": "ClockIcon", "color": "#2563EB", "size": "16px", "label": "Reliable", "sublabel": "24x7 Up" },
+              { "itemId": "badge_3", "kind": "icon", "icon": "CheckIcon", "color": "#7C3AED", "size": "16px", "label": "Easy", "sublabel": "Fast Access" }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

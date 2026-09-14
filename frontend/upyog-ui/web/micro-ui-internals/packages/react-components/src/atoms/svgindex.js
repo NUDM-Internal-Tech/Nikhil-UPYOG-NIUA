@@ -1102,7 +1102,86 @@ const PTRIcon = ({ className, styles }) => (
 <path d="M256 224c-79.41 0-192 122.76-192 200.25 0 34.9 26.81 55.75 71.74 55.75 48.84 0 81.09-25.08 120.26-25.08 39.51 0 71.85 25.08 120.26 25.08 44.93 0 71.74-20.85 71.74-55.75C448 346.76 335.41 224 256 224zm-147.28-12.61c-10.4-34.65-42.44-57.09-71.56-50.13-29.12 6.96-44.29 40.69-33.89
 75.34 10.4 34.65 42.44 57.09 71.56 50.13 29.12-6.96 44.29-40.69 33.89-75.34zm84.72-20.78c30.94-8.14 46.42-49.94 34.58-93.36s-46.52-72.01-77.46-63.87-46.42 49.94-34.58 93.36c11.84 43.42 46.53 72.02 77.46 63.87zm281.39-29.34c-29.12-6.96-61.15 15.48-71.56
 50.13-10.4 34.65 4.77 68.38 33.89 75.34 29.12 6.96 61.15-15.48 71.56-50.13 10.4-34.65-4.77-68.38-33.89-75.34zm-156.27 29.34c30.94 8.14 65.62-20.45 77.46-63.87 11.84-43.42-3.64-85.21-34.58-93.36s-65.62 20.45-77.46 63.87c-11.84 43.42 3.64 85.22 34.58 93.36z"/>
-</svg>
+  </svg>
+);
+
+const GlobeIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} viewBox="0 0 24 24" fill={fillcolor || fill} style={{ ...styles, ...style }} width="24" height="24">
+    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z" />
+  </svg>
+);
+
+const ChevronDown = ({ className, styles, style, fillcolor, fill = "currentColor", onClick }) => (
+  <svg style={{ ...styles, ...style }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={fillcolor || fill} className={className} onClick={onClick} width="18px" height="18px">
+    <path d="M7 10l5 5 5-5H7z" />
+  </svg>
+);
+
+const HelpCircleIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg" className={className} style={{ ...styles, ...style }}>
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 15.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z" />
+  </svg>
+);
+
+const BuildingIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} fill={fillcolor || fill} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm-4-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm8 8H4v-2h16v2zm0-4h-4v-2h4v2zm0-4h-4V7h4v2z" />
+  </svg>
+);
+
+const UserIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+  </svg>
+);
+
+const LockIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+  </svg>
+);
+
+const KeyIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z" />
+  </svg>
+);
+
+const ShieldIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z" />
+  </svg>
+);
+
+const DigiLockerIcon = ({ className, styles, style, width = "24", height = "24" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width={width} height={height} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="22" fill="#0072BB" />
+    <path d="M24 10C18.48 10 14 14.48 14 20v4h-2v14h24V24h-2v-4c0-5.52-4.48-10-10-10zm0 4c3.31 0 6 2.69 6 6v4H18v-4c0-3.31 2.69-6 6-6zm0 14c1.66 0 3 1.34 3 3 0 1.1-.6 2.06-1.5 2.57V35h-3v-1.43c-.9-.51-1.5-1.47-1.5-2.57 0-1.66 1.34-3 3-3z" fill="#FFFFFF" />
+  </svg>
+);
+
+const BellIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z" />
+  </svg>
+);
+
+const FileTextIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+  </svg>
+);
+
+const ClockIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+  </svg>
+);
+
+const CheckIcon = ({ className, styles, style, fillcolor, fill = "currentColor" }) => (
+  <svg className={className} style={{ ...styles, ...style }} width="24" height="24" viewBox="0 0 24 24" fill={fillcolor || fill} xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+  </svg>
 );
 
 export {
@@ -1110,6 +1189,7 @@ export {
   ReceiptIcon,
   ArrowLeft,
   ArrowDown,
+  ChevronDown,
   CameraSvg,
   DeleteBtn,
   DownloadIcon,
@@ -1146,6 +1226,7 @@ export {
   Details,
   PrintIcon,
   PropertyHouse,
+  BuildingIcon,
   PrimaryDownlaodIcon,
   InfoBannerIcon,
   ShareIcon,
@@ -1153,6 +1234,8 @@ export {
   ComplaintIcon,
   DropIcon,
   Person,
+  PersonIcon,
+  UserIcon,
   WhatsappIcon,
   EmailIcon,
   DocumentIcon,
@@ -1170,7 +1253,6 @@ export {
   ArrowToLast,
   DownloadPrefixIcon,
   CaseIcon,
-  PersonIcon,
   PTIcon,
   OBPSIcon,
   OBPSIconSolidBg,
@@ -1180,9 +1262,11 @@ export {
   BPAIcon,
   BPAHomeIcon,
   HelpIcon,
+  HelpCircleIcon,
   NotificationBell,
   MapMarker,
   Clock,
+  ClockIcon,
   EventCalendar,
   ImageIcon,
   TickMark,
@@ -1228,5 +1312,13 @@ export {
   DeathIcon,
   InfoIcon,
   PTRIcon,
-  CHBIcon
+  CHBIcon,
+  GlobeIcon,
+  LockIcon,
+  KeyIcon,
+  ShieldIcon,
+  DigiLockerIcon,
+  BellIcon,
+  FileTextIcon,
+  CheckIcon
 };

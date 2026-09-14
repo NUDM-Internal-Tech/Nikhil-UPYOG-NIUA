@@ -1,11 +1,10 @@
-import { BackButton, Dropdown, FormComposer, Loader, Toast } from "@nudmcdgnpm/digit-ui-react-components";
-import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Controller } from "react-hook-form";
-import Background from "../../../components/Background";
-import Header from "../../../components/Header";
+import PropTypes from "prop-types";
+import { Dropdown, FormComposer, Loader, Toast, ConfigurableLoginPage } from "@nudmcdgnpm/digit-ui-react-components";
+import employeeLoginConfig from "./employeeLoginConfig.json";
+import { loginConfig } from "./config";
 
-/* set employee details to enable backward compatiable */
+/* set employee details to enable backward compatible */
 const setEmployeeDetail = (userObject, token) => {
   let locale = JSON.parse(sessionStorage.getItem("Digit.locale"))?.value || "en_IN";
   localStorage.setItem("Employee.tenant-id", userObject?.tenantId);
@@ -28,10 +27,7 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
   const [disable, setDisable] = useState(false);
 
   const navigate = Digit.Hooks.useCustomNavigate();
-  // const getUserType = () => "EMPLOYEE" || Digit.UserService.getType();
-  let   sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
-  const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf";
-  
+
   useEffect(() => {
     if (!user) {
       return;
@@ -48,11 +44,11 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
       redirectPath = decodeURIComponent(window?.location?.href?.split("from=")?.[1]) || "/upyog-ui/employee";
     }
 
-    /*  RAIN-6489 Logic to navigate to National DSS home incase user has only one role [NATADMIN]*/
-    if (user?.info?.roles && user?.info?.roles?.length > 0 &&  user?.info?.roles?.every((e) => e.code === "NATADMIN")) {
+    /* RAIN-6489 Logic to navigate to National DSS home incase user has only one role [NATADMIN] */
+    if (user?.info?.roles && user?.info?.roles?.length > 0 && user?.info?.roles?.every((e) => e.code === "NATADMIN")) {
       redirectPath = "/upyog-ui/employee/dss/landing/NURT_DASHBOARD";
     }
-    /*  RAIN-6489 Logic to navigate to National DSS home incase user has only one role [NATADMIN]*/
+    /* RAIN-6489 Logic to navigate to National DSS home incase user has only one role [STADMIN] */
     if (user?.info?.roles && user?.info?.roles?.length > 0 && user?.info?.roles?.every((e) => e.code === "STADMIN")) {
       redirectPath = "/upyog-ui/employee/dss/landing/home";
     }
@@ -61,18 +57,19 @@ const Login = ({ config: propsConfig, t, isDisabled }) => {
   }, [user]);
 
   const onLogin = async (data) => {
-    if (!data.city) {
-      alert("Please Select City!");
+    if (!data?.city) {
+      setShowToast("Please Select City!");
+      setTimeout(closeToast, 4000);
       return;
     }
     setDisable(true);
-console.log("data",data)
     const requestData = {
       ...data,
       userType: "EMPLOYEE",
     };
     requestData.tenantId = data.city.code;
     delete requestData.city;
+
     try {
       const { UserRequest: info, ...tokens } = await Digit.UserService.authenticate(requestData);
       Digit.SessionStorage.set("Employee.tenantId", info?.tenantId);
@@ -89,12 +86,20 @@ console.log("data",data)
   };
 
   const onForgotPassword = () => {
-    sessionStorage.getItem("User") && sessionStorage.removeItem("User")
+    sessionStorage.getItem("User") && sessionStorage.removeItem("User");
     navigate("/upyog-ui/employee/user/forgot-password");
   };
 
-  const [userId, password, city] = propsConfig.inputs;
-  const config = [
+  const handleAction = (action, payload) => {
+    if (action === "forgotPassword") {
+      onForgotPassword();
+    }
+  };
+
+  const activeConfig = propsConfig || loginConfig?.[0] || {};
+  const [userId = { label: "CORE_LOGIN_USERNAME", type: "text", name: "username" }, password = { label: "CORE_LOGIN_PASSWORD", type: "password", name: "password" }, city = { label: "CORE_COMMON_CITY", type: "custom", name: "city" }] = activeConfig.inputs || [];
+
+  const formComposerConfig = [
     {
       body: [
         {
@@ -113,81 +118,74 @@ console.log("data",data)
           },
           isMandatory: true,
         },
-{
-  label: t(city.label),
-  type: city.type,
-  populators: {
-    name: city.name,
-    component: ({ onChange, value }) => (
-      <Dropdown
-        option={cities}
-        className="login-city-dd"
-        optionKey="i18nKey"
-        select={(d) => onChange(d)}   
-        value={value}                
-        t={t}
-      />
-    ),
-  },
-  isMandatory: true,
-}
+        {
+          label: t(city.label),
+          type: city.type,
+          populators: {
+            name: city.name,
+            component: ({ onChange, value }) => (
+              <Dropdown
+                option={cities}
+                className="login-city-dd"
+                optionKey="i18nKey"
+                select={(d) => onChange(d)}
+                value={value}
+                t={t}
+              />
+            ),
+          },
+          isMandatory: true,
+        },
       ],
     },
   ];
 
+  const employeeFormSlot = (
+    <FormComposer
+      onSubmit={onLogin}
+      isDisabled={isDisabled || disable}
+      noBoxShadow
+      inline
+      submitInForm
+      config={formComposerConfig}
+      label={activeConfig.texts?.submitButtonLabel || "CORE_COMMON_CONTINUE"}
+      secondaryActionLabel={activeConfig.texts?.secondaryButtonLabel || "CORE_COMMON_FORGOT_PASSWORD"}
+      onSecondayActionClick={onForgotPassword}
+      heading={activeConfig.texts?.header}
+      headingStyle={{ textAlign: "center", display: "none" }}
+      cardStyle={{ margin: "0", minWidth: "100%", width: "100%", background: "transparent", border: "none", boxShadow: "none", padding: 0 }}
+      className="loginFormStyleEmployee w-full text-left"
+      buttonStyle={{ maxWidth: "100%", width: "100%", marginTop: "8px", background: "var(--primary-main, #a82227)", borderRadius: "var(--border-radius-sm, 4px)" }}
+    />
+  );
+
   return isLoading || isStoreLoading ? (
     <Loader />
   ) : (
-    <Background>
-      <div className="employeeBackbuttonAlign">
-        <BackButton variant="white" style={{ borderBottom: "none" }} />
-      </div>
-
-      <FormComposer
-        onSubmit={onLogin}
-        isDisabled={isDisabled || disable}
-        noBoxShadow
-        inline
-        submitInForm
-        config={config}
-        label={propsConfig.texts.submitButtonLabel}
-        secondaryActionLabel={propsConfig.texts.secondaryButtonLabel}
-        onSecondayActionClick={onForgotPassword}
-        heading={propsConfig.texts.header}
-        headingStyle={{ textAlign: "center" }}
-        cardStyle={{ margin: "auto", minWidth: "408px" }}
-        className="loginFormStyleEmployee"
-        buttonStyle={{ maxWidth: "100%", width: "100%" }}
-      >
-        {/* <Header /> */}
-      </FormComposer>
+    <div className="w-full min-h-screen relative">
+      <ConfigurableLoginPage
+        pageConfig={employeeLoginConfig}
+        slots={{
+          employeeLoginForm: employeeFormSlot,
+        }}
+        t={t}
+        onAction={handleAction}
+      />
       {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}
-      <div className="bg-white text-center" style={{ width: '100%', position: 'fixed', bottom: 0 }}>
-        <div className="flex justify-center" style={{ color:"black" }}>
-          {/* <span className="cursor-pointer font-regular" style={{ fontSize: window.Digit.Utils.browser.isMobile()?"12px":"12px" }} onClick={() => { window.open('https://www.digit.org/', '_blank').focus();}} >Powered by DIGIT</span>
-          <span style={{ margin: "0 10px" ,fontSize: window.Digit.Utils.browser.isMobile()?"12px":"12px"}}>|</span> */}
-          <a className="cursor-pointer font-regular" style={{ fontSize: window.Digit.Utils.browser.isMobile()?"12px":"12px" }} href="#" target='_blank'>UPYOG License</a>
-
-          <span  className="upyog-copyright-footer text-xs" style={{ margin: "0 10px" }} >|</span>
-          <span  className="upyog-copyright-footer cursor-pointer font-regular" style={{ fontSize: window.Digit.Utils.browser.isMobile()?"12px":"12px" }} onClick={() => { window.open('https://niua.in/', '_blank').focus();}} >Copyright © 2022 National Institute of Urban Affairs</span>
-          
-          {/* <a className="cursor-pointer text-md font-regular" href="#" target='_blank'>UPYOG License</a> */}
-
-        </div>
-        <div className="upyog-copyright-footer-web">
-          <span className=" cursor-pointer font-regular" style={{ fontSize:  window.Digit.Utils.browser.isMobile()?"14px":"16px" }} onClick={() => { window.open('https://niua.in/', '_blank').focus();}} >Copyright © 2022 National Institute of Urban Affairs</span>
-          </div>
-      </div>
-    </Background>
+    </div>
   );
 };
 
 Login.propTypes = {
-  loginParams: PropTypes.any,
+  config: PropTypes.any,
+  t: PropTypes.func,
+  isDisabled: PropTypes.bool,
 };
 
 Login.defaultProps = {
-  loginParams: null,
+  config: null,
+  t: (s) => s,
+  isDisabled: false,
 };
 
 export default Login;

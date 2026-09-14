@@ -197,6 +197,20 @@ import FormComposer from "./hoc/FormComposer";
 import Modal from "./hoc/Modal";
 import ResponseComposer from "./hoc/ResponseComposer";
 import InboxComposer from "./hoc/InboxComposer";
+import ConfigurableLoginPage, {
+  ConfigurablePage,
+  StateEmblem,
+  BrandLogo,
+  OfficialPortrait,
+  HeaderLanguageSelector,
+  ConfigurableIcon,
+} from "./hoc/ConfigurableLoginPage";
+import {
+  tokenToVariable,
+  tokensToStyles,
+  tokenToStyleValue,
+  interpolateTemplate,
+} from "./utilities/themeUtils";
 
 import CityMohalla from "./molecules/CityMohalla";
 import DashboardBox from "./molecules/DashboardBox";
@@ -534,5 +548,16 @@ export {
   DynamicFormStep,
   DynamicObjectRenderer,
   DynamicCheckPage,
-  GeoLocationWithDigipin
+  GeoLocationWithDigipin,
+  ConfigurablePage,
+  ConfigurableLoginPage,
+  StateEmblem,
+  BrandLogo,
+  OfficialPortrait,
+  HeaderLanguageSelector,
+  ConfigurableIcon,
+  tokenToVariable,
+  tokensToStyles,
+  tokenToStyleValue,
+  interpolateTemplate,
 };

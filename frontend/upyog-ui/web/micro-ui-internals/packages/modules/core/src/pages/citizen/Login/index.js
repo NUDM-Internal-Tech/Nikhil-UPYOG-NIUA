@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { AppContainer, BackButton, Toast } from "@nudmcdgnpm/digit-ui-react-components";
-import { Route, Routes, useLocation,  } from "react-router-dom";
+import { AppContainer, BackButton, Toast, ConfigurableLoginPage } from "@nudmcdgnpm/digit-ui-react-components";
+import { Route, Routes, useLocation } from "react-router-dom";
+import citizenLoginConfig from "./citizenLoginConfig.json";
 import { loginSteps } from "./config";
 import SelectMobileNumber from "./SelectMobileNumber";
 import SelectOtp from "./SelectOtp";
@@ -255,44 +256,51 @@ const Login = ({ stateCode, isUserRegistered = true }) => {
     }
   };
 
+  const citizenFlow = (
+    <Routes>
+      <Route
+        index
+        element={
+          <SelectMobileNumber
+            onSelect={selectMobileNumber}
+            config={stepItems[0]}
+            mobileNumber={params.mobileNumber || ""}
+            onMobileChange={handleMobileChange}
+            canSubmit={canSubmitNo}
+            showRegisterLink={isUserRegistered && !location.state?.role}
+            t={t}
+          />
+        }
+      />
+      <Route
+        path="otp"
+        element={
+          <SelectOtp
+            config={{ ...stepItems[1], texts: { ...stepItems[1].texts, cardText: `${stepItems[1].texts.cardText} ${params.mobileNumber || ""}` } }}
+            onOtpChange={handleOtpChange}
+            onResend={resendOtp}
+            onSelect={selectOtp}
+            otp={params.otp}
+            error={isOtpValid}
+            canSubmit={canSubmitOtp}
+            t={t}
+          />
+        }
+      />
+      <Route path="name" element={<SelectName config={stepItems[2]} onSelect={selectName} t={t} isDisabled={canSubmitName} />} />
+    </Routes>
+  );
+
   return (
-    <div className="citizen-form-wrapper">
-      <AppContainer>
-        <BackButton />
-        <Routes>
-          <Route
-            index
-            element={
-              <SelectMobileNumber
-                onSelect={selectMobileNumber}
-                config={stepItems[0]}
-                mobileNumber={params.mobileNumber || ""}
-                onMobileChange={handleMobileChange}
-                canSubmit={canSubmitNo}
-                showRegisterLink={isUserRegistered && !location.state?.role}
-                t={t}
-              />
-            }
-          />
-          <Route
-            path="otp"
-            element={
-              <SelectOtp
-                config={{ ...stepItems[1], texts: { ...stepItems[1].texts, cardText: `${stepItems[1].texts.cardText} ${params.mobileNumber || ""}` } }}
-                onOtpChange={handleOtpChange}
-                onResend={resendOtp}
-                onSelect={selectOtp}
-                otp={params.otp}
-                error={isOtpValid}
-                canSubmit={canSubmitOtp}
-                t={t}
-              />
-            }
-          />
-          <Route path="name" element={<SelectName config={stepItems[2]} onSelect={selectName} t={t} isDisabled={canSubmitName} />} />
-        </Routes>
-        {error && <Toast error={true} label={error} onClose={() => setError(null)} />}
-      </AppContainer>
+    <div className="citizen-login-root w-full" style={{ height: "calc(100vh - 56px)", overflow: "hidden", marginTop: "-24px" }}>
+      <ConfigurableLoginPage
+        pageConfig={citizenLoginConfig}
+        slots={{
+          citizenLoginForm: citizenFlow,
+        }}
+        t={t}
+      />
+      {error && <Toast error={true} label={error} onClose={() => setError(null)} />}
     </div>
   );
 };
